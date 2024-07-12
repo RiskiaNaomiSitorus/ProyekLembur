@@ -101,16 +101,17 @@ body {
 }
 
 .username {
-  margin-left: auto; /* Pushes the username to the far right */
+  margin-left: auto;
+  margin-right: 5px; /* Pushes the username to the far right */
 }
 
 .profile-picture {
-  margin-right: 10px;
+  margin-right: 3px;
 }
 
 .profile-picture img {
-  width: 2px; /* Adjusted for a smaller circle */
-  height: 2px; /* Adjusted for a smaller circle */
+  width: 30px; /* Adjusted for a smaller circle */
+  height: 30px; /* Adjusted for a smaller circle */
   border-radius: 50%;
   border: 1px solid #ccc;
 }

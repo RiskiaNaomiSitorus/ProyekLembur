@@ -1,36 +1,58 @@
 <!DOCTYPE html>
 <html lang="id">
-<head>
-  <meta charset="UTF-8" />
-  <title>Login</title>
-  <link rel="stylesheet" href="Style.css" />
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-</head>
-<body>
-  <div class="container">
-    <img src="assets/nanti.png" width="200px" height="200px" alt="Logo Login" />
-    <h6>PT Tolan Tiga Indonesia</h6>
-    <form id="loginForm">
-      <div class="input-group">
-        <label for="inputEmail"><b>Reg No <span class="star">&midast;</span></b>
-          <div class="input-wrapper">
-            <br><input type="email" id="inputEmail" name="inputEmail" placeholder="Username@gmail.com" required>
-          </div>
-        </label>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Login</title>
+    <link rel="stylesheet" href="Style.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <img
+        src="assets/nanti.png"
+        width="200px"
+        height="200px"
+        alt="Logo Login"
+      />
+      <h6>PT Tolan Tiga Indonesia</h6>
+      <form id="loginForm">
+        <div class="input-group">
+          <label for="inputEmail"
+            ><b>Reg No <span class="star">&midast;</span></b>
+            <div class="input-wrapper">
+              <br /><input
+                type="email"
+                id="inputEmail"
+                name="inputEmail"
+                placeholder="Username@gmail.com"
+                required
+              />
+            </div>
+          </label>
+        </div>
+        <div class="input-group">
+          <label for="inputPassword"
+            ><b>Password <span class="star">&midast;</span></b>
+            <div class="input-wrapper">
+              <br /><input
+                type="password"
+                id="inputPassword"
+                name="inputPassword"
+                placeholder="Enter your password"
+                required
+              />
+            </div>
+          </label>
+        </div>
+        <p><button type="submit">Login</button></p>
+      </form>
+      <div class="links">
+        <h6 class="forgot">Forgot Password?</h6>
       </div>
-      <div class="input-group">
-        <label for="inputPassword"><b>Password <span class="star">&midast;</span></b>
-          <div class="input-wrapper">
-            <br><input type="password" id="inputPassword" name="inputPassword" placeholder="Enter your password" required>
-          </div>
-        </label>
-      </div>
-      <p><button type="submit">Login</button></p>
-    </form>
-    <div class="links">
-      <h6 class="forgot">Forgot Password?</h6>
     </div>
-  </div>
-</body>
+  </body>
 </html>

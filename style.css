@@ -22,7 +22,12 @@ body {
   top: 30%; /* Adjusted from 50% to 30% to move it upwards */
   left: 50%;
   transform: translate(-50%, -50%);
-  background-color: rgb(243, 247, 250);
+  background-color: rgba(
+    243,
+    247,
+    250,
+    0.8
+  ); /* Adjust opacity here (0.8 means 80% opacity) */
   border: 1px solid #ccc;
   border-radius: 10px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);

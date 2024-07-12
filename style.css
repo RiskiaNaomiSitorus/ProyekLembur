@@ -22,12 +22,7 @@ body {
   top: 30%; /* Adjusted from 50% to 30% to move it upwards */
   left: 50%;
   transform: translate(-50%, -50%);
-  background-color: rgba(
-    243,
-    247,
-    250,
-    0.8
-  ); /* Adjust opacity here (0.8 means 80% opacity) */
+  background-color: rgba(209, 223, 253, 0.8); /* Adjust opacity here (0.8 means 80% opacity) */
   border: 1px solid #ccc;
   border-radius: 10px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
@@ -63,9 +58,9 @@ h1 {
 }
 
 button {
-  width: 130%;
+  width: 75%;
   padding: 10px;
-  background-color: #3cb371;
+  background-color: #4651ca;
   color: white;
   border: none;
   border-radius: 5px;
@@ -75,7 +70,7 @@ button {
 }
 
 button:hover {
-  background-color: #0056b3;
+  background-color: #cc00ff;
 }
 
 .links {
@@ -92,6 +87,12 @@ button:hover {
 .forgot {
   color: #e74c3c;
   margin-top: 15px;
+  text-decoration: underline; /* Garis bawah */
+  cursor: pointer; /* Menunjukkan bahwa ini bisa diklik */
+}
+
+.forgot:hover {
+  color: #c0392b; /* Warna saat hover (opsional) */
 }
 
 h6 {

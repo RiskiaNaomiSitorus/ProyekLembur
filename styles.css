@@ -172,22 +172,46 @@ body {
 }
 
 /* Custom styles for each card */
-.card-karyawan {
-  border-left: 5px solid blue;
-  color: blue;
-}
-
 .card-absen {
   border-left: 5px solid green;
   color: green;
-}
-
-.card-lembur {
-  border-left: 5px solid red;
-  color: red;
 }
 
 /* Update the icon for Data Karyawan */
 .card-karyawan .glyphicon {
   content: "\e008"; /* Unicode for glyphicon-user */
 }
+
+.card {
+  margin: 20px;
+  border: 1px solid #007bff;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.card-header {
+  margin: 20px;
+  border: 1px solid #11a634;
+  border-radius: 0; /* Menghapus border-radius untuk membuat persegi */
+  box-shadow: 0 2px 4px rgba(0, 255, 38, 0.1);
+  width: 235px; /* Menentukan lebar card */
+  height: 40px; 
+  background-color: #1bbc53;
+  color: white;
+  display: flex;
+  align-items: center;/* Menambahkan padding untuk header */
+}
+.card-header i {
+  margin-right: 10px;
+}
+
+    .action-buttons {
+      display: flex;
+      gap: 50px; /* Increased space between buttons */
+      margin-left: 200px; /* Space between header and buttons */
+    }
+    .card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }

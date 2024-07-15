@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <title>Tambah Data Karyawan</title>
-    <link rel="stylesheet" href="styless.css" />
+    <link rel="stylesheet" href="styles.css" />
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
@@ -60,25 +60,48 @@
       <div class="main_content">
         <div class="header">
           <div class="title">PT. Tolan Tiga Indonesia</div>
-          <div class="username"><i class="fa fa-bell"></i> Riskia Sitorus</div>
-          <div class="profile-picture">
-            <img src="login copy.png" alt="Profile Picture" />
+          <div class="user-info">
+            <i class="fa fa-bell"></i>
+            <div class="profile-picture">
+              <img src="assets/img.png" alt="Profile Picture" />
+            </div>
+            <div class="username">Riskia Sitorus</div>
           </div>
         </div>
         <div class="info">
+          <h4>Tambah Data Karyawan</h4>
           <form>
             <div class="form-group">
-              <label for="exampleFormControlInput1">Email address</label>
+              <label for="IDKaryawan">ID Karyawan</label>
               <input
-                type="email"
+                type="text"
                 class="form-control"
-                id="exampleFormControlInput1"
-                placeholder="name@example.com"
+                id="IDKaryawan"
+                pattern="\d*"
+                title="Please enter numbers only"
               />
+              <span
+                id="IDKaryawanError"
+                class="text-danger"
+                style="display: none"
+                >ID Karyawan harus berupa angka.</span
+              >
             </div>
             <div class="form-group">
-              <label for="exampleFormControlSelect1">Example select</label>
-              <select class="form-control" id="exampleFormControlSelect1">
+              <label for="NamaLengkap">Nama Lengkap</label>
+              <input type="text" class="form-control" id="namaLengkap" />
+            </div>
+            <div class="form-group">
+              <label for="JenisKelamin">Jenis Kelamin</label>
+              <select class="form-control" id="jenisKelamin">
+                <option value="" disabled selected>Pilih Jenis Kelamin</option>
+                <option value="Laki-Laki">Laki-Laki</option>
+                <option value="Perempuan">Perempuan</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="Jabantan">Jabatan</label>
+              <select class="form-control" id="jabatan">
                 <option>1</option>
                 <option>2</option>
                 <option>3</option>
@@ -87,8 +110,8 @@
               </select>
             </div>
             <div class="form-group">
-              <label for="exampleFormControlSelect1">Example select</label>
-              <select class="form-control" id="exampleFormControlSelect1">
+              <label for="Status">Status</label>
+              <select class="form-control" id="status">
                 <option>1</option>
                 <option>2</option>
                 <option>3</option>
@@ -97,38 +120,29 @@
               </select>
             </div>
             <div class="form-group">
-              <label for="exampleFormControlSelect1">Example select</label>
-              <select class="form-control" id="exampleFormControlSelect1">
-                <option>1</option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
-                <option>5</option>
-              </select>
+              <label for="photo">Photo</label>
+              <input type="file" class="form-control-file" id="photo" />
             </div>
-            <div class="form-group">
-              <label for="exampleFormControlSelect1">Example select</label>
-              <select class="form-control" id="exampleFormControlSelect1">
-                <option>1</option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
-                <option>5</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label for="exampleFormControlSelect1">Example select</label>
-              <select class="form-control" id="exampleFormControlSelect1">
-                <option>1</option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
-                <option>5</option>
-              </select>
-            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
           </form>
         </div>
       </div>
     </div>
+    <script>
+      document
+        .getElementById("IDKaryawan")
+        .addEventListener("input", function (e) {
+          const value = e.target.value;
+          const errorMessage = document.getElementById("IDKaryawanError");
+          const numericValue = value.replace(/\D/g, ""); // Remove non-digit characters
+
+          if (value !== numericValue) {
+            errorMessage.style.display = "block";
+            e.target.value = numericValue; // Keep only the numeric part in the input field
+          } else {
+            errorMessage.style.display = "none";
+          }
+        });
+    </script>
   </body>
 </html>

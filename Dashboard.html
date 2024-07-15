@@ -1,108 +1,138 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Dashboard</title>
-  <link rel="stylesheet" href="styles.css">
-  <script src="https://kit.fontawesome.com/b99e675b6e.js"></script>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <style>
-    .chart-container {
-      width: 30%;
-      background-color: white;
-      padding: 15px;
-      border-radius: 5px;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-      margin: 10px;
-    }
-    .charts-wrapper {
-      display: flex;
-      justify-content: space-between;
-      width: 80%;
-      margin: 0 auto;
-    }
-    .chart-container h3 {
-      color: blue;
-      text-align: center;
-    }
-  </style>
-</head>
-<body>
-  <div class="wrapper">
-    <div class="sidebar">
-      <h2>Lembur</h2>
-      <ul>
-        <li><a href="Dashboard.html"><i class="fas fa-home"></i>Dashboard</a></li>
-        <li><a href="Data Karyawan.html"><i class="fas fa-user"></i>Data Karyawan</a></li>
-        <li><a href="Data Absen.html"><i class="fas fa-address-card"></i>Data Absen</a></li>
-        <li><a href="Rekapitulasi Jam Lembur.html"><i class="fas fa-project-diagram"></i>Rekapitulasi Jam Lembur</a></li>
-        <li><a href="Perhitungan Lembur.html"><i class="fas fa-address-book"></i>Perhitungan Lembur</a></li>
-      </ul>
-    </div>
-    <div class="main_content">
-      <div class="header">
-        <div class="title">PT. Tolan Tiga Indonesia</div>
-        <div class="user-info">
-          <i class="fa fa-bell"></i>
-          <div class="profile-picture">
-            <img src="assets/img.png" alt="Profile Picture">
-          </div>
-          <div class="username">Riskia Sitorus</div>
-        </div>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="styles.css" />
+    <script src="https://kit.fontawesome.com/b99e675b6e.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+      .chart-container {
+        width: 30%;
+        background-color: white;
+        padding: 15px;
+        border-radius: 5px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        margin: 10px;
+      }
+      .charts-wrapper {
+        display: flex;
+        justify-content: space-between;
+        width: 80%;
+        margin: 0 auto;
+      }
+      .chart-container h3 {
+        color: blue;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrapper">
+      <div class="sidebar">
+        <h2>Lembur</h2>
+        <ul>
+          <li>
+            <a href="Dashboard.html"><i class="fas fa-home"></i>Dashboard</a>
+          </li>
+          <li>
+            <a href="Data Karyawan.html"
+              ><i class="fas fa-user"></i>Data Karyawan</a
+            >
+          </li>
+          <li>
+            <a href="Data Absen.html"
+              ><i class="fas fa-address-card"></i>Data Absen</a
+            >
+          </li>
+          <li>
+            <a href="Rekapitulasi Jam Lembur.html"
+              ><i class="fas fa-project-diagram"></i>Rekapitulasi Jam Lembur</a
+            >
+          </li>
+          <li>
+            <a href="Perhitungan Lembur.html"
+              ><i class="fas fa-address-book"></i>Perhitungan Lembur</a
+            >
+          </li>
+        </ul>
       </div>
-      <div class="info">
-        <div class="date">
-          <h5>12 Juli 2024</h5>
-        </div>
-      </div>
-      <div class="dashboard">
-        Dashboard
-      </div>
-      <div class="cards-container">
-        <div class="card card-karyawan">
-          <h3>Data Karyawan</h3>
-          <div class="data-content">
-            <p>20</p>
-            <i class="glyphicon glyphicon-user"></i>
-          </div>
-        </div>
-        <div class="card card-absen">
-          <h3>Data Absen</h3>
-          <div class="data-content">
-            <p>15</p>
-            <i class="glyphicon glyphicon-list-alt"></i>
-          </div>
-        </div>
-        <div class="card card-lembur">
-          <h3>Rekap Lembur</h3>
-          <div class="data-content">
-            <p>10</p>
-            <i class="glyphicon glyphicon-time"></i>
-          </div>
-        </div>
-      </div>
-      <div class="charts-wrapper">
-        <div class="chart-container">
-          <h3>Data Pegawai Berdasarkan Jam Lembur</h3>
-          <canvas id="lemburChart"></canvas>
-        </div>
-        <div class="chart-container">
-          <h3>Status Karyawan</h3>
-          <canvas id="statusChart"></canvas>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <script src="scripts.js"></script>
-        <footer style="background-color: #f8f9fa; padding: 20px; text-align: center; margin-top: 20px;">
-            <p>&copy; 2024 PT. Tolan Tiga Indonesia. All rights reserved.</p>
-            <div style="display: flex; justify-content: center; gap: 20px;">
-                <a href="#" style="text-decoration: none; color: #007bff;">Privacy Policy</a>
-                <a href="#" style="text-decoration: none; color: #007bff;">Terms of Service</a>
-                <a href="#" style="text-decoration: none; color: #007bff;">Contact Us</a>
+      <div class="main_content">
+        <div class="header">
+          <div class="title">PT. Tolan Tiga Indonesia</div>
+          <div class="user-info">
+            <i class="fa fa-bell"></i>
+            <div class="profile-picture">
+              <img src="assets/img.png" alt="Profile Picture" />
             </div>
-        </footer>
-</body>
+            <div class="username">Riskia Sitorus</div>
+          </div>
+        </div>
+        <div class="infodashboard">
+          <div class="date">
+            <h5>12 Juli 2024</h5>
+          </div>
+        </div>
+        <div class="dashboard">Dashboard</div>
+        <div class="cards-container">
+          <div class="card card-karyawan">
+            <h3>Data Karyawan</h3>
+            <div class="data-content">
+              <p>20</p>
+              <i class="glyphicon glyphicon-user"></i>
+            </div>
+          </div>
+          <div class="card card-absen">
+            <h3>Data Absen</h3>
+            <div class="data-content">
+              <p>15</p>
+              <i class="glyphicon glyphicon-list-alt"></i>
+            </div>
+          </div>
+          <div class="card card-lembur">
+            <h3>Rekap Lembur</h3>
+            <div class="data-content">
+              <p>10</p>
+              <i class="glyphicon glyphicon-time"></i>
+            </div>
+          </div>
+        </div>
+        <div class="charts-wrapper">
+          <div class="chart-container">
+            <h3>Data Pegawai Berdasarkan Jam Lembur</h3>
+            <canvas id="lemburChart"></canvas>
+          </div>
+          <div class="chart-container">
+            <h3>Status Karyawan</h3>
+            <canvas id="statusChart"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="scripts.js"></script>
+    <footer
+      style="
+        background-color: #f8f9fa;
+        padding: 20px;
+        text-align: center;
+        margin-top: 20px;
+      "
+    >
+      <p>&copy; 2024 PT. Tolan Tiga Indonesia. All rights reserved.</p>
+      <div style="display: flex; justify-content: center; gap: 20px">
+        <a href="#" style="text-decoration: none; color: #007bff"
+          >Privacy Policy</a
+        >
+        <a href="#" style="text-decoration: none; color: #007bff"
+          >Terms of Service</a
+        >
+        <a href="#" style="text-decoration: none; color: #007bff">Contact Us</a>
+      </div>
+    </footer>
+  </body>
 </html>

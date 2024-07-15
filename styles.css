@@ -71,47 +71,123 @@ body {
 }
 
 .wrapper .main_content .header {
-  padding: 20px;
-  background: #fff;
-  color: black;
-  border-bottom: 1px solid #e0e4e8;
-}
-
-.wrapper .main_content .info {
-  margin: 20px;
-  color: black;
-  line-height: 25px;
-}
-
-.wrapper .main_content .info div {
-  margin-bottom: 20px;
-}
-.header {
   display: flex;
-  justify-content: space-between; /* This distributes the space between the two items */
-  align-items: center; /* This vertically centers the items */
-  background-color: #f3f7fa; /* Adjust background color as needed */
-  padding: 10px 20px; /* Adjust padding as needed */
-  border-bottom: 1px solid #ccc; /* Optional: adds a bottom border */
-  font-size: 16px; /* Adjust font size as needed */
+  justify-content: space-between;
+  align-items: center;
+  background-color: #f3f7fa;
+  padding: 10px 20px;
+  border-bottom: 1px solid #ccc;
+  font-size: 16px;
 }
 
 .title {
-  font-weight: bold; /* Optional: makes the title bold */
+  font-weight: bold;
 }
 
-.username {
-  margin-left: auto;
-  margin-right: 5px; /* Pushes the username to the far right */
+.user-info {
+  display: flex;
+  align-items: center;
+}
+
+.user-info i {
+  margin-right: 10px;
+  color: rgb(86, 91, 93);
 }
 
 .profile-picture {
-  margin-right: 3px;
+  margin-right: 10px;
 }
 
 .profile-picture img {
-  width: 30px; /* Adjusted for a smaller circle */
-  height: 30px; /* Adjusted for a smaller circle */
+  width: 45px;
+  height: 45px;
   border-radius: 50%;
-  border: 1px solid #ccc;
+}
+
+.username {
+  font-weight: bold;
+}
+
+.info {
+  display: flex;
+  justify-content: flex-end;
+  padding: 20px;
+  color: gray;
+}
+
+.date {
+  font-size: 35px;
+  color: rgb(65, 63, 64);
+}
+
+.dashboard {
+  display: flex;
+  font-size: 30px;
+  color: rgb(65, 63, 64);
+  margin-left: 20px;
+}
+
+.cards-container {
+  display: flex;
+  justify-content: space-between;
+  margin: 20px;
+}
+
+.card {
+  background-color: white;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+  flex: 1;
+  margin: 0 10px;
+  max-width: 30%;
+  height: 150px;
+  font-size: 14px;
+  color: #333;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.card h3 {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.data-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.data-content p {
+  margin-right: 10px;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.data-content i {
+  font-size: 20px;
+}
+
+/* Custom styles for each card */
+.card-karyawan {
+  border-left: 5px solid blue;
+  color: blue;
+}
+
+.card-absen {
+  border-left: 5px solid green;
+  color: green;
+}
+
+.card-lembur {
+  border-left: 5px solid red;
+  color: red;
+}
+
+/* Update the icon for Data Karyawan */
+.card-karyawan .glyphicon {
+  content: "\e008"; /* Unicode for glyphicon-user */
 }

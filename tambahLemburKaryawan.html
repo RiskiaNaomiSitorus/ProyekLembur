@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Tambah Lembur Karyawan</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+    <script src="https://kit.fontawesome.com/b99e675b6e.js"></script>
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+      integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js"
+      integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDzwrnQq4sF86dIHNDz0W1"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js"
+      integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body>
+    <div class="wrapper">
+      <div class="sidebar">
+        <h2>Lembur</h2>
+        <ul>
+          <li>
+            <a href="#"><i class="fas fa-home"></i>Dashboard</a>
+          </li>
+          <li>
+            <a href="#"><i class="fas fa-user"></i>Data Karyawan</a>
+          </li>
+          <li>
+            <a href="#"><i class="fas fa-address-card"></i>Data Absen</a>
+          </li>
+          <li>
+            <a href="#"
+              ><i class="fas fa-project-diagram"></i>Rekapitulasi Jam Lembur</a
+            >
+          </li>
+          <li>
+            <a href="#"
+              ><i class="fas fa-address-book"></i>Perhitungan Lembur</a
+            >
+          </li>
+        </ul>
+      </div>
+      <div class="main_content">
+        <div class="header">
+          <div class="title">PT. Tolan Tiga Indonesia</div>
+          <div class="username"><i class="fa fa-bell"></i> Riskia Sitorus</div>
+          <div class="profile-picture">
+            <img src="login copy.png" alt="Profile Picture" />
+          </div>
+        </div>
+        <div class="info">
+          <h4>Perhitungan Lembur</h4>
+          <div>
+            <button type="button" class="btn btn-success">
+              Tambah Lembur Karyawan
+            </button>
+            <button type="button" class="btn btn-success">
+              <i class="fas fa-eye"></i> Lihat
+            </button>
+          </div>
+          <div>
+            <button type="button" class="btn btn-secondary">Excel</button>
+            <button type="button" class="btn btn-secondary">Print</button>
+            <button type="button" class="btn btn-secondary">
+              Column Visibility
+            </button>
+          </div>
+          <form id="lemburForm">
+            <div class="form-group">
+              <label for="NamaLengkap">Nama Lengkap</label>
+              <input type="text" class="form-control" id="namaLengkap" />
+            </div>
+            <div class="form-group">
+              <label for="IDKaryawan">ID Karyawan</label>
+              <input type="text" class="form-control" id="IDKaryawan" />
+            </div>
+            <div class="form-group">
+              <label for="gaji">Gaji</label>
+              <input type="text" class="form-control" id="gaji" name="gaji" />
+            </div>
+            <div class="form-group">
+              <label for="TanggalLembur">Tanggal Lembur</label>
+              <input type="date" class="form-control" id="tanggalLembur" />
+            </div>
+            <div class="cs-form">
+              <label for="gaji">Jam Masuk</label>
+              <input type="time" class="form-control" id="jamMasuk" disabled />
+            </div>
+            <div class="cs-form">
+              <label for="gaji">Jam Keluar</label>
+              <input type="time" class="form-control" id="jamKeluar" />
+            </div>
+            <div class="form-group">
+              <label for="JenisLembur">Jenis Lembur</label>
+              <select class="form-control" id="jenisLembur" disabled>
+                <option></option>
+                <option>Weekend</option>
+                <option>Hari biasa</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="JamKerjaLembur">Jam Kerja Lembur</label>
+              <input type="number" class="form-control" id="jamKerjaLembur" />
+            </div>
+            <div class="form-group">
+              <label for="KeteranganLembur">Keterangan Lembur </label>
+              <textarea
+                class="form-control"
+                id="keteranganLembur"
+                rows="3"
+              ></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </form>
+        </div>
+      </div>
+    </div>
+    <script>
+      document
+        .getElementById("tanggalLembur")
+        .addEventListener("change", function () {
+          const tanggalLembur = new Date(this.value);
+          const jenisLembur = document.getElementById("jenisLembur");
+          const jamMasuk = document.getElementById("jamMasuk");
+          const jamKeluar = document.getElementById("jamKeluar");
+
+          if (tanggalLembur.getDay() === 0 || tanggalLembur.getDay() === 6) {
+            jenisLembur.value = "Weekend";
+            jamMasuk.value = "";
+            jamMasuk.disabled = false;
+            jamKeluar.value = "";
+          } else if (tanggalLembur.getDay() === 5) {
+            // Friday
+            jenisLembur.value = "Hari biasa";
+            jamMasuk.value = "07:30";
+            jamMasuk.disabled = true;
+            jamKeluar.value = "15:30";
+          } else {
+            // Monday to Thursday
+            jenisLembur.value = "Hari biasa";
+            jamMasuk.value = "07:30";
+            jamMasuk.disabled = true;
+            jamKeluar.value = "16:30";
+          }
+        });
+
+      document
+        .getElementById("jamKeluar")
+        .addEventListener("change", function () {
+          const tanggalLembur = new Date(
+            document.getElementById("tanggalLembur").value
+          );
+          const jamMasuk = document.getElementById("jamMasuk").value;
+          const jamKeluar = this.value;
+          const jamKerjaLembur = document.getElementById("jamKerjaLembur");
+
+          const [jamMasukHour, jamMasukMinute] = jamMasuk
+            .split(":")
+            .map(Number);
+          const [jamKeluarHour, jamKeluarMinute] = jamKeluar
+            .split(":")
+            .map(Number);
+
+          let totalJamMasuk = jamMasukHour + jamMasukMinute / 60;
+          let totalJamKeluar = jamKeluarHour + jamKeluarMinute / 60;
+
+          if (tanggalLembur.getDay() === 0 || tanggalLembur.getDay() === 6) {
+            jamKerjaLembur.value = Math.floor(totalJamKeluar - totalJamMasuk);
+          } else if (tanggalLembur.getDay() === 5) {
+            // Friday
+            if (totalJamKeluar > 15.5) {
+              jamKerjaLembur.value = Math.floor(totalJamKeluar - 15.5);
+            } else {
+              jamKerjaLembur.value = 0;
+            }
+          } else {
+            // Monday to Thursday
+            if (totalJamKeluar > 16.5) {
+              jamKerjaLembur.value = Math.floor(totalJamKeluar - 16.5);
+            } else {
+              jamKerjaLembur.value = 0;
+            }
+          }
+        });
+
+      document
+        .getElementById("lemburForm")
+        .addEventListener("submit", function (event) {
+          const jenisLembur = document.getElementById("jenisLembur");
+          jenisLembur.disabled = false;
+        });
+
+      document.getElementById("gaji").addEventListener("input", function (e) {
+        let value = e.target.value.replace(/[^,\d]/g, "");
+        let formattedValue = new Intl.NumberFormat("id-ID", {
+          style: "currency",
+          currency: "IDR",
+          minimumFractionDigits: 0,
+        }).format(value);
+        e.target.value = formattedValue.replace("IDR", "Rp").trim();
+      });
+    </script>
+  </body>
+</html>

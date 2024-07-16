@@ -47,6 +47,104 @@
         color: blue;
         text-align: center;
       }
+      .wrapper {
+        display: flex;
+      }
+      .sidebar {
+        width: 250px;
+        background: #333;
+        color: #fff;
+        min-height: 100vh;
+        padding: 15px;
+      }
+      .main_content {
+        flex: 1;
+        padding: 20px;
+      }
+      .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: #f1f1f1;
+        padding: 15px;
+        border-bottom: 1px solid #ccc;
+      }
+      .header .title {
+        font-size: 24px;
+        font-weight: bold;
+      }
+      .user-info {
+        display: flex;
+        align-items: center;
+      }
+      .user-info .profile-picture {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        overflow: hidden;
+        margin-right: 10px;
+      }
+      .user-info .profile-picture img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      .user-info .username {
+        font-size: 18px;
+        font-weight: bold;
+      }
+      .infodashboard {
+        text-align: right;
+        margin-bottom: 20px;
+      }
+      .infodashboard h5 {
+        margin: 0;
+      }
+      .dashboard {
+        font-size: 28px;
+        font-weight: bold;
+        margin-bottom: 20px;
+      }
+      .cards-container {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 20px;
+      }
+      .card {
+        background: #fff;
+        padding: 20px;
+        border-radius: 5px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        flex: 1;
+        margin: 0 10px;
+        text-align: center;
+        position: relative;
+      }
+      .card h3 {
+        margin-bottom: 15px;
+        color: #007bff;
+      }
+      .data-content {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 24px;
+        font-weight: bold;
+      }
+      .data-content p {
+        margin: 0 10px;
+      }
+      .label-container {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 10px;
+      }
+      .label {
+        background-color: #007bff;
+        color: white;
+        padding: 5px 10px;
+        border-radius: 3px;
+      }
       footer {
         background-color: #f8f9fa;
         padding: 20px;
@@ -113,6 +211,9 @@
               <p>20</p>
               <i class="glyphicon glyphicon-user"></i>
             </div>
+            <div class="label-container">
+              <div class="label">Karyawan Aktif</div>
+            </div>
           </div>
           <div class="card card-absen">
             <h3>Data Absen</h3>
@@ -120,12 +221,18 @@
               <p>15</p>
               <i class="glyphicon glyphicon-list-alt"></i>
             </div>
+            <div class="label-container">
+              <div class="label">Absen Hari Ini</div>
+            </div>
           </div>
           <div class="card card-lembur">
             <h3>Rekap Lembur</h3>
             <div class="data-content">
               <p>10</p>
               <i class="glyphicon glyphicon-time"></i>
+            </div>
+            <div class="label-container">
+              <div class="label">Jam Lembur</div>
             </div>
           </div>
         </div>
@@ -141,8 +248,15 @@
         </div>
       </div>
     </div>
+    <script src="scripts.js"></script>
+    
+    <footer style="background-color: #f8f9fa; padding: 20px; text-align: center; margin-top: 20px;">
     <footer>
       <p>&copy; 2024 PT. Tolan Tiga Indonesia. All rights reserved.</p>
+      <div style="display: flex; justify-content: center; gap: 20px;">
+        <a href="#" style="text-decoration: none; color: #007bff;">Privacy Policy</a>
+        <a href="#" style="text-decoration: none; color: #007bff;">Terms of Service</a>
+        <a href="#" style="text-decoration: none; color: #007bff;">Contact Us</a>
       <div class="footer-links">
         <a href="#">Privacy Policy</a>
         <a href="#">Terms of Service</a>

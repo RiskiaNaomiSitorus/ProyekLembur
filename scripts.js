@@ -63,3 +63,95 @@ var statusChart = new Chart(statusCtx, {
     }
   }
 });
+
+// perhitungan
+document.addEventListener('DOMContentLoaded', () => {
+  const upahPerBulan = 5190000;
+  const upahPerJam = upahPerBulan / 173;
+
+  const totalLemburHariKerja = 24;
+  const totalLemburHariLibur = 42;
+  const totalLembur = totalLemburHariKerja + totalLemburHariLibur;
+
+  const totalUpahLembur = totalLembur * upahPerJam;
+
+  console.log(`Upah per jam: Rp. ${upahPerJam}`);
+  console.log(`Total upah lembur: Rp. ${totalUpahLembur}`);
+});
+
+
+// rekapitulasi
+document.getElementById('overtime-form').addEventListener('submit', function(event) {
+  event.preventDefault();
+  
+  const day = document.getElementById('day').value;
+  const date = document.getElementById('date').value;
+  const inTime = document.getElementById('in-time').value;
+  const outTime = document.getElementById('out-time').value;
+  const notes = document.getElementById('notes').value;
+  
+  const totalHours = calculateTotalHours(inTime, outTime);
+  const overtime = calculateOvertime(totalHours);
+  
+  const newRow = `
+      <tr>
+          <td></td>
+          <td>${day}</td>
+          <td>${date}</td>
+          <td>${inTime}</td>
+          <td>${outTime}</td>
+          <td>${totalHours}</td>
+          <td>${overtime.jamI}</td>
+          <td>${overtime.jamII}</td>
+          <td>${overtime.jamIX}</td>
+          <td>${overtime.jamX}</td>
+          <td>${overtime.totalOvertimeHours}</td>
+          <td>${overtime.totalOvertimePay}</td>
+          <td>${notes}</td>
+      </tr>
+  `;
+  
+  document.getElementById('overtime-table').insertAdjacentHTML('beforeend', newRow);
+  updateRowNumbers();
+  this.reset();
+});
+
+function calculateTotalHours(inTime, outTime) {
+  const [inHours, inMinutes] = inTime.split(':').map(Number);
+  const [outHours, outMinutes] = outTime.split(':').map(Number);
+  
+  const totalInMinutes = (inHours * 60) + inMinutes;
+  const totalOutMinutes = (outHours * 60) + outMinutes;
+  
+  return (totalOutMinutes - totalInMinutes) / 60;
+}
+
+function calculateOvertime(totalHours) {
+  const overtimePayPerHour = 21803;
+  
+  let jamI = 0, jamII = 0, jamIX = 0, jamX = 0;
+  
+  if (totalHours > 8) {
+      const overtimeHours = totalHours - 8;
+      if (overtimeHours > 4) {
+          jamX = overtimeHours - 4;
+          jamIX = 4;
+      } else {
+          jamIX = overtimeHours;
+      }
+      jamII = 1;
+      jamI = 1.5;
+  }
+  
+  const totalOvertimeHours = jamI + jamII + jamIX + jamX;
+  const totalOvertimePay = (jamI * 1.5 + jamII * 2 + jamIX * 3 + jamX * 4) * overtimePayPerHour;
+  
+  return { jamI, jamII, jamIX, jamX, totalOvertimeHours, totalOvertimePay };
+}
+
+function updateRowNumbers() {
+  const rows = document.querySelectorAll('#overtime-table tr');
+  rows.forEach((row, index) => {
+      row.cells[0].textContent = index + 1;
+  });
+}

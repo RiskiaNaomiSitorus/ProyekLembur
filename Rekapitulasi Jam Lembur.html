@@ -41,5 +41,80 @@
         <div class="dashboard">Rekapitulasi</div>
       </div>
     </div>
+
+
+
+
+    <!DOCTYPE html>
+    <html lang="id">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Rekapitulasi Lembur Karyawan</title>
+        <link rel="stylesheet" href="styles.css">
+    </head>
+    <body>
+        <div class="container">
+            <h1>Rekapitulasi Lembur Karyawan</h1>
+            
+            <div id="employee-details">
+                <p>Nama: Rakhmat</p>
+                <p>Jabatan: Driver</p>
+                <p>Periode: 06 Mei - 05 Juni 2024</p>
+                <p>Gaji Pokok: Rp. 3,772,000</p>
+                <p>Upah Lembur Per Jam: Rp. 21,803</p>
+            </div>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>Hari</th>
+                        <th>Tanggal</th>
+                        <th>In</th>
+                        <th>Out</th>
+                        <th>Total</th>
+                        <th>Jam I x 1.5</th>
+                        <th>Jam II x 2</th>
+                        <th>Jam IX x 3</th>
+                        <th>Jam X x 4</th>
+                        <th>Total Jam Lembur</th>
+                        <th>Upah Lembur (Rp)</th>
+                        <th>Keterangan</th>
+                    </tr>
+                </thead>
+                <tbody id="overtime-table">
+                    <!-- Rows will be inserted here by JavaScript -->
+                </tbody>
+            </table>
+            
+            <form id="overtime-form">
+                <h2>Tambah Data Lembur</h2>
+                <label for="day">Hari:</label>
+                <input type="text" id="day" name="day" required>
+                <label for="date">Tanggal:</label>
+                <input type="date" id="date" name="date" required>
+                <label for="in-time">In:</label>
+                <input type="time" id="in-time" name="in-time" required>
+                <label for="out-time">Out:</label>
+                <input type="time" id="out-time" name="out-time" required>
+                <label for="notes">Keterangan:</label>
+                <input type="text" id="notes" name="notes">
+                <button type="submit">Tambah</button>
+            </form>
+        </div>
+    
+        <script src="scripts.js"></script>
+    </body>
+    </html>
+    
+
+
+
+
+
+
+
+    
   </body>
 </html>

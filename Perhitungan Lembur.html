@@ -1,224 +1,267 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Perhitungan Lembur</title>
-  <link rel="stylesheet" href="styles.css">
-  <script src="https://kit.fontawesome.com/b99e675b6e.js"></script>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <style>
-    .card-header {
-      display: flex;
-      align-items: center;
-      margin-bottom: 20px;
-    }
-    .action-buttons {
-      display: flex;
-      gap: 10px;
-      margin-top: 10px; /* Space between header and buttons */
-      justify-content: flex-start; /* Align buttons to the left */
-    }
-    .header-title {
-      display: flex;
-      align-items: center;
-    }
-    .container {
-      margin-top: 20px;
-    }
-    table {
-      width: 100%;
-      margin: 20px 0;
-      border-collapse: collapse;
-    }
-    table, th, td {
-      border: 1px solid black;
-    }
-    th, td {
-      padding: 8px;
-      text-align: center;
-    }
-    th {
-      background-color: #f2f2f2;
-    }
-  </style>
-</head>
-<body>
-  <div class="wrapper">
-    <div class="sidebar">
-      <h2>Lembur</h2>
-      <ul>
-        <li><a href="Dashboard.html"><i class="fas fa-home"></i>Dashboard</a></li>
-        <li><a href="Data Karyawan.html"><i class="fas fa-user"></i>Data Karyawan</a></li>
-        <li><a href="Rekapitulasi Jam Lembur.html"><i class="fas fa-project-diagram"></i>Rekapitulasi Jam Lembur</a></li>
-        <li><a href="Perhitungan Lembur.html"><i class="fas fa-address-book"></i>Perhitungan Lembur</a></li>
-      </ul>
-    </div>
-    <div class="main_content">
-      <div class="header">
-        <div class="title">PT. Tolan Tiga Indonesia</div>
-        <div class="user-info">
-          <i class="fa fa-bell"></i>
-          <div class="profile-picture">
-            <img src="assets/img.png" alt="Profile Picture">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Perhitungan Lembur</title>
+    <link rel="stylesheet" href="styles.css" />
+    <script src="https://kit.fontawesome.com/b99e675b6e.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+      .card-header {
+        display: flex;
+        align-items: center;
+        margin-bottom: 20px;
+      }
+      .action-buttons {
+        display: flex;
+        gap: 10px;
+        margin-top: 10px; /* Space between header and buttons */
+        justify-content: flex-start; /* Align buttons to the left */
+      }
+      .header-title {
+        display: flex;
+        align-items: center;
+      }
+      .container {
+        margin-top: 20px;
+      }
+      table {
+        width: 100%;
+        margin: 20px 0;
+        border-collapse: collapse;
+      }
+      table,
+      th,
+      td {
+        border: 1px solid black;
+      }
+      th,
+      td {
+        padding: 8px;
+        text-align: center;
+      }
+      th {
+        background-color: #f2f2f2;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrapper">
+      <div class="sidebar">
+        <h2>Lembur</h2>
+        <ul>
+          <li>
+            <a href="Dashboard.html"><i class="fas fa-home"></i>Dashboard</a>
+          </li>
+          <li>
+            <a href="Data Karyawan.html"
+              ><i class="fas fa-user"></i>Data Karyawan</a
+            >
+          </li>
+          <li>
+            <a href="Rekapitulasi Jam Lembur.html"
+              ><i class="fas fa-project-diagram"></i>Rekapitulasi Jam Lembur</a
+            >
+          </li>
+          <li>
+            <a href="Perhitungan Lembur.html"
+              ><i class="fas fa-address-book"></i>Perhitungan Lembur</a
+            >
+          </li>
+        </ul>
+      </div>
+      <div class="main_content">
+        <div class="header">
+          <div class="title">PT. Tolan Tiga Indonesia</div>
+          <div class="user-info">
+            <i class="fa fa-bell"></i>
+            <div class="profile-picture">
+              <img src="assets/img.png" alt="Profile Picture" />
+            </div>
+            <div class="username">Riskia Sitorus</div>
           </div>
-          <div class="username">Riskia Sitorus</div>
+        </div>
+        <div class="info">
+          <div class="date">
+            <h5>12 Juli 2024</h5>
+          </div>
+        </div>
+        <div class="dashboard">Perhitungan Lembur</div>
+        <div class="action-buttons">
+          <button class="btn btn-primary btn-sm">
+            <i class="fas fa-file-excel"></i> Excel
+          </button>
+          <button class="btn btn-secondary btn-sm">
+            <i class="fas fa-print"></i> Print
+          </button>
+          <button class="btn btn-success btn-sm">
+            <i class="fas fa-file-csv"></i> CSV
+          </button>
+          <button class="btn btn-info btn-sm">
+            <i class="fas fa-copy"></i> Copy
+          </button>
+          <button class="btn btn-warning btn-sm">
+            <i class="fas fa-eye"></i> Column Visibility
+          </button>
+        </div>
+        <div class="container">
+          <table>
+            <thead>
+              <tr>
+                <th>No</th>
+                <th>Hari</th>
+                <th>Tanggal</th>
+                <th>Waktu IN</th>
+                <th>Waktu OUT</th>
+                <th>Total Jam Kerja</th>
+                <th>Jam Lembur 1 x 1.5</th>
+                <th>Jam Lembur 2</th>
+                <th>Total Jam Lembur</th>
+                <th>Upah Lembur (Rp)</th>
+                <th>Keterangan</th>
+              </tr>
+            </thead>
+            <tbody id="overtime-table-body">
+              <tr>
+                <td>1</td>
+                <td>Senin</td>
+                <td>2024-07-08</td>
+                <td><input type="time" id="in-time-1" value="07:30" /></td>
+                <td><input type="time" id="out-time-1" value="16:30" /></td>
+                <td id="total-work-1"></td>
+                <td id="overtime-1-1"></td>
+                <td id="overtime-2-1"></td>
+                <td id="total-overtime-1"></td>
+                <td id="pay-1"></td>
+                <td>Lembur Hari Biasa</td>
+              </tr>
+              <tr>
+                <td>2</td>
+                <td>Sabtu</td>
+                <td>2024-07-13</td>
+                <td><input type="time" id="in-time-2" value="09:00" /></td>
+                <td><input type="time" id="out-time-2" value="17:00" /></td>
+                <td id="total-work-2"></td>
+                <td id="overtime-1-2"></td>
+                <td id="overtime-2-2"></td>
+                <td id="total-overtime-2"></td>
+                <td id="pay-2"></td>
+                <td>Lembur Weekend</td>
+              </tr>
+            </tbody>
+          </table>
+          <div>
+            <label for="base-salary">Gaji Asli Karyawan (Rp):</label>
+            <input type="number" id="base-salary" value="5000000" />
+          </div>
         </div>
       </div>
-      <div class="info">
-        <div class="date">
-          <h5>12 Juli 2024</h5>
-        </div>
-      </div>
-      <div class="dashboard">
-        Perhitungan Lembur
-      </div>
-      <div class="action-buttons">
-        <button class="btn btn-primary btn-sm"><i class="fas fa-file-excel"></i> Excel</button>
-        <button class="btn btn-secondary btn-sm"><i class="fas fa-print"></i> Print</button>
-        <button class="btn btn-success btn-sm"><i class="fas fa-file-csv"></i> CSV</button>
-        <button class="btn btn-info btn-sm"><i class="fas fa-copy"></i> Copy</button>
-        <button class="btn btn-warning btn-sm"><i class="fas fa-eye"></i> Column Visibility</button>
     </div>
-      <div class="container">
-        <table>
-          <thead>
-            <tr>
-              <th>No</th>
-              <th>Hari</th>
-              <th>Tanggal</th>
-              <th>Waktu IN</th>
-              <th>Waktu OUT</th>
-              <th>Total Jam Kerja</th>
-              <th>Jam Lembur 1 x 1.5</th>
-              <th>Jam Lembur 2</th>
-              <th>Total Jam Lembur</th>
-              <th>Upah Lembur (Rp)</th>
-              <th>Keterangan</th>
-            </tr>
-          </thead>
-          <tbody id="overtime-table-body">
-            <tr>
-              <td>1</td>
-              <td>Senin</td>
-              <td>2024-07-08</td>
-              <td><input type="time" id="in-time-1" value="07:30"></td>
-              <td><input type="time" id="out-time-1" value="16:30"></td>
-              <td id="total-work-1"></td>
-              <td id="overtime-1-1"></td>
-              <td id="overtime-2-1"></td>
-              <td id="total-overtime-1"></td>
-              <td id="pay-1"></td>
-              <td>Lembur Hari Biasa</td>
-            </tr>
-            <tr>
-              <td>2</td>
-              <td>Sabtu</td>
-              <td>2024-07-13</td>
-              <td><input type="time" id="in-time-2" value="09:00"></td>
-              <td><input type="time" id="out-time-2" value="17:00"></td>
-              <td id="total-work-2"></td>
-              <td id="overtime-1-2"></td>
-              <td id="overtime-2-2"></td>
-              <td id="total-overtime-2"></td>
-              <td id="pay-2"></td>
-              <td>Lembur Weekend</td>
-            </tr>
-          </tbody>
-        </table>
-        <div>
-          <label for="base-salary">Gaji Asli Karyawan (Rp):</label>
-          <input type="number" id="base-salary" value="5000000">
-        </div>
-      </div>
-    </div>
-  </div>
-  <script>
-    function calculateOvertimeWeekday(inTime, outTime, baseSalary) {
-      const inDate = new Date(`1970-01-01T${inTime}Z`);
-      const outDate = new Date(`1970-01-01T${outTime}Z`);
-      const workHours = (outDate - inDate) / (1000 * 60 * 60);
+    <script>
+      function calculateOvertimeWeekday(inTime, outTime, baseSalary) {
+        const inDate = new Date(`1970-01-01T${inTime}Z`);
+        const outDate = new Date(`1970-01-01T${outTime}Z`);
+        const workHours = (outDate - inDate) / (1000 * 60 * 60);
 
-      let overtime1 = 0, overtime2 = 0, overtimePay = 0;
-      const normalHours = 8; // 8 jam kerja normal
-      const hourlyRate = baseSalary / 173; // 173 adalah jam kerja rata-rata dalam sebulan
-      
-      if (workHours > normalHours) {
-        overtime1 = Math.min(1, workHours - normalHours);
-        overtime2 = Math.max(0, workHours - normalHours - 1);
-        overtimePay = (overtime1 * 1.5 + overtime2 * 2) * hourlyRate;
+        let overtime1 = 0,
+          overtime2 = 0,
+          overtimePay = 0;
+        const normalHours = 8; // 8 jam kerja normal
+        const hourlyRate = baseSalary / 173; // 173 adalah jam kerja rata-rata dalam sebulan
+
+        if (workHours > normalHours) {
+          overtime1 = Math.min(1, workHours - normalHours);
+          overtime2 = Math.max(0, workHours - normalHours - 1);
+          overtimePay = (overtime1 * 1.5 + overtime2 * 2) * hourlyRate;
+        }
+
+        const totalOvertime = overtime1 + overtime2;
+
+        return {
+          workHours: workHours.toFixed(2),
+          overtime1: overtime1.toFixed(2),
+          overtime2: overtime2.toFixed(2),
+          totalOvertime: totalOvertime.toFixed(2),
+          overtimePay: `Rp ${overtimePay.toLocaleString("id-ID")}`,
+        };
       }
 
-      const totalOvertime = overtime1 + overtime2;
+      function calculateOvertimeWeekend(inTime, outTime, baseSalary) {
+        const inDate = new Date(`1970-01-01T${inTime}Z`);
+        const outDate = new Date(`1970-01-01T${outTime}Z`);
+        const workHours = (outDate - inDate) / (1000 * 60 * 60);
 
-      return {
-        workHours: workHours.toFixed(2),
-        overtime1: overtime1.toFixed(2),
-        overtime2: overtime2.toFixed(2),
-        totalOvertime: totalOvertime.toFixed(2),
-        overtimePay: `Rp ${overtimePay.toLocaleString('id-ID')}`
-      };
-    }
+        let overtime1 = 0,
+          overtime2 = 0,
+          overtimePay = 0;
+        const normalHours = 8; // 8 jam kerja normal
+        const hourlyRate = baseSalary / 173; // 173 adalah jam kerja rata-rata dalam sebulan
 
-    function calculateOvertimeWeekend(inTime, outTime, baseSalary) {
-      const inDate = new Date(`1970-01-01T${inTime}Z`);
-      const outDate = new Date(`1970-01-01T${outTime}Z`);
-      const workHours = (outDate - inDate) / (1000 * 60 * 60);
+        if (workHours > normalHours) {
+          overtime1 = Math.min(1, workHours - normalHours);
+          overtime2 = Math.max(0, workHours - normalHours - 1);
+          overtimePay = (overtime1 * 1.5 + overtime2 * 2) * hourlyRate * 2; // 2x rate untuk weekend
+        }
 
-      let overtime1 = 0, overtime2 = 0, overtimePay = 0;
-      const normalHours = 8; // 8 jam kerja normal
-      const hourlyRate = baseSalary / 173; // 173 adalah jam kerja rata-rata dalam sebulan
-      
-      if (workHours > normalHours) {
-        overtime1 = Math.min(1, workHours - normalHours);
-        overtime2 = Math.max(0, workHours - normalHours - 1);
-        overtimePay = (overtime1 * 1.5 + overtime2 * 2) * hourlyRate * 2; // 2x rate untuk weekend
+        const totalOvertime = overtime1 + overtime2;
+
+        return {
+          workHours: workHours.toFixed(2),
+          overtime1: overtime1.toFixed(2),
+          overtime2: overtime2.toFixed(2),
+          totalOvertime: totalOvertime.toFixed(2),
+          overtimePay: `Rp ${overtimePay.toLocaleString("id-ID")}`,
+        };
       }
 
-      const totalOvertime = overtime1 + overtime2;
+      function updateOvertime(id, isWeekend) {
+        const inTime = document.getElementById(`in-time-${id}`).value;
+        const outTime = document.getElementById(`out-time-${id}`).value;
+        const baseSalary = parseFloat(
+          document.getElementById("base-salary").value
+        );
 
-      return {
-        workHours: workHours.toFixed(2),
-        overtime1: overtime1.toFixed(2),
-        overtime2: overtime2.toFixed(2),
-        totalOvertime: totalOvertime.toFixed(2),
-        overtimePay: `Rp ${overtimePay.toLocaleString('id-ID')}`
-      };
-    }
+        const result = isWeekend
+          ? calculateOvertimeWeekend(inTime, outTime, baseSalary)
+          : calculateOvertimeWeekday(inTime, outTime, baseSalary);
 
-    function updateOvertime(id, isWeekend) {
-      const inTime = document.getElementById(`in-time-${id}`).value;
-      const outTime = document.getElementById(`out-time-${id}`).value;
-      const baseSalary = parseFloat(document.getElementById("base-salary").value);
+        document.getElementById(`total-work-${id}`).innerText =
+          result.workHours;
+        document.getElementById(`overtime-1-${id}`).innerText =
+          result.overtime1;
+        document.getElementById(`overtime-2-${id}`).innerText =
+          result.overtime2;
+        document.getElementById(`total-overtime-${id}`).innerText =
+          result.totalOvertime;
+        document.getElementById(`pay-${id}`).innerText = result.overtimePay;
+      }
 
-      const result = isWeekend
-        ? calculateOvertimeWeekend(inTime, outTime, baseSalary)
-        : calculateOvertimeWeekday(inTime, outTime, baseSalary);
-
-      document.getElementById(`total-work-${id}`).innerText = result.workHours;
-      document.getElementById(`overtime-1-${id}`).innerText = result.overtime1;
-      document.getElementById(`overtime-2-${id}`).innerText = result.overtime2;
-      document.getElementById(`total-overtime-${id}`).innerText = result.totalOvertime;
-      document.getElementById(`pay-${id}`).innerText = result.overtimePay;
-    }
-
-    document.querySelectorAll('input[type="time"]').forEach(input => {
-      input.addEventListener('change', () => {
-        const id = input.id.split('-').pop();
-        const isWeekend = document.querySelector(`#overtime-table-body tr:nth-child(${id}) td:nth-child(2)`).innerText.toLowerCase() === 'sabtu';
-        updateOvertime(id, isWeekend);
+      document.querySelectorAll('input[type="time"]').forEach((input) => {
+        input.addEventListener("change", () => {
+          const id = input.id.split("-").pop();
+          const isWeekend =
+            document
+              .querySelector(
+                `#overtime-table-body tr:nth-child(${id}) td:nth-child(2)`
+              )
+              .innerText.toLowerCase() === "sabtu";
+          updateOvertime(id, isWeekend);
+        });
       });
-    });
 
-    document.getElementById("base-salary").addEventListener('input', () => {
-      updateOvertime(1, false);
-      updateOvertime(2, true);
-    });
+      document.getElementById("base-salary").addEventListener("input", () => {
+        updateOvertime(1, false);
+        updateOvertime(2, true);
+      });
 
-    window.onload = () => {
-      updateOvertime(1, false);
-      updateOvertime(2, true);
-    };
-  </script>
-</body>
+      window.onload = () => {
+        updateOvertime(1, false);
+        updateOvertime(2, true);
+      };
+    </script>
+  </body>
 </html>

@@ -26,6 +26,35 @@
       integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
       crossorigin="anonymous"
     ></script>
+    <style>
+      body,
+      html {
+        height: 100%;
+        margin: 0;
+      }
+      .wrapper {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+      }
+      .main_content {
+        flex: 1;
+      }
+      footer {
+        background-color: #f8f9fa;
+        padding: 20px;
+        text-align: center;
+      }
+      .footer-links {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+      }
+      .footer-links a {
+        text-decoration: none;
+        color: #007bff;
+      }
+    </style>
   </head>
   <body>
     <div class="wrapper">
@@ -38,11 +67,6 @@
           <li>
             <a href="Data Karyawan.html"
               ><i class="fas fa-user"></i>Data Karyawan</a
-            >
-          </li>
-          <li>
-            <a href="Data Absen.html"
-              ><i class="fas fa-address-card"></i>Data Absen</a
             >
           </li>
           <li>
@@ -146,6 +170,14 @@
           </form>
         </div>
       </div>
+      <footer>
+        <p>&copy; 2024 PT. Tolan Tiga Indonesia. All rights reserved.</p>
+        <div class="footer-links">
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms of Service</a>
+          <a href="#">Contact Us</a>
+        </div>
+      </footer>
     </div>
     <script>
       document
@@ -248,16 +280,4 @@
         });
     </script>
   </body>
-  <footer style="background-color: #f8f9fa;
-        padding: 20px;
-        text-align: center;
-        margin-top: 20px;">
-      <p>&copy; 2024 PT. Tolan Tiga Indonesia. All rights reserved.</p>
-      <div style="display: flex; justify-content: center; gap: 20px">
-        <a href="#" style="text-decoration: none; color: #007bff" >Privacy Policy</a>
-        <a href="#" style="text-decoration: none; color: #007bff">Terms of Service</a>
-        <a href="#" style="text-decoration: none; color: #007bff">Contact Us</a>
-      </div>
-    </footer>
-    
 </html>

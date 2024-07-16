@@ -10,6 +10,40 @@
       href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
     />
     <style>
+      html,
+      body {
+        height: 100%;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+      }
+      .wrapper {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+      }
+      .main_content {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        padding: 20px;
+        margin-left: 220px; /* Adjust the margin to account for the sidebar */
+      }
+      .sidebar {
+        position: fixed;
+        height: 100%;
+        width: 220px;
+        background-color: #f8f9fa;
+        padding-top: 20px;
+      }
+      .header {
+        width: 100%;
+        background-color: #f8f9fa;
+        padding: 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
       .header-section {
         display: flex;
         flex-direction: column;
@@ -20,35 +54,44 @@
         display: flex;
         align-items: center;
         cursor: pointer;
-        margin-bottom: 30px; /* Space between header and action buttons */
-        padding: 10px; /* Adjust padding as needed */
-        border: 1px solid #ccc; /* Optional: to visualize the boundary */
-        border-radius: 5px; /* Optional: for rounded corners */
+        margin-bottom: 30px;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
         width: 250px;
       }
-
       .card-header h4 {
-        margin-left: 10px; /* Space between the icon and text */
+        margin-left: 10px;
         margin: 0;
-        flex-shrink: 0; /* Prevent shrinking */
+        flex-shrink: 0;
       }
       .action-buttons {
         display: flex;
         gap: 10px;
         margin-bottom: 20px;
-        margin-left: 20px; /* Align action buttons with card-header */
-      }
-      .main_content {
-        margin-left: 220px; /* Adjust the margin to account for the sidebar */
-        padding: 20px;
+        margin-left: 20px;
       }
       .table-container {
         width: 100%;
-        margin-left: 5px; /* Align action buttons with card-header */
-        /* Ensure the table spans the full width of the container */
+        margin-left: 5px;
       }
       .table-container table {
-        width: 100%; /* Ensure the table spans the full width of the container */
+        width: 100%;
+      }
+      footer {
+        background-color: #f8f9fa;
+        padding: 20px;
+        text-align: center;
+        margin-top: 20px;
+      }
+      .footer-links {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+      }
+      .footer-links a {
+        text-decoration: none;
+        color: #007bff;
       }
     </style>
   </head>
@@ -58,26 +101,21 @@
         <h2>Lembur</h2>
         <ul>
           <li>
-            <a href="Dashboard.html"><i class="fas fa-home"></i> Dashboard</a>
+            <a href="Dashboard.html"><i class="fas fa-home"></i>Dashboard</a>
           </li>
           <li>
             <a href="Data Karyawan.html"
-              ><i class="fas fa-user"></i> Data Karyawan</a
-            >
-          </li>
-          <li>
-            <a href="Data Absen.html"
-              ><i class="fas fa-address-card"></i> Data Absen</a
+              ><i class="fas fa-user"></i>Data Karyawan</a
             >
           </li>
           <li>
             <a href="Rekapitulasi Jam Lembur.html"
-              ><i class="fas fa-project-diagram"></i> Rekapitulasi Jam Lembur</a
+              ><i class="fas fa-project-diagram"></i>Rekapitulasi Jam Lembur</a
             >
           </li>
           <li>
             <a href="Perhitungan Lembur.html"
-              ><i class="fas fa-address-book"></i> Perhitungan Lembur</a
+              ><i class="fas fa-address-book"></i>Perhitungan Lembur</a
             >
           </li>
         </ul>
@@ -202,6 +240,14 @@
         </div>
       </div>
     </div>
+    <footer>
+      <p>&copy; 2024 PT. Tolan Tiga Indonesia. All rights reserved.</p>
+      <div class="footer-links">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Service</a>
+        <a href="#">Contact Us</a>
+      </div>
+    </footer>
     <script>
       document
         .getElementById("tambahKaryawanForm")
@@ -211,23 +257,4 @@
         });
     </script>
   </body>
-  <footer
-    style="
-      background-color: #f8f9fa;
-      padding: 20px;
-      text-align: center;
-      margin-top: 20px;
-    "
-  >
-    <p>&copy; 2024 PT. Tolan Tiga Indonesia. All rights reserved.</p>
-    <div style="display: flex; justify-content: center; gap: 20px">
-      <a href="#" style="text-decoration: none; color: #007bff"
-        >Privacy Policy</a
-      >
-      <a href="#" style="text-decoration: none; color: #007bff"
-        >Terms of Service</a
-      >
-      <a href="#" style="text-decoration: none; color: #007bff">Contact Us</a>
-    </div>
-  </footer>
 </html>

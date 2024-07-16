@@ -205,150 +205,151 @@ body {
   border-radius: 0; /* Menghapus border-radius untuk membuat persegi */
   box-shadow: 0 2px 4px rgba(0, 255, 38, 0.1);
   width: 235px; /* Menentukan lebar card */
-  height: 40px; 
+  height: 40px;
   background-color: #1bbc53;
   color: white;
   display: flex;
-  align-items: center;/* Menambahkan padding untuk header */
+  align-items: center; /* Menambahkan padding untuk header */
 }
 .card-header i {
   margin-right: 10px;
 }
 
-    .action-buttons {
-      display: flex;
-      gap: 50px; /* Increased space between buttons */
-      margin-left: 200px; /* Space between header and buttons */
-    }
-    .card-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #f4f4f4;
-      margin: 0;
-      padding: 0;
-  }
-  
-  /* perhitungan jam lembur */
-  .container {
-      width: 80%;
-      margin: 0 auto;
-      padding: 20px;
-      background-color: #fff;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  }
-  
-  h1, h2, h3 {
-      text-align: center;
-  }
-  
-  form {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-  }
-  
-  label {
-      margin: 10px 0 5px;
-  }
-  
-  input {
-      margin-bottom: 20px;
-      padding: 10px;
-      width: 50%;
-      max-width: 300px;
-  }
-  
-  button {
-      padding: 10px 20px;
-      background-color: #007BFF;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-  }
-  
-  button:hover {
-      background-color: #0056b3;
-  }
-  
-  #result {
-      text-align: center;
-      margin-top: 20px;
-  }
-  
-  #result p {
-      font-size: 18px;
-      font-weight: bold;
-  }
-  
-
-
-  /* rekapitulasi */
-  body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-    margin: 0;
-    padding: 0;
+.action-buttons {
+  display: flex;
+  gap: 50px; /* Increased space between buttons */
+  margin-left: 200px; /* Space between header and buttons */
+}
+.card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+  margin: 0;
+  padding: 0;
+}
+
+/* perhitungan jam lembur */
 .container {
-    width: 90%;
-    margin: 20px auto;
-    padding: 20px;
-    background-color: #fff;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  width: 80%;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-h1, h2 {
-    text-align: center;
-}
-
-#employee-details p {
-    margin: 5px 0;
-}
-
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin: 20px 0;
-}
-
-th, td {
-    padding: 10px;
-    border: 1px solid #ddd;
-    text-align: center;
-}
-
-th {
-    background-color: #f2f2f2;
+h1,
+h2,
+h3 {
+  text-align: center;
 }
 
 form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-form label, form input {
-    margin: 5px 0;
+label {
+  margin: 10px 0 5px;
+}
+
+input {
+  margin-bottom: 20px;
+  padding: 10px;
+  width: 50%;
+  max-width: 300px;
 }
 
 button {
-    margin-top: 10px;
-    padding: 10px 20px;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    cursor: pointer;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
 }
 
 button:hover {
-    background-color: #45a049;
+  background-color: #0056b3;
 }
 
+#result {
+  text-align: center;
+  margin-top: 20px;
+}
+
+#result p {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+/* rekapitulasi */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  width: 90%;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h1,
+h2 {
+  text-align: center;
+}
+
+#employee-details p {
+  margin: 5px 0;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+}
+
+th,
+td {
+  padding: 10px;
+  border: 1px solid #ddd;
+  text-align: center;
+}
+
+th {
+  background-color: #f2f2f2;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+form label,
+form input {
+  margin: 5px 0;
+}
+
+button {
+  margin-top: 10px;
+  padding: 10px 20px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #45a049;
+}

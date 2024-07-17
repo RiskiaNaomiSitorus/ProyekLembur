@@ -11,6 +11,24 @@
     />
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
+      html,
+      body {
+        height: 100%;
+        margin: 0;
+      }
+      body {
+        display: flex;
+        flex-direction: column;
+      }
+      .wrapper {
+        flex: 1;
+        display: flex;
+      }
+      .main_content {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+      }
       .chart-container {
         width: 30%;
         background-color: white;
@@ -127,6 +145,21 @@
         padding: 5px 10px;
         border-radius: 3px;
       }
+      footer {
+        background-color: #f8f9fa;
+        padding: 20px;
+        text-align: center;
+        margin-top: 20px;
+      }
+      .footer-links {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+      }
+      .footer-links a {
+        text-decoration: none;
+        color: #007bff;
+      }
     </style>
   </head>
   <body>
@@ -134,10 +167,24 @@
       <div class="sidebar">
         <h2>Lembur</h2>
         <ul>
-          <li><a href="Dashboard.html"><i class="fas fa-home"></i> Dashboard</a></li>
-          <li><a href="Data Karyawan.html"><i class="fas fa-user"></i> Data Karyawan</a></li>
-          <li><a href="Rekapitulasi Jam Lembur.html"><i class="fas fa-project-diagram"></i> Rekapitulasi Jam Lembur</a></li>
-          <li><a href="Perhitungan Lembur.html"><i class="fas fa-address-book"></i> Perhitungan Lembur</a></li>
+          <li>
+            <a href="Dashboard.html"><i class="fas fa-home"></i>Dashboard</a>
+          </li>
+          <li>
+            <a href="Data Karyawan.html"
+              ><i class="fas fa-user"></i>Data Karyawan</a
+            >
+          </li>
+          <li>
+            <a href="Rekapitulasi Jam Lembur.html"
+              ><i class="fas fa-project-diagram"></i>Rekapitulasi Jam Lembur</a
+            >
+          </li>
+          <li>
+            <a href="Perhitungan Lembur.html"
+              ><i class="fas fa-address-book"></i>Perhitungan Lembur</a
+            >
+          </li>
         </ul>
       </div>
       <div class="main_content">
@@ -204,12 +251,18 @@
     <script src="scripts.js"></script>
     
     <footer style="background-color: #f8f9fa; padding: 20px; text-align: center; margin-top: 20px;">
+    <footer>
       <p>&copy; 2024 PT. Tolan Tiga Indonesia. All rights reserved.</p>
       <div style="display: flex; justify-content: center; gap: 20px;">
         <a href="#" style="text-decoration: none; color: #007bff;">Privacy Policy</a>
         <a href="#" style="text-decoration: none; color: #007bff;">Terms of Service</a>
         <a href="#" style="text-decoration: none; color: #007bff;">Contact Us</a>
+      <div class="footer-links">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Service</a>
+        <a href="#">Contact Us</a>
       </div>
     </footer>
+    <script src="scripts.js"></script>
   </body>
 </html>

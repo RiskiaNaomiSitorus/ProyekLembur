@@ -11,6 +11,8 @@
 
 body {
   background-color: #f3f5f9;
+  margin: 0;
+  padding: 0;
 }
 
 .wrapper {
@@ -66,7 +68,7 @@ body {
 }
 
 .wrapper .main_content {
-  width: 100%;
+  flex: 1; /* Adjust main content to take remaining space */
   margin-left: 200px;
 }
 
@@ -141,6 +143,7 @@ body {
   display: flex;
   justify-content: space-between;
   margin: 20px;
+  flex-wrap: wrap; /* Wrap cards if they overflow */
 }
 
 .card {
@@ -148,9 +151,9 @@ body {
   border-radius: 5px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   padding: 10px;
-  flex: 1;
-  margin: 0 10px;
-  max-width: 30%;
+  flex: 1 1 calc(33.333% - 20px); /* Adjust to 3 cards per row */
+  margin: 10px;
+  max-width: calc(33.333% - 20px); /* Ensure cards fit within container */
   height: 150px;
   font-size: 14px;
   color: #333;
@@ -192,13 +195,6 @@ body {
   content: "\e008"; /* Unicode for glyphicon-user */
 }
 
-.card {
-  margin: 20px;
-  border: 1px solid #007bff;
-  border-radius: 5px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
 .card-header {
   margin: 20px;
   border: 1px solid #11a634;
@@ -226,130 +222,17 @@ body {
   justify-content: space-between;
 }
 
-body {
-  font-family: Arial, sans-serif;
-  background-color: #f4f4f4;
-  margin: 0;
-  padding: 0;
-}
-
-/* perhitungan jam lembur */
-.container {
-  width: 80%;
-  margin: 0 auto;
+footer {
+  background-color: #f8f9fa;
   padding: 20px;
-  background-color: #fff;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-h1,
-h2,
-h3 {
   text-align: center;
 }
-
-form {
+.footer-links {
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  justify-content: center;
+  gap: 20px;
 }
-
-label {
-  margin: 10px 0 5px;
-}
-
-input {
-  margin-bottom: 20px;
-  padding: 10px;
-  width: 50%;
-  max-width: 300px;
-}
-
-button {
-  padding: 10px 20px;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-button:hover {
-  background-color: #0056b3;
-}
-
-#result {
-  text-align: center;
-  margin-top: 20px;
-}
-
-#result p {
-  font-size: 18px;
-  font-weight: bold;
-}
-
-/* rekapitulasi */
-body {
-  font-family: Arial, sans-serif;
-  background-color: #f4f4f4;
-  margin: 0;
-  padding: 0;
-}
-
-.container {
-  width: 90%;
-  margin: 20px auto;
-  padding: 20px;
-  background-color: #fff;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-h1,
-h2 {
-  text-align: center;
-}
-
-#employee-details p {
-  margin: 5px 0;
-}
-
-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin: 20px 0;
-}
-
-th,
-td {
-  padding: 10px;
-  border: 1px solid #ddd;
-  text-align: center;
-}
-
-th {
-  background-color: #f2f2f2;
-}
-
-form {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-form label,
-form input {
-  margin: 5px 0;
-}
-
-button {
-  margin-top: 10px;
-  padding: 10px 20px;
-  background-color: #4caf50;
-  color: white;
-  border: none;
-  cursor: pointer;
-}
-
-button:hover {
-  background-color: #45a049;
+.footer-links a {
+  text-decoration: none;
+  color: #007bff;
 }

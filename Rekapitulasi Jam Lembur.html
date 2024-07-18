@@ -1,244 +1,381 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <title>Rekapitulasi</title>
-  <link rel="stylesheet" href="styles.css" />
-  <script src="https://kit.fontawesome.com/b99e675b6e.js"></script>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <style>
-    .table-container {
-      width: 100%;
-      margin-left: 5px;
-    }
-    .table-container table {
-      width: 100%;
-    }
-    .form-container {
-      margin: 20px 0;
-    }
-  </style>
-</head>
-<body>
-  <div class="wrapper">
-    <div class="sidebar">
-      <h2>Lembur</h2>
-      <ul>
-        <li><a href="Dashboard.html"><i class="fas fa-home"></i>Dashboard</a></li>
-        <li><a href="Data Karyawan.html"><i class="fas fa-user"></i>Data Karyawan</a></li>
-        <li><a href="Rekapitulasi Jam Lembur.html"><i class="fas fa-project-diagram"></i>Rekapitulasi Jam Lembur</a></li>
-        <li><a href="Perhitungan Lembur.html"><i class="fas fa-address-book"></i>Perhitungan Lembur</a></li>
-      </ul>
-    </div>
-    <div class="main_content">
-      <div class="header">
-        <div class="title">PT. Tolan Tiga Indonesia</div>
-        <div class="user-info">
-          <i class="fa fa-bell"></i>
-          <div class="profile-picture">
-            <img src="assets/img.png" alt="Profile Picture" />
+  <head>
+    <meta charset="UTF-8" />
+    <title>Rekapitulasi</title>
+    <link rel="stylesheet" href="styles.css" />
+    <script src="https://kit.fontawesome.com/b99e675b6e.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+      .table-container {
+        width: 100%;
+        margin-left: 5px;
+      }
+      .table-container table {
+        width: 100%;
+      }
+      .form-container {
+        margin: 20px 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrapper">
+      <div class="sidebar">
+        <h2>Lembur</h2>
+        <ul>
+          <li>
+            <a href="Dashboard.html"><i class="fas fa-home"></i>Dashboard</a>
+          </li>
+          <li>
+            <a href="Data Karyawan.html"
+              ><i class="fas fa-user"></i>Data Karyawan</a
+            >
+          </li>
+          <li>
+            <a href="Rekapitulasi Jam Lembur.html"
+              ><i class="fas fa-project-diagram"></i>Rekapitulasi Jam Lembur</a
+            >
+          </li>
+          <li>
+            <a href="Perhitungan Lembur.html"
+              ><i class="fas fa-address-book"></i>Perhitungan Lembur</a
+            >
+          </li>
+        </ul>
+      </div>
+      <div class="main_content">
+        <div class="header">
+          <div class="title">PT. Tolan Tiga Indonesia</div>
+          <div class="user-info">
+            <i class="fa fa-bell"></i>
+            <div class="profile-picture">
+              <img src="assets/img.png" alt="Profile Picture" />
+            </div>
+            <div class="username">Riskia Sitorus</div>
           </div>
-          <div class="username">Riskia Sitorus</div>
         </div>
-      </div>
-      <div class="info">
-        <div class="date">
-          <h5>12 Juli 2024</h5>
-        </div>
-      </div>
-      <div class="dashboard"></div>
-      <div class="header-section">
-        <div class="container">
-          <h1>Rekapitulasi Lembur Karyawan</h1>
-          <div class="action-buttons">
-            <button class="btn btn-primary btn-sm"><i class="fas fa-file-excel"></i> Excel</button>
-            <button class="btn btn-secondary btn-sm"><i class="fas fa-print"></i> Print</button>
-            <button class="btn btn-success btn-sm"><i class="fas fa-file-csv"></i> CSV</button>
-            <button class="btn btn-info btn-sm"><i class="fas fa-copy"></i> Copy</button>
-            <button class="btn btn-warning btn-sm"><i class="fas fa-eye"></i> Column Visibility</button>
+        <div class="info">
+          <div class="date">
+            <h5>12 Juli 2024</h5>
           </div>
         </div>
-        <div id="employee-details">
-          <p>Nama: Rakhmat</p>
-          <p>Jabatan: Driver</p>
-          <p>Periode: 06 Mei - 05 Juni 2024</p>
-          <p>Gaji Pokok: Rp. 3,772,000</p>
-          <p>Upah Lembur Per Jam: Rp. 21,803</p>
-        </div>
-        
-        <div class="form-container">
-          <form id="overtime-form">
-            <div class="form-group">
-              <label for="hari">Hari:</label>
-              <input type="text" id="hari" name="hari" class="form-control" required>
+        <div class="dashboard"></div>
+        <div class="header-section">
+          <div class="container">
+            <h1>Rekapitulasi Lembur Karyawan</h1>
+            <div class="action-buttons">
+              <button class="btn btn-primary btn-sm">
+                <i class="fas fa-file-excel"></i> Excel
+              </button>
+              <button class="btn btn-secondary btn-sm">
+                <i class="fas fa-print"></i> Print
+              </button>
+              <button class="btn btn-success btn-sm">
+                <i class="fas fa-file-csv"></i> CSV
+              </button>
+              <button class="btn btn-info btn-sm">
+                <i class="fas fa-copy"></i> Copy
+              </button>
+              <button class="btn btn-warning btn-sm">
+                <i class="fas fa-eye"></i> Column Visibility
+              </button>
             </div>
-            <div class="form-group">
-              <label for="tanggal">Tanggal:</label>
-              <input type="date" id="tanggal" name="tanggal" class="form-control" required>
-            </div>
-            <div class="form-group">
-              <label for="in">In:</label>
-              <input type="time" id="in" name="in" class="form-control" required>
-            </div>
-            <div class="form-group">
-              <label for="out">Out:</label>
-              <input type="time" id="out" name="out" class="form-control" required>
-            </div>
-            <div class="form-group">
-              <label for="total">Total:</label>
-              <input type="text" id="total" name="total" class="form-control" required>
-            </div>
-            <div class="form-group">
-              <label for="jam1">Jam I x 1.5:</label>
-              <input type="number" step="0.01" id="jam1" name="jam1" class="form-control" readonly>
-            </div>
-            <div class="form-group">
-              <label for="jam2">Jam II x 2:</label>
-              <input type="number" step="0.01" id="jam2" name="jam2" class="form-control" readonly>
-            </div>
-            <div class="form-group">
-              <label for="jam9">Jam IX x 3:</label>
-              <input type="number" step="0.01" id="jam9" name="jam9" class="form-control" readonly>
-            </div>
-            <div class="form-group">
-              <label for="jam10">Jam X x 4:</label>
-              <input type="number" step="0.01" id="jam10" name="jam10" class="form-control" readonly>
-            </div>
-            <div class="form-group">
-              <label for="totalLembur">Total Jam Lembur:</label>
-              <input type="number" step="0.01" id="totalLembur" name="totalLembur" class="form-control" readonly>
-            </div>
-            <div class="form-group">
-              <label for="upahLembur">Upah Lembur (Rp):</label>
-              <input type="number" step="0.01" id="upahLembur" name="upahLembur" class="form-control" readonly>
-            </div>
-            <div class="form-group">
-              <label for="keterangan">Keterangan:</label>
-              <input type="text" id="keterangan" name="keterangan" class="form-control" required>
-            </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
-          </form>
-        </div>
+          </div>
+          <div id="employee-details">
+            <p>Nama: Rakhmat</p>
+            <p>Jabatan: Driver</p>
+            <p>Periode: 06 Mei - 05 Juni 2024</p>
+            <p>Gaji Pokok: Rp. 3,772,000</p>
+            <p>Upah Lembur Per Jam: Rp. 21,803</p>
+          </div>
 
-        <div class="table-container">
-          <table class="table table-striped table-bordered">
-            <thead>
-              <tr>
-                <th>No</th>
-                <th>Hari</th>
-                <th>Tanggal</th>
-                <th>In</th>
-                <th>Out</th>
-                <th>Total</th>
-                <th>Jam I x 1.5</th>
-                <th>Jam II x 2</th>
-                <th>Jam IX x 3</th>
-                <th>Jam X x 4</th>
-                <th>Total Jam Lembur</th>
-                <th>Upah Lembur (Rp)</th>
-                <th>Keterangan</th>
-              </tr>
-            </thead>
-            <tbody id="overtime-table">
-              <!-- Rows will be inserted here by JavaScript -->
-            </tbody>
-          </table>
+          <div class="form-container">
+            <form id="overtime-form">
+              <div class="form-group">
+                <label for="hari">Hari:</label>
+                <input
+                  type="text"
+                  id="hari"
+                  name="hari"
+                  class="form-control"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label for="tanggal">Tanggal:</label>
+                <input
+                  type="date"
+                  id="tanggal"
+                  name="tanggal"
+                  class="form-control"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label for="in">In:</label>
+                <input
+                  type="time"
+                  id="in"
+                  name="in"
+                  class="form-control"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label for="out">Out:</label>
+                <input
+                  type="time"
+                  id="out"
+                  name="out"
+                  class="form-control"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label for="total">Total:</label>
+                <input
+                  type="text"
+                  id="total"
+                  name="total"
+                  class="form-control"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label for="jam1">Jam I x 1.5:</label>
+                <input
+                  type="number"
+                  step="0.01"
+                  id="jam1"
+                  name="jam1"
+                  class="form-control"
+                  readonly
+                />
+              </div>
+              <div class="form-group">
+                <label for="jam2">Jam II x 2:</label>
+                <input
+                  type="number"
+                  step="0.01"
+                  id="jam2"
+                  name="jam2"
+                  class="form-control"
+                  readonly
+                />
+              </div>
+              <div class="form-group">
+                <label for="jam9">Jam IX x 3:</label>
+                <input
+                  type="number"
+                  step="0.01"
+                  id="jam9"
+                  name="jam9"
+                  class="form-control"
+                  readonly
+                />
+              </div>
+              <div class="form-group">
+                <label for="jam10">Jam X x 4:</label>
+                <input
+                  type="number"
+                  step="0.01"
+                  id="jam10"
+                  name="jam10"
+                  class="form-control"
+                  readonly
+                />
+              </div>
+              <div class="form-group">
+                <label for="totalLembur">Total Jam Lembur:</label>
+                <input
+                  type="number"
+                  step="0.01"
+                  id="totalLembur"
+                  name="totalLembur"
+                  class="form-control"
+                  readonly
+                />
+              </div>
+              <div class="form-group">
+                <label for="upahLembur">Upah Lembur (Rp):</label>
+                <input
+                  type="number"
+                  step="0.01"
+                  id="upahLembur"
+                  name="upahLembur"
+                  class="form-control"
+                  readonly
+                />
+              </div>
+              <div class="form-group">
+                <label for="keterangan">Keterangan:</label>
+                <input
+                  type="text"
+                  id="keterangan"
+                  name="keterangan"
+                  class="form-control"
+                  required
+                />
+              </div>
+              <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+          </div>
+
+          <div class="table-container">
+            <table class="table table-striped table-bordered">
+              <thead>
+                <tr>
+                  <th>No</th>
+                  <th>Hari</th>
+                  <th>Tanggal</th>
+                  <th>In</th>
+                  <th>Out</th>
+                  <th>Total</th>
+                  <th>Jam I x 1.5</th>
+                  <th>Jam II x 2</th>
+                  <th>Jam IX x 3</th>
+                  <th>Jam X x 4</th>
+                  <th>Total Jam Lembur</th>
+                  <th>Upah Lembur (Rp)</th>
+                  <th>Keterangan</th>
+                </tr>
+              </thead>
+              <tbody id="overtime-table">
+                <!-- Rows will be inserted here by JavaScript -->
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-  <script>
-    // Sample data
-    const overtimeData = [
-      { no: 1, hari: "Senin", tanggal: "06-05-2024", in: "08:00", out: "17:00", total: "9:00", jam1: 1.5, jam2: 2, jam9: 3, jam10: 4, totalLembur: 10.5, upahLembur: 228931.5, keterangan: "Lembur Proyek A" },
-      { no: 2, hari: "Selasa", tanggal: "07-05-2024", in: "08:00", out: "18:00", total: "10:00", jam1: 1.5, jam2: 2, jam9: 3, jam10: 4, totalLembur: 11.5, upahLembur: 250634.5, keterangan: "Lembur Proyek B" },
-      // Add more data as needed
-    ];
+    <script>
+      // Sample data
+      const overtimeData = [
+        {
+          no: 1,
+          hari: "Senin",
+          tanggal: "06-05-2024",
+          in: "08:00",
+          out: "17:00",
+          total: "9:00",
+          jam1: 1.5,
+          jam2: 2,
+          jam9: 3,
+          jam10: 4,
+          totalLembur: 10.5,
+          upahLembur: 228931.5,
+          keterangan: "Lembur Proyek A",
+        },
+        {
+          no: 2,
+          hari: "Selasa",
+          tanggal: "07-05-2024",
+          in: "08:00",
+          out: "18:00",
+          total: "10:00",
+          jam1: 1.5,
+          jam2: 2,
+          jam9: 3,
+          jam10: 4,
+          totalLembur: 11.5,
+          upahLembur: 250634.5,
+          keterangan: "Lembur Proyek B",
+        },
+        // Add more data as needed
+      ];
 
-    // Function to populate table
-    function populateOvertimeTable(data) {
-      const tableBody = document.getElementById("overtime-table");
-      tableBody.innerHTML = ''; // Clear existing rows
+      // Function to populate table
+      function populateOvertimeTable(data) {
+        const tableBody = document.getElementById("overtime-table");
+        tableBody.innerHTML = ""; // Clear existing rows
 
-      data.forEach((item) => {
-        const row = document.createElement("tr");
+        data.forEach((item) => {
+          const row = document.createElement("tr");
 
-        for (const key in item) {
-          const cell = document.createElement("td");
-          cell.textContent = item[key];
-          row.appendChild(cell);
-        }
+          for (const key in item) {
+            const cell = document.createElement("td");
+            cell.textContent = item[key];
+            row.appendChild(cell);
+          }
 
-        tableBody.appendChild(row);
+          tableBody.appendChild(row);
+        });
+      }
+
+      // Calculate total hours, overtime hours, and wage
+      function calculateOvertime(inTime, outTime) {
+        const inParts = inTime.split(":");
+        const outParts = outTime.split(":");
+        const inDate = new Date(0, 0, 0, inParts[0], inParts[1], 0);
+        const outDate = new Date(0, 0, 0, outParts[0], outParts[1], 0);
+        const diff = outDate.getTime() - inDate.getTime();
+        const hours = Math.floor(diff / 1000 / 60 / 60);
+        const minutes = Math.floor((diff - hours * 60 * 60 * 1000) / 1000 / 60);
+        const total = hours + ":" + (minutes < 10 ? "0" : "") + minutes;
+        const totalHours = hours + minutes / 60;
+
+        const jam1 = Math.min(totalHours, 1);
+        const jam2 = totalHours > 1 ? Math.min(totalHours - 1, 1) : 0;
+        const jam9 = totalHours > 2 ? Math.min(totalHours - 2, 1) : 0;
+        const jam10 = totalHours > 3 ? totalHours - 3 : 0;
+
+        const totalLembur = jam1 + jam2 + jam9 + jam10;
+        const upahLembur =
+          (jam1 * 1.5 + jam2 * 2 + jam9 * 3 + jam10 * 4) * 21803;
+
+        return { total, jam1, jam2, jam9, jam10, totalLembur, upahLembur };
+      }
+
+      // Function to handle form submission
+      document
+        .getElementById("overtime-form")
+        .addEventListener("submit", function (event) {
+          event.preventDefault();
+
+          const formData = new FormData(event.target);
+          const data = Object.fromEntries(formData.entries());
+
+          const { total, jam1, jam2, jam9, jam10, totalLembur, upahLembur } =
+            calculateOvertime(data.in, data.out);
+
+          document.getElementById("total").value = total;
+          document.getElementById("jam1").value = jam1.toFixed(2);
+          document.getElementById("jam2").value = jam2.toFixed(2);
+          document.getElementById("jam9").value = jam9.toFixed(2);
+          document.getElementById("jam10").value = jam10.toFixed(2);
+          document.getElementById("totalLembur").value = totalLembur.toFixed(2);
+          document.getElementById("upahLembur").value = upahLembur.toFixed(2);
+
+          const newRow = {
+            no: overtimeData.length + 1,
+            hari: data.hari,
+            tanggal: data.tanggal,
+            in: data.in,
+            out: data.out,
+            total: total,
+            jam1: jam1.toFixed(2),
+            jam2: jam2.toFixed(2),
+            jam9: jam9.toFixed(2),
+            jam10: jam10.toFixed(2),
+            totalLembur: totalLembur.toFixed(2),
+            upahLembur: upahLembur.toFixed(2),
+            keterangan: data.keterangan,
+          };
+
+          overtimeData.push(newRow);
+          populateOvertimeTable(overtimeData);
+          event.target.reset();
+        });
+
+      // Populate table on page load
+      document.addEventListener("DOMContentLoaded", () => {
+        populateOvertimeTable(overtimeData);
       });
-    }
-
-    // Calculate total hours, overtime hours, and wage
-    function calculateOvertime(inTime, outTime) {
-      const inParts = inTime.split(':');
-      const outParts = outTime.split(':');
-      const inDate = new Date(0, 0, 0, inParts[0], inParts[1], 0);
-      const outDate = new Date(0, 0, 0, outParts[0], outParts[1], 0);
-      const diff = outDate.getTime() - inDate.getTime();
-      const hours = Math.floor(diff / 1000 / 60 / 60);
-      const minutes = Math.floor((diff - (hours * 60 * 60 * 1000)) / 1000 / 60);
-      const total = hours + ':' + (minutes < 10 ? '0' : '') + minutes;
-      const totalHours = hours + minutes / 60;
-
-      const jam1 = Math.min(totalHours, 1);
-      const jam2 = totalHours > 1 ? Math.min(totalHours - 1, 1) : 0;
-      const jam9 = totalHours > 2 ? Math.min(totalHours - 2, 1) : 0;
-      const jam10 = totalHours > 3 ? totalHours - 3 : 0;
-
-      const totalLembur = jam1 + jam2 + jam9 + jam10;
-      const upahLembur = (jam1 * 1.5 + jam2 * 2 + jam9 * 3 + jam10 * 4) * 21803;
-
-      return { total, jam1, jam2, jam9, jam10, totalLembur, upahLembur };
-    }
-
-    // Function to handle form submission
-    document.getElementById("overtime-form").addEventListener("submit", function(event) {
-      event.preventDefault();
-
-      const formData = new FormData(event.target);
-      const data = Object.fromEntries(formData.entries());
-
-      const { total, jam1, jam2, jam9, jam10, totalLembur, upahLembur } = calculateOvertime(data.in, data.out);
-      
-      document.getElementById('total').value = total;
-      document.getElementById('jam1').value = jam1.toFixed(2);
-      document.getElementById('jam2').value = jam2.toFixed(2);
-      document.getElementById('jam9').value = jam9.toFixed(2);
-      document.getElementById('jam10').value = jam10.toFixed(2);
-      document.getElementById('totalLembur').value = totalLembur.toFixed(2);
-      document.getElementById('upahLembur').value = upahLembur.toFixed(2);
-
-      const newRow = {
-        no: overtimeData.length + 1,
-        hari: data.hari,
-        tanggal: data.tanggal,
-        in: data.in,
-        out: data.out,
-        total: total,
-        jam1: jam1.toFixed(2),
-        jam2: jam2.toFixed(2),
-        jam9: jam9.toFixed(2),
-        jam10: jam10.toFixed(2),
-        totalLembur: totalLembur.toFixed(2),
-        upahLembur: upahLembur.toFixed(2),
-        keterangan: data.keterangan
-      };
-
-      overtimeData.push(newRow);
-      populateOvertimeTable(overtimeData);
-      event.target.reset();
-    });
-
-    // Populate table on page load
-    document.addEventListener("DOMContentLoaded", () => {
-      populateOvertimeTable(overtimeData);
-    });
-  </script>
-</body>
+    </script>
+  </body>
 </html>

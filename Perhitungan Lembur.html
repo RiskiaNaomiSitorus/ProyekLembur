@@ -11,6 +11,31 @@
     />
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        display: flex;
+        flex-direction: column;
+      }
+      .wrapper {
+        display: flex;
+        flex: 1;
+      }
+      .sidebar {
+        width: 250px;
+        background: #333;
+        color: white;
+        padding: 20px;
+        box-sizing: border-box;
+      }
+      .main_content {
+        flex: 1;
+        padding: 20px;
+        box-sizing: border-box;
+      }
       .card-header {
         display: flex;
         align-items: center;
@@ -34,18 +59,29 @@
         margin: 20px 0;
         border-collapse: collapse;
       }
-      table,
-      th,
-      td {
+      table, th, td {
         border: 1px solid black;
       }
-      th,
-      td {
+      th, td {
         padding: 8px;
         text-align: center;
       }
       th {
         background-color: #f2f2f2;
+      }
+      footer {
+        background-color: #f8f9fa;
+        padding: 20px;
+        text-align: center;
+      }
+      .footer-links {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+      }
+      .footer-links a {
+        text-decoration: none;
+        color: #007bff;
       }
     </style>
   </head>
@@ -113,51 +149,123 @@
             <thead>
               <tr>
                 <th>No</th>
-                <th>Hari</th>
-                <th>Tanggal</th>
-                <th>Waktu IN</th>
-                <th>Waktu OUT</th>
-                <th>Total Jam Kerja</th>
-                <th>Jam Lembur 1 x 1.5</th>
-                <th>Jam Lembur 2</th>
-                <th>Total Jam Lembur</th>
+                <th>Nama Lengkap</th>
+                <th>ID Karyawan</th>
+                <th>Tanggal Lembur</th>
+                <th>Jam Masuk</th>
+                <th>Jam Keluar</th>
+                <th>Jenis Lembur</th>
+                <th>Gaji</th>
+                <th>Jam Kerja Lembur</th>
+                <th>Jam I</th>
+                <th>Jam II</th>
+                <th>Jam III</th>
+                <th>Jam IV</th>
                 <th>Upah Lembur (Rp)</th>
                 <th>Keterangan</th>
+                <th>Actions</th>
               </tr>
             </thead>
-            <tbody id="overtime-table-body">
-              <tr>
-                <td>1</td>
-                <td>Senin</td>
-                <td>2024-07-08</td>
-                <td><input type="time" id="in-time-1" value="07:30" /></td>
-                <td><input type="time" id="out-time-1" value="16:30" /></td>
-                <td id="total-work-1"></td>
-                <td id="overtime-1-1"></td>
-                <td id="overtime-2-1"></td>
-                <td id="total-overtime-1"></td>
-                <td id="pay-1"></td>
-                <td>Lembur Hari Biasa</td>
-              </tr>
-              <tr>
-                <td>2</td>
-                <td>Sabtu</td>
-                <td>2024-07-13</td>
-                <td><input type="time" id="in-time-2" value="09:00" /></td>
-                <td><input type="time" id="out-time-2" value="17:00" /></td>
-                <td id="total-work-2"></td>
-                <td id="overtime-1-2"></td>
-                <td id="overtime-2-2"></td>
-                <td id="total-overtime-2"></td>
-                <td id="pay-2"></td>
-                <td>Lembur Weekend</td>
-              </tr>
-            </tbody>
           </table>
-          <div>
-            <label for="base-salary">Gaji Asli Karyawan (Rp):</label>
-            <input type="number" id="base-salary" value="5000000" />
-          </div>
+          <form id="lemburForm">
+            <div class="form-group">
+              <label for="NamaLengkap">Nama Lengkap</label>
+              <input type="text" class="form-control" id="namaLengkap" />
+            </div>
+            <div class="form-group">
+              <label for="IDKaryawan">ID Karyawan</label>
+              <input
+                type="text"
+                class="form-control"
+                id="IDKaryawan"
+                pattern="\d*"
+                title="Please enter numbers only"
+              />
+              <span
+                id="IDKaryawanError"
+                class="text-danger"
+                style="display: none"
+                >ID Karyawan harus berupa angka.</span
+              >
+            </div>
+
+            <div class="form-group">
+              <label for="TanggalLembur">Tanggal Lembur</label>
+              <input type="date" class="form-control" id="tanggalLembur" />
+            </div>
+            <div class="cs-form">
+              <label for="Jam Masuk">Jam Masuk</label>
+              <input type="time" class="form-control" id="jamMasuk" disabled />
+            </div>
+            <div class="cs-form">
+              <label for="Jam Keluar">Jam Keluar</label>
+              <input type="time" class="form-control" id="jamKeluar" />
+            </div>
+            <div class="form-group">
+              <label for="JenisLembur">Jenis Lembur</label>
+              <select class="form-control" id="jenisLembur">
+                <option selected disabled></option>
+                <option value="Weekend / Libur">Weekend / Libur</option>
+                <option value="Hari Biasa">Hari Biasa</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="gaji">Gaji</label>
+              <input type="text" class="form-control" id="gaji" name="gaji" />
+            </div>
+            <div class="form-group">
+              <label for="JamKerjaLembur">Jam Kerja Lembur</label>
+              <input
+                type="number"
+                class="form-control"
+                id="jamKerjaLembur"
+                disabled
+              />
+            </div>
+            <div class="form-group">
+              <label for="Jam I">Jam I</label>
+              <input type="number" class="form-control" id="jamI" disabled />
+            </div>
+            <div class="form-group">
+              <label for="Jam II">Jam II</label>
+              <input type="number" class="form-control" id="jamII" disabled />
+            </div>
+            <div class="form-group">
+              <label for="Jam III">Jam III</label>
+              <input type="number" class="form-control" id="jamIII" disabled />
+            </div>
+            <div class="form-group">
+              <label for="Jam IV">Jam IV</label>
+              <input type="number" class="form-control" id="jamIV" disabled />
+            </div>
+            <div class="form-group">
+              <label for="Total Jam Lembur">Total Jam Lembur</label>
+              <input
+                type="number"
+                class="form-control"
+                id="totalJamLembur"
+                disabled
+              />
+            </div>
+            <div class="form-group">
+              <label for="Upah Lembur">Upah Lembur</label>
+              <input
+                type="text"
+                class="form-control"
+                id="upahLembur"
+                disabled
+              />
+            </div>
+            <div class="form-group">
+              <label for="KeteranganLembur">Keterangan Lembur </label>
+              <textarea
+                class="form-control"
+                id="keteranganLembur"
+                rows="3"
+              ></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </form>
         </div>
       </div>
     </div>
@@ -175,106 +283,218 @@
         </div>
       </footer>
     <script>
-      function calculateOvertimeWeekday(inTime, outTime, baseSalary) {
-        const inDate = new Date(`1970-01-01T${inTime}Z`);
-        const outDate = new Date(`1970-01-01T${outTime}Z`);
-        const workHours = (outDate - inDate) / (1000 * 60 * 60);
+  
 
-        let overtime1 = 0,
-          overtime2 = 0,
-          overtimePay = 0;
-        const normalHours = 8; // 8 jam kerja normal
-        const hourlyRate = baseSalary / 173; // 173 adalah jam kerja rata-rata dalam sebulan
+      document
+        .getElementById("tanggalLembur")
+        .addEventListener("change", function () {
+          const tanggalLembur = new Date(this.value);
+          const jenisLembur = document.getElementById("jenisLembur");
+          const jamMasuk = document.getElementById("jamMasuk");
+          const jamKeluar = document.getElementById("jamKeluar");
 
-        if (workHours > normalHours) {
-          overtime1 = Math.min(1, workHours - normalHours);
-          overtime2 = Math.max(0, workHours - normalHours - 1);
-          overtimePay = (overtime1 * 1.5 + overtime2 * 2) * hourlyRate;
-        }
+          if (tanggalLembur.getDay() === 0 || tanggalLembur.getDay() === 6) {
+            jenisLembur.value = "Weekend / Libur";
+            jamMasuk.value = "";
+            jamMasuk.disabled = false;
+            jamKeluar.value = "";
+          } else if (tanggalLembur.getDay() === 5) {
+            // Friday
+            jenisLembur.value = "Hari Biasa";
+            jamMasuk.value = "07:30";
+            jamMasuk.disabled = true;
+            jamKeluar.value = "15:30";
+          } else {
+            // Monday to Thursday
+            jenisLembur.value = "Hari Biasa";
+            jamMasuk.value = "07:30";
+            jamMasuk.disabled = true;
+            jamKeluar.value = "16:30";
+          }
+        });
 
-        const totalOvertime = overtime1 + overtime2;
+      document
+        .getElementById("jamKeluar")
+        .addEventListener("change", function () {
+          const tanggalLembur = new Date(
+            document.getElementById("tanggalLembur").value
+          );
+          const jenisLembur = document.getElementById("jenisLembur").value;
+          const jamMasuk = document.getElementById("jamMasuk").value;
+          const jamKeluar = this.value;
+          const jamKerjaLembur = document.getElementById("jamKerjaLembur");
 
-        return {
-          workHours: workHours.toFixed(2),
-          overtime1: overtime1.toFixed(2),
-          overtime2: overtime2.toFixed(2),
-          totalOvertime: totalOvertime.toFixed(2),
-          overtimePay: `Rp ${overtimePay.toLocaleString("id-ID")}`,
-        };
-      }
+          const [jamMasukHour, jamMasukMinute] = jamMasuk
+            .split(":")
+            .map(Number);
+          const [jamKeluarHour, jamKeluarMinute] = jamKeluar
+            .split(":")
+            .map(Number);
 
-      function calculateOvertimeWeekend(inTime, outTime, baseSalary) {
-        const inDate = new Date(`1970-01-01T${inTime}Z`);
-        const outDate = new Date(`1970-01-01T${outTime}Z`);
-        const workHours = (outDate - inDate) / (1000 * 60 * 60);
+          let totalJamMasuk = jamMasukHour + jamMasukMinute / 60;
+          let totalJamKeluar = jamKeluarHour + jamKeluarMinute / 60;
 
-        let overtime1 = 0,
-          overtime2 = 0,
-          overtimePay = 0;
-        const normalHours = 8; // 8 jam kerja normal
-        const hourlyRate = baseSalary / 173; // 173 adalah jam kerja rata-rata dalam sebulan
+          function roundToNearestHalf(num) {
+            return Math.floor(num * 2) / 2;
+          }
 
-        if (workHours > normalHours) {
-          overtime1 = Math.min(1, workHours - normalHours);
-          overtime2 = Math.max(0, workHours - normalHours - 1);
-          overtimePay = (overtime1 * 1.5 + overtime2 * 2) * hourlyRate * 2; // 2x rate untuk weekend
-        }
+          let lemburHours;
 
-        const totalOvertime = overtime1 + overtime2;
+          if (jenisLembur === "Weekend / Libur") {
+            lemburHours = totalJamKeluar - totalJamMasuk;
+          } else if (tanggalLembur.getDay() === 5) {
+            // Friday
+            if (totalJamKeluar > 15.5) {
+              lemburHours = totalJamKeluar - 15.5;
+            } else {
+              lemburHours = 0;
+            }
+          } else {
+            // Monday to Thursday
+            if (totalJamKeluar > 16.5) {
+              lemburHours = totalJamKeluar - 16.5;
+            } else {
+              lemburHours = 0;
+            }
+          }
 
-        return {
-          workHours: workHours.toFixed(2),
-          overtime1: overtime1.toFixed(2),
-          overtime2: overtime2.toFixed(2),
-          totalOvertime: totalOvertime.toFixed(2),
-          overtimePay: `Rp ${overtimePay.toLocaleString("id-ID")}`,
-        };
-      }
+          const roundedLemburHours = roundToNearestHalf(lemburHours);
+          jamKerjaLembur.value = roundedLemburHours;
 
-      function updateOvertime(id, isWeekend) {
-        const inTime = document.getElementById(`in-time-${id}`).value;
-        const outTime = document.getElementById(`out-time-${id}`).value;
-        const baseSalary = parseFloat(
-          document.getElementById("base-salary").value
+          // Clear previous values
+          document.getElementById("jamI").value = 0;
+          document.getElementById("jamII").value = 0;
+          document.getElementById("jamIII").value = 0;
+          document.getElementById("jamIV").value = 0;
+
+          if (jenisLembur === "Hari Biasa") {
+            if (roundedLemburHours > 1) {
+              document.getElementById("jamI").value = 1;
+              document.getElementById("jamII").value = roundedLemburHours - 1;
+            } else {
+              document.getElementById("jamI").value = roundedLemburHours;
+            }
+          } else if (jenisLembur === "Weekend / Libur") {
+            if (roundedLemburHours <= 8) {
+              document.getElementById("jamII").value = roundedLemburHours;
+            } else {
+              document.getElementById("jamII").value = 8;
+              if (roundedLemburHours - 8 > 1) {
+                document.getElementById("jamIII").value = 1;
+                document.getElementById("jamIV").value = roundedLemburHours - 9;
+              } else {
+                document.getElementById("jamIII").value =
+                  roundedLemburHours - 8;
+              }
+            }
+          }
+
+          // Calculate totalJamLembur
+          const totalJamLembur =
+            document.getElementById("jamI").value * 1.5 +
+            document.getElementById("jamII").value * 2 +
+            document.getElementById("jamIII").value * 3 +
+            document.getElementById("jamIV").value * 4;
+
+          document.getElementById("totalJamLembur").value = totalJamLembur;
+        });
+
+      document
+        .getElementById("jenisLembur")
+        .addEventListener("change", function () {
+          const jenisLembur = this.value;
+          const jamMasuk = document.getElementById("jamMasuk");
+
+          if (jenisLembur === "Weekend / Libur") {
+            jamMasuk.disabled = false;
+          } else {
+            jamMasuk.disabled = true;
+            jamMasuk.value = "07:30"; // Automatically set to 07:30 for "Hari Biasa"
+          }
+        });
+
+      document
+        .getElementById("lemburForm")
+        .addEventListener("submit", function (event) {
+          const jenisLembur = document.getElementById("jenisLembur");
+          jenisLembur.disabled = false;
+        });
+
+      document.getElementById("gaji").addEventListener("input", function (e) {
+        let value = e.target.value.replace(/[^,\d]/g, "");
+        let formattedValue = new Intl.NumberFormat("id-ID", {
+          style: "currency",
+          currency: "IDR",
+          minimumFractionDigits: 0,
+        }).format(value);
+        e.target.value = formattedValue.replace("IDR", "Rp").trim();
+      });
+
+      document
+        .getElementById("IDKaryawan")
+        .addEventListener("input", function (e) {
+          const value = e.target.value;
+          const errorMessage = document.getElementById("IDKaryawanError");
+          const numericValue = value.replace(/\D/g, ""); // Remove non-digit characters
+
+          if (value !== numericValue) {
+            errorMessage.style.display = "block";
+            e.target.value = numericValue; // Keep only the numeric part in the input field
+          } else {
+            errorMessage.style.display = "none";
+          }
+        });
+
+      // Function to calculate upahLembur
+      function calculateUpahLembur() {
+        const gaji = parseFloat(
+          document.getElementById("gaji").value.replace(/[^\d]/g, "")
+        ); // Parse gaji as number
+        const totalJamLembur = parseFloat(
+          document.getElementById("totalJamLembur").value
         );
 
-        const result = isWeekend
-          ? calculateOvertimeWeekend(inTime, outTime, baseSalary)
-          : calculateOvertimeWeekday(inTime, outTime, baseSalary);
+        // Calculate upahLembur
+        const upahLembur = Math.round(gaji / 173) * totalJamLembur;
 
-        document.getElementById(`total-work-${id}`).innerText =
-          result.workHours;
-        document.getElementById(`overtime-1-${id}`).innerText =
-          result.overtime1;
-        document.getElementById(`overtime-2-${id}`).innerText =
-          result.overtime2;
-        document.getElementById(`total-overtime-${id}`).innerText =
-          result.totalOvertime;
-        document.getElementById(`pay-${id}`).innerText = result.overtimePay;
+        // Display upahLembur in formatted currency
+        document.getElementById("upahLembur").value = new Intl.NumberFormat(
+          "id-ID",
+          {
+            style: "currency",
+            currency: "IDR",
+            minimumFractionDigits: 0,
+          }
+        )
+          .format(upahLembur)
+          .replace("IDR", "Rp")
+          .trim();
       }
 
-      document.querySelectorAll('input[type="time"]').forEach((input) => {
-        input.addEventListener("change", () => {
-          const id = input.id.split("-").pop();
-          const isWeekend =
-            document
-              .querySelector(
-                `#overtime-table-body tr:nth-child(${id}) td:nth-child(2)`
-              )
-              .innerText.toLowerCase() === "sabtu";
-          updateOvertime(id, isWeekend);
+      // Event listener for changes in gaji
+      document.getElementById("gaji").addEventListener("input", function (e) {
+        let value = e.target.value.replace(/[^,\d]/g, "");
+        let formattedValue = new Intl.NumberFormat("id-ID", {
+          style: "currency",
+          currency: "IDR",
+          minimumFractionDigits: 0,
+        }).format(value);
+        e.target.value = formattedValue.replace("IDR", "Rp").trim();
+
+        // Recalculate upahLembur when gaji changes
+        calculateUpahLembur();
+      });
+
+      // Event listener for changes in totalJamLembur
+      document
+        .getElementById("totalJamLembur")
+        .addEventListener("input", function () {
+          // Recalculate upahLembur when totalJamLembur changes
+          calculateUpahLembur();
         });
-      });
 
-      document.getElementById("base-salary").addEventListener("input", () => {
-        updateOvertime(1, false);
-        updateOvertime(2, true);
-      });
-
-      window.onload = () => {
-        updateOvertime(1, false);
-        updateOvertime(2, true);
-      };
+      // Initial calculation when page loads
+      calculateUpahLembur();
     </script>
   </body>
 </html>

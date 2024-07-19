@@ -155,3 +155,7 @@ function updateRowNumbers() {
       row.cells[0].textContent = index + 1;
   });
 }
+
+
+
+

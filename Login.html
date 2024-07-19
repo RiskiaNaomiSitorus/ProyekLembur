@@ -1,58 +1,149 @@
 <!DOCTYPE html>
 <html lang="id">
-  <head>
+<head>
     <meta charset="UTF-8" />
     <title>Login</title>
-    <link rel="stylesheet" href="Style.css" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
-    />
-  </head>
-  <body>
-    <div class="container">
-      <img
-        src="assets/nanti.png"
-        width="200px"
-        height="200px"
-        alt="Logo Login"
-      />
-      <h6>PT Tolan Tiga Indonesia</h6>
-      <form id="loginForm">
-        <div class="input-group">
-          <label for="inputEmail"
-            ><b>Reg No <span class="star">&midast;</span></b>
-            <div class="input-wrapper">
-              <br /><input
-                type="email"
-                id="inputEmail"
-                name="inputEmail"
-                placeholder="Username@gmail.com"
-                required
-              />
-            </div>
-          </label>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <style>
+        /* Importing fonts from Google */
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
+        
+        /* Reseting */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: #ecf0f3;
+        }
+
+        .wrapper {
+            max-width: 350px;
+            min-height: 500px;
+            padding: 40px 30px 30px 30px;
+            background-color: #ecf0f3;
+            border-radius: 15px;
+            box-shadow: 13px 13px 20px #cbced1, -13px -13px 20px #fff;
+        }
+
+        .logo {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #fff;
+            border-radius: 50%;
+            box-shadow: 0px 0px 3px #5f5f5f, 0px 0px 0px 5px #ecf0f3, 8px 8px 15px #a7aaa7, -8px -8px 15px #fff;
+            overflow: hidden;
+        }
+
+        .logo img {
+            width: 80%;
+            height: 80%;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
+        .wrapper .name {
+            font-weight: 600;
+            font-size: 1.6rem;
+            letter-spacing: 1.3px;
+            padding-left: 10px;
+            color: #555;
+            text-align: center;
+        }
+
+        .form-field {
+            position: relative;
+            padding-left: 10px;
+            margin-bottom: 20px;
+            border-radius: 20px;
+            box-shadow: inset 8px 8px 8px #cbced1, inset -8px -8px 8px #fff;
+        }
+
+        .form-field input {
+            width: 100%;
+            display: block;
+            border: none;
+            outline: none;
+            background: none;
+            font-size: 1.2rem;
+            color: #666;
+            padding: 10px 15px 10px 40px;
+        }
+
+        .form-field .fa {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #555;
+        }
+
+        .wrapper .btn {
+            box-shadow: none;
+            width: 100%;
+            height: 45px;
+            background-color: #03A9F4;
+            color: #fff;
+            border-radius: 25px;
+            box-shadow: 3px 3px 3px #b1b1b1, -3px -3px 3px #fff;
+            letter-spacing: 1.3px;
+            font-size: 1rem;
+        }
+
+        .wrapper .btn:hover {
+            background-color: #039BE5;
+        }
+
+        .wrapper a {
+            text-decoration: none;
+            font-size: 0.8rem;
+            color: #03A9F4;
+        }
+
+        .wrapper a:hover {
+            color: #039BE5;
+        }
+
+        @media(max-width: 380px) {
+            .wrapper {
+                margin: 30px 20px;
+                padding: 40px 15px 15px 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="wrapper">
+        <div class="logo">
+            <img src="assets/img2.png" alt="Twitter Logo">
         </div>
-        <div class="input-group">
-          <label for="inputPassword"
-            ><b>Password <span class="star">&midast;</span></b>
-            <div class="input-wrapper">
-              <br /><input
-                type="password"
-                id="inputPassword"
-                name="inputPassword"
-                placeholder="Enter your password"
-                required
-              />
+        <div class="text-center mt-4 name">Twitter</div>
+        <form class="p-3 mt-3">
+            <div class="form-field d-flex align-items-center">
+                <i class="fa fa-user"></i>
+                <input type="text" name="userName" id="userName" placeholder="Username">
             </div>
-          </label>
+            <div class="form-field d-flex align-items-center">
+                <i class="fa fa-key"></i>
+                <input type="password" name="password" id="pwd" placeholder="Password">
+            </div>
+            <button class="btn mt-3">Login</button>
+        </form>
+        <div class="text-center fs-6">
+            <a href="#">Forget password?</a> or <a href="#">Sign up</a>
         </div>
-        <p><button type="submit">Login</button></p>
-      </form>
-      <div class="links">
-        <h6 class="forgot">Forgot Password?</h6>
-      </div>
     </div>
-  </body>
+</body>
 </html>

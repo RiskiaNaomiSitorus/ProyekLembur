@@ -156,10 +156,7 @@
           <h2>Data Karyawan</h2>
         </div>
         <div class="header-section">
-          <div
-            class="card-header"
-            onclick="location.href='tambahDataKaryawan.html';"
-          >
+          <div class="card-header" id="tambahDataKaryawan">
             <i class="fas fa-plus-circle"></i>
             <h4>Tambah Data Karyawan</h4>
           </div>
@@ -216,7 +213,9 @@
                   <button class="btn btn-warning btn-sm edit-button">
                     Edit
                   </button>
-                  <button class="btn btn-danger btn-sm">Hapus</button>
+                  <button class="btn btn-danger btn-sm delete-button">
+                    Hapus
+                  </button>
                 </td>
               </tr>
               <tr>
@@ -238,7 +237,9 @@
                   <button class="btn btn-warning btn-sm edit-button">
                     Edit
                   </button>
-                  <button class="btn btn-danger btn-sm">Hapus</button>
+                  <button class="btn btn-danger btn-sm delete-button">
+                    Hapus
+                  </button>
                 </td>
               </tr>
             </tbody>
@@ -272,107 +273,309 @@
       </div>
     </footer>
 
+    <!-- Modal for Editing Data -->
     <div id="editModal" class="modal">
       <div class="modal-content">
+        <span class="close" id="closeModal">&times;</span>
+        <h3 style="margin-bottom: 30px">
+          <strong>Edit Data Karyawan</strong>
+        </h3>
         <form id="editForm">
           <div class="form-group">
-            <label for="IDKaryawan">ID Karyawan</label>
+            <label for="editID">ID Karyawan</label>
             <input
               type="text"
               class="form-control"
-              id="IDKaryawan"
-              pattern="\d*"
-              title="Please enter numbers only"
+              id="editID"
+              name="editID"
+              required
             />
-            <span id="IDKaryawanError" class="text-danger" style="display: none"
-              >ID Karyawan harus berupa angka.</span
+          </div>
+          <div class="form-group">
+            <label for="editName">Nama Karyawan</label>
+            <input
+              type="text"
+              class="form-control"
+              id="editName"
+              name="editName"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="editGender">Jenis Kelamin</label>
+            <select
+              class="form-control"
+              id="editGender"
+              name="editGender"
+              required
             >
-          </div>
-          <div class="form-group">
-            <label for="NamaLengkap">Nama Lengkap</label>
-            <input type="text" class="form-control" id="NamaLengkap" />
-          </div>
-          <div class="form-group">
-            <label for="JenisKelamin">Jenis Kelamin</label>
-            <select class="form-control" id="JenisKelamin">
-              <option value="" disabled selected>Pilih Jenis Kelamin</option>
-              <option value="Laki-Laki">Laki-Laki</option>
+              <option value="" selected disabled></option>
+              <option value="Laki-laki">Laki-laki</option>
               <option value="Perempuan">Perempuan</option>
             </select>
           </div>
           <div class="form-group">
-            <label for="Jabatan">Jabatan</label>
-            <select class="form-control" id="Jabatan">
-              <option>1</option>
-              <option>2</option>
-              <option>3</option>
-              <option>4</option>
-              <option>5</option>
+            <label for="editPosition">Jabatan</label>
+            <input
+              type="text"
+              class="form-control"
+              id="editPosition"
+              name="editPosition"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="editStatus">Status</label>
+            <input
+              type="text"
+              class="form-control"
+              id="editStatus"
+              name="editStatus"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="editSalary">Gaji</label>
+            <input
+              type="text"
+              class="form-control"
+              id="editSalary"
+              name="editSalary"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="editPhoto">Photo</label>
+            <input
+              type="file"
+              class="form-control"
+              id="editPhoto"
+              name="editPhoto"
+            />
+          </div>
+          <button type="submit" class="btn btn-primary">Save Changes</button>
+        </form>
+      </div>
+    </div>
+    <!-- Modal for Deleting Data -->
+    <div id="deleteModal" class="modal">
+      <div class="modal-content">
+        <span class="close" id="closeDeleteModal">&times;</span>
+        <h3 style="margin-bottom: 30px">
+          <strong>Hapus Data Karyawan</strong>
+        </h3>
+        <p>Apakah Anda yakin ingin menghapus data karyawan ini?</p>
+        <form id="deleteForm">
+          <input type="hidden" id="deleteID" name="deleteID" />
+          <button type="submit" class="btn btn-danger">Hapus</button>
+          <button type="button" class="btn btn-secondary" id="cancelDelete">
+            Batal
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Modal for Adding Data -->
+    <div id="addModal" class="modal">
+      <div class="modal-content">
+        <span class="close" id="closeAddModal">&times;</span>
+        <h3 style="margin-bottom: 30px">
+          <strong>Tambah Data Karyawan</strong>
+        </h3>
+
+        <form id="addForm">
+          <div class="form-group">
+            <label for="addID">ID Karyawan</label>
+            <input
+              type="text"
+              class="form-control"
+              id="addID"
+              name="addID"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="addName">Nama Karyawan</label>
+            <input
+              type="text"
+              class="form-control"
+              id="addName"
+              name="addName"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="addGender">Jenis Kelamin</label>
+            <select
+              class="form-control"
+              id="addGender"
+              name="addGender"
+              required
+            >
+              <option value="" selected disabled></option>
+              <option value="Laki-laki">Laki-laki</option>
+              <option value="Perempuan">Perempuan</option>
             </select>
           </div>
           <div class="form-group">
-            <label for="Status">Status</label>
-            <select class="form-control" id="Status">
-              <option>1</option>
-              <option>2</option>
-              <option>3</option>
-              <option>4</option>
-              <option>5</option>
-            </select>
+            <label for="addPosition">Jabatan</label>
+            <input
+              type="text"
+              class="form-control"
+              id="addPosition"
+              name="addPosition"
+              required
+            />
           </div>
           <div class="form-group">
-            <label for="Gaji">Gaji</label>
-            <input type="text" class="form-control" id="Gaji" name="Gaji" />
+            <label for="addStatus">Status</label>
+            <input
+              type="text"
+              class="form-control"
+              id="addStatus"
+              name="addStatus"
+              required
+            />
           </div>
           <div class="form-group">
-            <label for="Photo">Photo</label>
-            <input type="file" class="form-control-file" id="Photo" />
+            <label for="addSalary">Gaji</label>
+            <input
+              type="text"
+              class="form-control"
+              id="addSalary"
+              name="addSalary"
+              required
+            />
           </div>
-          <button class="btn btn-danger">Cancel</button>
-          <button type="submit" class="btn btn-primary">Submit</button>
+          <div class="form-group">
+            <label for="addPhoto">Photo</label>
+            <input
+              type="file"
+              class="form-control"
+              id="addPhoto"
+              name="addPhoto"
+            />
+          </div>
+          <button type="submit" class="btn btn-primary">Add Karyawan</button>
         </form>
       </div>
     </div>
 
     <script>
-      // Get the modal
+      // Get modal elements
       var modal = document.getElementById("editModal");
+      var addModal = document.getElementById("addModal");
+      var deleteModal = document.getElementById("deleteModal");
 
-      // Get the button that opens the modal
+      // Get open modal buttons
       var editButtons = document.getElementsByClassName("edit-button");
+      var tambahDataKaryawan = document.getElementById("tambahDataKaryawan");
+      var deleteButtons = document.getElementsByClassName("delete-button");
 
-      // Get the <span> element that closes the modal
-      var span = document.getElementsByClassName("close")[0];
+      // Get close buttons
+      var closeModal = document.getElementById("closeModal");
+      var closeAddModal = document.getElementById("closeAddModal");
+      var closeDeleteModal = document.getElementById("closeDeleteModal");
+      var cancelDelete = document.getElementById("cancelDelete");
 
-      // Loop through all edit buttons to add click event listener
+      // Listen for open click for edit modal
       Array.from(editButtons).forEach(function (button) {
-        button.addEventListener("click", function () {
-          modal.style.display = "block";
-        });
+        button.addEventListener("click", openEditModal);
       });
 
-      // When the user clicks on <span> (x), close the modal
-      span.onclick = function () {
-        modal.style.display = "none";
-      };
+      // Listen for open click for add modal
+      tambahDataKaryawan.addEventListener("click", openAddModal);
 
-      // When the user clicks anywhere outside of the modal, close it
-      window.onclick = function (event) {
-        if (event.target == modal) {
+      // Listen for open click for delete modal
+      Array.from(deleteButtons).forEach(function (button) {
+        button.addEventListener("click", openDeleteModal);
+      });
+
+      // Listen for close click
+      closeModal.addEventListener("click", closeEditModal);
+      closeAddModal.addEventListener("click", closeAddModalFunc);
+      closeDeleteModal.addEventListener("click", closeDeleteModalFunc);
+      cancelDelete.addEventListener("click", closeDeleteModalFunc);
+
+      // Outside click
+      window.addEventListener("click", outsideClick);
+
+      // Function to open edit modal
+      function openEditModal() {
+        modal.style.display = "block";
+      }
+
+      // Function to open add modal
+      function openAddModal() {
+        addModal.style.display = "block";
+      }
+
+      // Function to open delete modal
+      function openDeleteModal() {
+        var employeeID =
+          this.closest("tr").querySelector("td:nth-child(2)").innerText;
+        document.getElementById("deleteID").value = employeeID;
+        deleteModal.style.display = "block";
+      }
+
+      // Function to close edit modal
+      function closeEditModal() {
+        modal.style.display = "none";
+      }
+
+      // Function to close add modal
+      function closeAddModalFunc() {
+        addModal.style.display = "none";
+      }
+
+      // Function to close delete modal
+      function closeDeleteModalFunc() {
+        deleteModal.style.display = "none";
+      }
+
+      // Function to close modal if outside click
+      function outsideClick(e) {
+        if (e.target == modal) {
           modal.style.display = "none";
         }
-      };
+        if (e.target == addModal) {
+          addModal.style.display = "none";
+        }
+        if (e.target == deleteModal) {
+          deleteModal.style.display = "none";
+        }
+      }
 
       // Event listener for changes in gaji
-      document.getElementById("Gaji").addEventListener("input", function (e) {
-        let value = e.target.value.replace(/[^,\d]/g, "");
-        let formattedValue = new Intl.NumberFormat("id-ID", {
-          style: "currency",
-          currency: "IDR",
-          minimumFractionDigits: 0,
-        }).format(value);
-        e.target.value = formattedValue.replace("IDR", "Rp").trim();
-      });
+      document
+        .getElementById("editSalary")
+        .addEventListener("input", function (e) {
+          let value = e.target.value.replace(/[^,\d]/g, "");
+          let formattedValue = new Intl.NumberFormat("id-ID", {
+            style: "currency",
+            currency: "IDR",
+            minimumFractionDigits: 0,
+          }).format(value);
+          e.target.value = formattedValue.replace("IDR", "Rp").trim();
+
+          // Recalculate upahLembur when gaji changes
+          calculateUpahLembur();
+        });
+      // Event listener for changes in gaji
+      document
+        .getElementById("addSalary")
+        .addEventListener("input", function (e) {
+          let value = e.target.value.replace(/[^,\d]/g, "");
+          let formattedValue = new Intl.NumberFormat("id-ID", {
+            style: "currency",
+            currency: "IDR",
+            minimumFractionDigits: 0,
+          }).format(value);
+          e.target.value = formattedValue.replace("IDR", "Rp").trim();
+
+          // Recalculate upahLembur when gaji changes
+          calculateUpahLembur();
+        });
     </script>
   </body>
 </html>

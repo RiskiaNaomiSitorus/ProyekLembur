@@ -13,11 +13,13 @@ body {
   background-color: #f3f5f9;
   margin: 0;
   padding: 0;
+  overflow: hidden; /* Disable scrolling */
 }
 
 .wrapper {
   display: flex;
-  position: relative;
+  flex-direction: column;
+  min-height: 100vh; /* Ensure wrapper takes full viewport height */
 }
 
 .wrapper .sidebar {
@@ -68,8 +70,10 @@ body {
 }
 
 .wrapper .main_content {
-  flex: 1; /* Adjust main content to take remaining space */
+  flex: 1;
   margin-left: 200px;
+  padding: 20px;
+  padding-bottom: 50px; /* Provide space for footer */
 }
 
 .wrapper .main_content .header {
@@ -83,156 +87,161 @@ body {
 }
 
 .wrapper .main_content .info {
-  margin: 20px;
-  color: black;
-  line-height: 25px;
+  font-size: 18px;
 }
 
-.wrapper .main_content .info div {
-  margin-bottom: 20px;
-}
-
-.title {
+.wrapper .main_content .header .title {
+  font-size: 20px;
   font-weight: bold;
 }
 
-.user-info {
+.wrapper .main_content .header input[type="text"] {
+  padding: 5px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.wrapper .main_content .header .user-info {
   display: flex;
   align-items: center;
 }
 
-.user-info i {
+.wrapper .main_content .header .user-info i {
   margin-right: 10px;
-  color: rgb(86, 91, 93);
-}
-
-.profile-picture {
-  margin-right: 10px;
-}
-
-.profile-picture img {
-  width: 45px;
-  height: 45px;
-  border-radius: 50%;
-}
-
-.username {
-  font-weight: bold;
-}
-
-.infodashboard {
-  display: flex;
-  justify-content: flex-end;
-  padding: 20px;
-  color: gray;
-}
-
-.date {
-  font-size: 35px;
-  color: rgb(65, 63, 64);
-}
-
-.dashboard {
-  display: flex;
-  font-size: 30px;
-  color: rgb(65, 63, 64);
-  margin-left: 20px;
-}
-
-.cards-container {
-  display: flex;
-  justify-content: space-between;
-  margin: 20px;
-  flex-wrap: wrap; /* Wrap cards if they overflow */
-}
-
-.card {
-  background-color: white;
-  border-radius: 5px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  padding: 10px;
-  flex: 1 1 calc(33.333% - 20px); /* Adjust to 3 cards per row */
-  margin: 10px;
-  max-width: calc(33.333% - 20px); /* Ensure cards fit within container */
-  height: 150px;
-  font-size: 14px;
-  color: #333;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
-.card h3 {
-  font-size: 18px;
-  font-weight: bold;
-  margin-bottom: 10px;
-}
-
-.data-content {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.data-content p {
-  margin-right: 10px;
-  font-size: 18px;
-  font-weight: bold;
-}
-
-.data-content i {
   font-size: 20px;
 }
 
-/* Custom styles for each card */
-.card-absen {
-  border-left: 5px solid green;
-  color: green;
-}
-
-/* Update the icon for Data Karyawan */
-.card-karyawan .glyphicon {
-  content: "\e008"; /* Unicode for glyphicon-user */
-}
-
-.card-header {
-  margin: 20px;
-  border: 1px solid #11a634;
-  border-radius: 0; /* Menghapus border-radius untuk membuat persegi */
-  box-shadow: 0 2px 4px rgba(0, 255, 38, 0.1);
-  width: 235px; /* Menentukan lebar card */
+.wrapper .main_content .header .profile-picture img {
+  width: 40px;
   height: 40px;
-  background-color: #1bbc53;
-  color: white;
-  display: flex;
-  align-items: center; /* Menambahkan padding untuk header */
-}
-.card-header i {
+  border-radius: 50%;
   margin-right: 10px;
 }
 
-.action-buttons {
-  display: flex;
-  gap: 50px; /* Increased space between buttons */
-  margin-left: 200px; /* Space between header and buttons */
+.wrapper .main_content .header .username {
+  font-size: 16px;
+  color: #333;
 }
-.card-header {
+
+.wrapper .main_content .dashboard-title {
+  font-size: 24px;
+  margin: 20px 0;
+}
+
+.wrapper .main_content .cards-container {
   display: flex;
-  align-items: center;
+  justify-content: space-around;
+  margin-bottom: 10px; /* Reduce margin-bottom */
+}
+
+.wrapper .main_content .card {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 10px;
+  width: 30%; /* Adjust width */
+  text-align: center;
+}
+
+.wrapper .main_content .card h3 {
+  margin-bottom: 10px; /* Reduce margin */
+}
+
+.wrapper .main_content .card .data-content p {
+  font-size: 24px;
+  margin: 0;
+}
+
+.wrapper .main_content .card .data-content i {
+  font-size: 0px;
+  margin-top: 10px;
+}
+
+.wrapper .main_content .card .label-container {
+  margin-top: 10px; /* Reduce margin */
+}
+
+.wrapper .main_content .card .label {
+  font-size: 14px;
+  color: #fffefe;
+}
+
+.wrapper .main_content .card:nth-child(1) {
+  background-color: #00ff33; /* Blue */
+}
+
+.wrapper .main_content .card:nth-child(2) {
+  background-color: #f50539; /* Pink */
+}
+
+.wrapper .main_content .card:nth-child(3) {
+  background-color: #007bff; /* Green */
+}
+
+.wrapper .main_content .charts-wrapper {
+  display: flex;
   justify-content: space-between;
+  margin: 10px 0; /* Reduce margin */
+}
+
+.wrapper .main_content .chart-container {
+  width: 60%; /* Adjust width */
+}
+
+.wrapper .main_content .report-container {
+  width: 35%; /* Adjust width */
+}
+
+.wrapper .main_content .chart-container canvas {
+  width: 100% !important;
+  height: auto !important;
+}
+
+.report-container h3 {
+  text-align: center;
+  margin-bottom: 10px; /* Reduce margin */
+}
+
+.report-container ul {
+  list-style: none;
+  padding: 0;
+}
+
+.report-container ul li {
+  padding: 5px; /* Reduce padding */
+  border-bottom: 1px solid #ddd;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.report-container ul li a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.calendar-notification {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px; /* Reduce margin */
+}
+
+.calendar-container {
+  display: block;
+  margin-top: 20px; /* Add margin top */
 }
 
 footer {
-  background-color: #f8f9fa;
-  padding: 20px;
+  background-color: #4b4276;
+  color: #fff;
   text-align: center;
+  padding: 10px; /* Adjust padding */
+  position: absolute; /* Change to absolute */
+  bottom: 0; /* Align at bottom */
+  left: 200px; /* Align with main content */
+  width: calc(100% - 200px); /* Adjust width */
 }
-.footer-links {
-  display: flex;
-  justify-content: center;
-  gap: 20px;
-}
-.footer-links a {
-  text-decoration: none;
-  color: #007bff;
+
+footer .footer-links a {
+  color: #fff;
+  margin: 0 10px;
 }

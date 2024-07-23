@@ -9,9 +9,10 @@
       rel="stylesheet"
       href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
     />
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
-      html, body {
+      /* Add your styles here */
+      html,
+      body {
         height: 100%;
         margin: 0;
         padding: 0;
@@ -37,52 +38,80 @@
         box-sizing: border-box;
       }
       .card-header {
+        margin: 20px;
+        border: 1px solid #11a634;
+        border-radius: 0; /* Menghapus border-radius untuk membuat persegi */
+        box-shadow: 0 2px 4px rgba(0, 255, 38, 0.1);
+        width: 235px; /* Menentukan lebar card */
+        height: 40px;
+        background-color: #1bbc53;
+        color: white;
         display: flex;
-        align-items: center;
-        margin-bottom: 20px;
+        align-items: center; /* Menambahkan padding untuk header */
+      }
+      .card-header i {
+        margin-right: 10px;
       }
       .action-buttons {
         display: flex;
         gap: 10px;
-        margin-left: 153px;
-        margin-top: 10px; /* Space between header and buttons */
-        justify-content: flex-start; /* Align buttons to the left */
+        margin-bottom: 40px;
+        margin-left: 20px;
       }
       .header-title {
         display: flex;
         align-items: center;
       }
-      .container {
-        margin-top: 20px;
-      }
-      table {
+      .table-container {
         width: 100%;
-        margin: 20px 0;
-        border-collapse: collapse;
+        margin-left: 5px;
       }
-      table, th, td {
+      .table-container table {
+        width: 100%;
+      }
+      table,
+      th,
+      td {
         border: 1px solid black;
       }
-      th, td {
+      th,
+      td {
         padding: 8px;
         text-align: center;
       }
       th {
         background-color: #f2f2f2;
       }
-      footer {
-        background-color: #f8f9fa;
+      .modal {
+        display: none;
+        position: fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0, 0, 0, 0.4);
+      }
+      .modal-content {
+        background-color: #fefefe;
+        margin: 15% auto;
         padding: 20px;
-        text-align: center;
+        border: 1px solid #888;
+        width: 80%;
+        position: relative;
       }
-      .footer-links {
-        display: flex;
-        justify-content: center;
-        gap: 20px;
+      .close {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
       }
-      .footer-links a {
+      .close:hover,
+      .close:focus {
+        color: black;
         text-decoration: none;
-        color: #007bff;
+        cursor: pointer;
       }
     </style>
   </head>
@@ -128,25 +157,31 @@
           </div>
         </div>
         <div class="dashboard">Perhitungan Lembur</div>
-        <div class="action-buttons">
-          <button class="btn btn-primary btn-sm">
-            <i class="fas fa-file-excel"></i> Excel
-          </button>
-          <button class="btn btn-secondary btn-sm">
-            <i class="fas fa-print"></i> Print
-          </button>
-          <button class="btn btn-success btn-sm">
-            <i class="fas fa-file-csv"></i> CSV
-          </button>
-          <button class="btn btn-info btn-sm">
-            <i class="fas fa-copy"></i> Copy
-          </button>
-          <button class="btn btn-warning btn-sm">
-            <i class="fas fa-eye"></i> Column Visibility
-          </button>
+        <div class="header-section">
+          <div class="card-header" id="tambahDataLembur">
+            <i class="fas fa-plus-circle"></i>
+            <h4>Tambah Data Lembur</h4>
+          </div>
+          <div class="action-buttons">
+            <button class="btn btn-primary btn-sm">
+              <i class="fas fa-file-excel"></i> Excel
+            </button>
+            <button class="btn btn-secondary btn-sm">
+              <i class="fas fa-print"></i> Print
+            </button>
+            <button class="btn btn-success btn-sm">
+              <i class="fas fa-file-csv"></i> CSV
+            </button>
+            <button class="btn btn-info btn-sm">
+              <i class="fas fa-copy"></i> Copy
+            </button>
+            <button class="btn btn-warning btn-sm">
+              <i class="fas fa-eye"></i> Column Visibility
+            </button>
+          </div>
         </div>
-        <div class="container">
-          <table>
+        <div class="container table-container">
+          <table class="table table-striped table-bordered">
             <thead>
               <tr>
                 <th>No</th>
@@ -189,378 +224,444 @@
                   <button class="btn btn-danger btn-sm">Hapus</button>
                 </td>
               </tr>
-              <tr>
-                <td>2</td>
-                <td>John Doe</td>
-                <td>12345</td>
-                <td>2024-07-18</td>
-                <td>08:00</td>
-                <td>17:00</td>
-                <td>Hari Biasa</td>
-                <td>5,000,000</td>
-                <td>8</td>
-                <td>1</td>
-                <td>7</td>
-                <td>0</td>
-                <td>0</td>
-                <td>600,000</td>
-                <td>-</td>
-                <td>
-                  <button class="btn btn-warning btn-sm">Edit</button>
-                  <button class="btn btn-danger btn-sm">Hapus</button>
-                </td>
-              </tr>
-              <tr>
-                <td>3</td>
-                <td>Bro</td>
-                <td>12345</td>
-                <td>2024-07-18</td>
-                <td>08:00</td>
-                <td>17:00</td>
-                <td>Hari Biasa</td>
-                <td>5,000,000</td>
-                <td>8</td>
-                <td>1</td>
-                <td>7</td>
-                <td>0</td>
-                <td>0</td>
-                <td>600,000</td>
-                <td>-</td>
-                <td>
-                  <button class="btn btn-warning btn-sm">Edit</button>
-                  <button class="btn btn-danger btn-sm">Hapus</button>
-                </td>
-              </tr>
+              <!-- Additional rows as needed -->
             </tbody>
           </table>
-          <form id="lemburForm">
-            <div class="form-group">
-              <label for="NamaLengkap">Nama Lengkap</label>
-              <input type="text" class="form-control" id="namaLengkap" />
-            </div>
-            <div class="form-group">
-              <label for="IDKaryawan">ID Karyawan</label>
-              <input
-                type="text"
-                class="form-control"
-                id="IDKaryawan"
-                pattern="\d*"
-                title="Please enter numbers only"
-              />
-              <span
-                id="IDKaryawanError"
-                class="text-danger"
-                style="display: none"
-                >ID Karyawan harus berupa angka.</span
-              >
-            </div>
-
-            <div class="form-group">
-              <label for="TanggalLembur">Tanggal Lembur</label>
-              <input type="date" class="form-control" id="tanggalLembur" />
-            </div>
-            <div class="cs-form">
-              <label for="Jam Masuk">Jam Masuk</label>
-              <input type="time" class="form-control" id="jamMasuk" disabled />
-            </div>
-            <div class="cs-form">
-              <label for="Jam Keluar">Jam Keluar</label>
-              <input type="time" class="form-control" id="jamKeluar" />
-            </div>
-            <div class="form-group">
-              <label for="JenisLembur">Jenis Lembur</label>
-              <select class="form-control" id="jenisLembur">
-                <option selected disabled></option>
-                <option value="Weekend / Libur">Weekend / Libur</option>
-                <option value="Hari Biasa">Hari Biasa</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label for="gaji">Gaji</label>
-              <input type="text" class="form-control" id="gaji" name="gaji" />
-            </div>
-            <div class="form-group">
-              <label for="JamKerjaLembur">Jam Kerja Lembur</label>
-              <input
-                type="number"
-                class="form-control"
-                id="jamKerjaLembur"
-                disabled
-              />
-            </div>
-            <div class="form-group">
-              <label for="Jam I">Jam I</label>
-              <input type="number" class="form-control" id="jamI" disabled />
-            </div>
-            <div class="form-group">
-              <label for="Jam II">Jam II</label>
-              <input type="number" class="form-control" id="jamII" disabled />
-            </div>
-            <div class="form-group">
-              <label for="Jam III">Jam III</label>
-              <input type="number" class="form-control" id="jamIII" disabled />
-            </div>
-            <div class="form-group">
-              <label for="Jam IV">Jam IV</label>
-              <input type="number" class="form-control" id="jamIV" disabled />
-            </div>
-            <div class="form-group">
-              <label for="Total Jam Lembur">Total Jam Lembur</label>
-              <input
-                type="number"
-                class="form-control"
-                id="totalJamLembur"
-                disabled
-              />
-            </div>
-            <div class="form-group">
-              <label for="Upah Lembur">Upah Lembur</label>
-              <input
-                type="text"
-                class="form-control"
-                id="upahLembur"
-                disabled
-              />
-            </div>
-            <div class="form-group">
-              <label for="KeteranganLembur">Keterangan Lembur </label>
-              <textarea
-                class="form-control"
-                id="keteranganLembur"
-                rows="3"
-              ></textarea>
-            </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
-          </form>
         </div>
       </div>
     </div>
-    <footer style="background-color: #f8f9fa; padding: 20px; text-align: center; margin-top: 20px;">
-      <footer>
-        <p>&copy; 2024 PT. Tolan Tiga Indonesia. All rights reserved.</p>
-        <div style="display: flex; justify-content: center; gap: 20px;">
-          <a href="#" style="text-decoration: none; color: #007bff;">Privacy Policy</a>
-          <a href="#" style="text-decoration: none; color: #007bff;">Terms of Service</a>
-          <a href="#" style="text-decoration: none; color: #007bff;">Contact Us</a>
-        <div class="footer-links">
-          <a href="#">Privacy Policy</a>
-          <a href="#">Terms of Service</a>
-          <a href="#">Contact Us</a>
-        </div>
-      </footer>
+    <footer
+      style="
+        background-color: #f8f9fa;
+        padding: 20px;
+        text-align: center;
+        margin-top: 20px;
+      "
+    >
+      <p>&copy; 2024 PT. Tolan Tiga Indonesia. All rights reserved.</p>
+      <div style="display: flex; justify-content: center; gap: 20px">
+        <a href="#" style="text-decoration: none; color: #007bff"
+          >Privacy Policy</a
+        >
+        <a href="#" style="text-decoration: none; color: #007bff"
+          >Terms of Service</a
+        >
+        <a href="#" style="text-decoration: none; color: #007bff">Contact Us</a>
+      </div>
+    </footer>
+
+    <!-- Modal for Adding Lembur -->
+    <div id="addLemburModal" class="modal">
+      <div class="modal-content">
+        <span class="close" id="closeAddLemburModal">&times;</span>
+        <h3 style="margin-bottom: 30px"><strong>Tambah Data Lembur</strong></h3>
+        <form id="addlemburForm">
+          <div class="form-group">
+            <label for="namaLengkap">Nama Lengkap</label>
+            <input
+              type="text"
+              class="form-control"
+              id="addnamaLengkap"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="addIDKaryawan">ID Karyawan</label>
+            <input
+              type="text"
+              class="form-control"
+              id="addIDKaryawan"
+              pattern="\d*"
+              title="Please enter numbers only"
+              required
+            />
+            <div id="addIDKaryawanError" style="display: none; color: red">
+              ID Karyawan should contain numbers only.
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="addTanggalLembur">Tanggal Lembur</label>
+            <input
+              type="date"
+              class="form-control"
+              id="addtanggalLembur"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="addJamMasuk">Jam Masuk</label>
+            <input type="time" class="form-control" id="addjamMasuk" required />
+          </div>
+          <div class="form-group">
+            <label for="addJamKeluar">Jam Keluar</label>
+            <input
+              type="time"
+              class="form-control"
+              id="addjamKeluar"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="addJenisLembur">Jenis Lembur</label>
+            <select class="form-control" id="addjenisLembur" required>
+              <option value="Hari Biasa">Hari Biasa</option>
+              <option value="Weekend / Libur">Weekend / Libur</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="addGaji">Gaji</label>
+            <input type="text" class="form-control" id="addgaji" required />
+          </div>
+          <div class="form-group">
+            <label for="addJamKerjaLembur">Total Waktu Kerja</label>
+            <input
+              type="number"
+              class="form-control"
+              id="addjamKerjaLembur"
+              disabled
+            />
+          </div>
+          <div class="form-group">
+            <label for="addJamI">Jam I</label>
+            <input type="number" class="form-control" id="addjamI" disabled />
+          </div>
+          <div class="form-group">
+            <label for="addJamII">Jam II</label>
+            <input type="number" class="form-control" id="addjamII" disabled />
+          </div>
+          <div class="form-group">
+            <label for="addJamIII">Jam III</label>
+            <input type="number" class="form-control" id="addjamIII" disabled />
+          </div>
+          <div class="form-group">
+            <label for="addJamIV">Jam IV</label>
+            <input type="number" class="form-control" id="addjamIV" disabled />
+          </div>
+          <div class="form-group">
+            <label for="addTotal Jam Lembur">Total Jam Lembur</label>
+            <input
+              type="number"
+              class="form-control"
+              id="addtotalJamLembur"
+              disabled
+            />
+          </div>
+          <div class="form-group">
+            <label for="addUpahLembur">Upah Lembur (Rp)</label>
+            <input
+              type="number"
+              class="form-control"
+              id="addupahLembur"
+              disabled
+            />
+          </div>
+          <div class="form-group">
+            <label for="addKeterangan">Keterangan</label>
+            <textarea class="form-control" id="addKeterangan"></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary">Simpan</button>
+        </form>
+      </div>
+    </div>
     <script>
-  
+      // Get the modal
+      var modal = document.getElementById("addLemburModal");
 
-      document
-        .getElementById("tanggalLembur")
-        .addEventListener("change", function () {
-          const tanggalLembur = new Date(this.value);
-          const jenisLembur = document.getElementById("jenisLembur");
-          const jamMasuk = document.getElementById("jamMasuk");
-          const jamKeluar = document.getElementById("jamKeluar");
+      // Get the button that opens the modal
+      var btn = document.getElementById("tambahDataLembur");
 
-          if (tanggalLembur.getDay() === 0 || tanggalLembur.getDay() === 6) {
-            jenisLembur.value = "Weekend / Libur";
-            jamMasuk.value = "";
-            jamMasuk.disabled = false;
-            jamKeluar.value = "";
-          } else if (tanggalLembur.getDay() === 5) {
-            // Friday
-            jenisLembur.value = "Hari Biasa";
-            jamMasuk.value = "07:30";
-            jamMasuk.disabled = true;
-            jamKeluar.value = "15:30";
-          } else {
-            // Monday to Thursday
-            jenisLembur.value = "Hari Biasa";
-            jamMasuk.value = "07:30";
-            jamMasuk.disabled = true;
-            jamKeluar.value = "16:30";
-          }
-        });
+      // Get the <span> element that closes the modal
+      var span = document.getElementById("closeAddLemburModal");
 
-      document
-        .getElementById("jamKeluar")
-        .addEventListener("change", function () {
-          const tanggalLembur = new Date(
-            document.getElementById("tanggalLembur").value
-          );
-          const jenisLembur = document.getElementById("jenisLembur").value;
-          const jamMasuk = document.getElementById("jamMasuk").value;
-          const jamKeluar = this.value;
-          const jamKerjaLembur = document.getElementById("jamKerjaLembur");
+      // Open the modal
+      btn.onclick = function () {
+        modal.style.display = "block";
+      };
 
-          const [jamMasukHour, jamMasukMinute] = jamMasuk
-            .split(":")
-            .map(Number);
-          const [jamKeluarHour, jamKeluarMinute] = jamKeluar
-            .split(":")
-            .map(Number);
+      // Close the modal
+      span.onclick = function () {
+        modal.style.display = "none";
+      };
 
-          let totalJamMasuk = jamMasukHour + jamMasukMinute / 60;
-          let totalJamKeluar = jamKeluarHour + jamKeluarMinute / 60;
+      // Close the modal if clicked outside
+      window.onclick = function (event) {
+        if (event.target == modal) {
+          modal.style.display = "none";
+        }
+      };
 
-          function roundToNearestHalf(num) {
-            return Math.floor(num * 2) / 2;
-          }
+      // Format numbers as Rupiah
+      function formatRupiah(angka) {
+        var angka = angka.replace(/[^,\d]/g, "").toString(),
+          split = angka.split(","),
+          sisa = split[0].length % 3,
+          rupiah = split[0].substr(0, sisa),
+          ribuan = split[0].substr(sisa).match(/\d{3}/gi);
 
-          let lemburHours;
+        if (ribuan) {
+          separator = sisa ? "." : "";
+          rupiah += separator + ribuan.join(".");
+        }
 
-          if (jenisLembur === "Weekend / Libur") {
-            lemburHours = totalJamKeluar - totalJamMasuk;
-          } else if (tanggalLembur.getDay() === 5) {
-            // Friday
-            if (totalJamKeluar > 15.5) {
-              lemburHours = totalJamKeluar - 15.5;
-            } else {
-              lemburHours = 0;
-            }
-          } else {
-            // Monday to Thursday
-            if (totalJamKeluar > 16.5) {
-              lemburHours = totalJamKeluar - 16.5;
-            } else {
-              lemburHours = 0;
-            }
-          }
-
-          const roundedLemburHours = roundToNearestHalf(lemburHours);
-          jamKerjaLembur.value = roundedLemburHours;
-
-          // Clear previous values
-          document.getElementById("jamI").value = 0;
-          document.getElementById("jamII").value = 0;
-          document.getElementById("jamIII").value = 0;
-          document.getElementById("jamIV").value = 0;
-
-          if (jenisLembur === "Hari Biasa") {
-            if (roundedLemburHours > 1) {
-              document.getElementById("jamI").value = 1;
-              document.getElementById("jamII").value = roundedLemburHours - 1;
-            } else {
-              document.getElementById("jamI").value = roundedLemburHours;
-            }
-          } else if (jenisLembur === "Weekend / Libur") {
-            if (roundedLemburHours <= 8) {
-              document.getElementById("jamII").value = roundedLemburHours;
-            } else {
-              document.getElementById("jamII").value = 8;
-              if (roundedLemburHours - 8 > 1) {
-                document.getElementById("jamIII").value = 1;
-                document.getElementById("jamIV").value = roundedLemburHours - 9;
-              } else {
-                document.getElementById("jamIII").value =
-                  roundedLemburHours - 8;
-              }
-            }
-          }
-
-          // Calculate totalJamLembur
-          const totalJamLembur =
-            document.getElementById("jamI").value * 1.5 +
-            document.getElementById("jamII").value * 2 +
-            document.getElementById("jamIII").value * 3 +
-            document.getElementById("jamIV").value * 4;
-
-          document.getElementById("totalJamLembur").value = totalJamLembur;
-        });
-
-      document
-        .getElementById("jenisLembur")
-        .addEventListener("change", function () {
-          const jenisLembur = this.value;
-          const jamMasuk = document.getElementById("jamMasuk");
-
-          if (jenisLembur === "Weekend / Libur") {
-            jamMasuk.disabled = false;
-          } else {
-            jamMasuk.disabled = true;
-            jamMasuk.value = "07:30"; // Automatically set to 07:30 for "Hari Biasa"
-          }
-        });
-
-      document
-        .getElementById("lemburForm")
-        .addEventListener("submit", function (event) {
-          const jenisLembur = document.getElementById("jenisLembur");
-          jenisLembur.disabled = false;
-        });
-
-      document.getElementById("gaji").addEventListener("input", function (e) {
-        let value = e.target.value.replace(/[^,\d]/g, "");
-        let formattedValue = new Intl.NumberFormat("id-ID", {
-          style: "currency",
-          currency: "IDR",
-          minimumFractionDigits: 0,
-        }).format(value);
-        e.target.value = formattedValue.replace("IDR", "Rp").trim();
-      });
-
-      document
-        .getElementById("IDKaryawan")
-        .addEventListener("input", function (e) {
-          const value = e.target.value;
-          const errorMessage = document.getElementById("IDKaryawanError");
-          const numericValue = value.replace(/\D/g, ""); // Remove non-digit characters
-
-          if (value !== numericValue) {
-            errorMessage.style.display = "block";
-            e.target.value = numericValue; // Keep only the numeric part in the input field
-          } else {
-            errorMessage.style.display = "none";
-          }
-        });
-
-      // Function to calculate upahLembur
-      function calculateUpahLembur() {
-        const gaji = parseFloat(
-          document.getElementById("gaji").value.replace(/[^\d]/g, "")
-        ); // Parse gaji as number
-        const totalJamLembur = parseFloat(
-          document.getElementById("totalJamLembur").value
-        );
-
-        // Calculate upahLembur
-        const upahLembur = Math.round(gaji / 173) * totalJamLembur;
-
-        // Display upahLembur in formatted currency
-        document.getElementById("upahLembur").value = new Intl.NumberFormat(
-          "id-ID",
-          {
-            style: "currency",
-            currency: "IDR",
-            minimumFractionDigits: 0,
-          }
-        )
-          .format(upahLembur)
-          .replace("IDR", "Rp")
-          .trim();
+        rupiah = split[1] != undefined ? rupiah + "," + split[1] : rupiah;
+        return "Rp " + rupiah;
       }
 
-      // Event listener for changes in gaji
-      document.getElementById("gaji").addEventListener("input", function (e) {
-        let value = e.target.value.replace(/[^,\d]/g, "");
-        let formattedValue = new Intl.NumberFormat("id-ID", {
-          style: "currency",
-          currency: "IDR",
-          minimumFractionDigits: 0,
-        }).format(value);
-        e.target.value = formattedValue.replace("IDR", "Rp").trim();
-
-        // Recalculate upahLembur when gaji changes
-        calculateUpahLembur();
-      });
-
-      // Event listener for changes in totalJamLembur
+      // Handle input for addgaji field
       document
-        .getElementById("totalJamLembur")
-        .addEventListener("input", function () {
-          // Recalculate upahLembur when totalJamLembur changes
-          calculateUpahLembur();
+        .getElementById("addgaji")
+        .addEventListener("input", function (e) {
+          var value = e.target.value.replace(/\D/g, ""); // Remove non-numeric characters
+          e.target.value = formatRupiah(value);
         });
 
-      // Initial calculation when page loads
-      calculateUpahLembur();
+      document
+        .getElementById("addupahLembur")
+        .addEventListener("input", function (e) {
+          var value = e.target.value.replace(/\D/g, ""); // Remove non-numeric characters
+          e.target.value = formatRupiah(value);
+        });
+
+      // Handle input for addIDKaryawan field
+      document
+        .getElementById("addIDKaryawan")
+        .addEventListener("input", function (e) {
+          var value = e.target.value;
+          var isValid = /^\d*$/.test(value); // Check if the value is numeric
+
+          // Show or hide error message based on validity
+          document.getElementById("addIDKaryawanError").style.display = isValid
+            ? "none"
+            : "block";
+
+          // Remove non-numeric characters from input value
+          e.target.value = value.replace(/\D/g, "");
+        });
+
+      // Determine if a date is a weekend
+      function isWeekend(date) {
+        var day = new Date(date).getDay();
+        return day === 0 || day === 6; // Sunday = 0, Saturday = 6
+      }
+
+      function setDefaultTimes(date) {
+        var dayOfWeek = new Date(date).getDay();
+        var jamMasuk = document.getElementById("addjamMasuk");
+        var jamKeluar = document.getElementById("addjamKeluar");
+        var jenisLembur = document.getElementById("addjenisLembur").value;
+
+        if (jenisLembur === "Weekend / Libur") {
+          jamMasuk.value = "";
+          jamKeluar.value = "";
+          jamMasuk.disabled = false;
+          jamKeluar.disabled = false;
+        } else if (jenisLembur === "Hari Biasa") {
+          jamMasuk.value = dayOfWeek === 5 ? "07:30" : "07:30";
+          jamMasuk.disabled = true;
+          jamKeluar.value = ""; // Reset jamKeluar for "Hari Biasa"
+          jamKeluar.disabled = false; // Allow manual input for jamKeluar
+        }
+      }
+
+      // Event listener for addjenisLembur change
+      document
+        .getElementById("addjenisLembur")
+        .addEventListener("change", function () {
+          var date = document.getElementById("addtanggalLembur").value;
+          setDefaultTimes(date); // Update default times based on jenisLembur
+        });
+
+      // Calculate time difference in hours
+      function calculateTimeDifference(start, end) {
+        var startTime = new Date("1970-01-01T" + start + ":00Z");
+        var endTime = new Date("1970-01-01T" + end + ":00Z");
+        return (endTime - startTime) / 1000 / 60 / 60; // Difference in hours
+      }
+
+      // Round hours to the nearest 0.5
+      function roundToHalfHour(value) {
+        return Math.round(value * 2) / 2;
+      }
+
+      // Update addjamKerjaLembur based on addjamKeluar
+      function updateJamKerjaLembur() {
+        var tanggalLembur = document.getElementById("addtanggalLembur").value;
+        var jamMasuk = document.getElementById("addjamMasuk").value;
+        var jamKeluar = document.getElementById("addjamKeluar").value;
+        var jamKerjaLembur = document.getElementById("addjamKerjaLembur");
+        var jenisLembur = document.getElementById("addjenisLembur").value;
+
+        if (!tanggalLembur || !jamKeluar) {
+          jamKerjaLembur.value = "";
+          calculateTotalJamLembur(); // Update total jam lembur when clearing input
+          return;
+        }
+
+        var endOfDay;
+
+        if (jenisLembur === "Weekend / Libur") {
+          if (jamMasuk && jamKeluar) {
+            var difference = calculateTimeDifference(jamMasuk, jamKeluar);
+            jamKerjaLembur.value = roundToHalfHour(difference).toFixed(1);
+          } else {
+            jamKerjaLembur.value = "";
+          }
+        } else {
+          var dayOfWeek = new Date(tanggalLembur).getDay();
+          endOfDay = dayOfWeek === 5 ? "15:30" : "16:30";
+
+          var difference = calculateTimeDifference(endOfDay, jamKeluar);
+          jamKerjaLembur.value = roundToHalfHour(difference).toFixed(1);
+        }
+
+        // Update jamI, jamII, jamIII, and jamIV
+        updateJamCategories();
+      }
+
+      // Update jamI, jamII, jamIII, and jamIV based on jenisLembur
+      function updateJamCategories() {
+        var jenisLembur = document.getElementById("addjenisLembur").value;
+        var jamKerjaLembur =
+          parseFloat(document.getElementById("addjamKerjaLembur").value) || 0;
+
+        var jamI = document.getElementById("addjamI");
+        var jamII = document.getElementById("addjamII");
+        var jamIII = document.getElementById("addjamIII");
+        var jamIV = document.getElementById("addjamIV");
+
+        // Reset fields
+        jamI.value = "";
+        jamII.value = "";
+        jamIII.value = "";
+        jamIV.value = "";
+
+        if (jenisLembur === "Hari Biasa") {
+          if (jamKerjaLembur > 0) {
+            jamI.value = Math.min(jamKerjaLembur, 1).toFixed(1);
+            jamII.value = (
+              jamKerjaLembur > 1 ? jamKerjaLembur - 1 : ""
+            ).toFixed(1);
+          }
+        } else if (jenisLembur === "Weekend / Libur") {
+          if (jamKerjaLembur > 0) {
+            jamII.value = Math.min(jamKerjaLembur, 8).toFixed(1);
+            jamIII.value =
+              jamKerjaLembur > 8
+                ? Math.min(jamKerjaLembur - 8, 1).toFixed(1)
+                : "";
+            jamIV.value =
+              jamKerjaLembur > 9 ? (jamKerjaLembur - 9).toFixed(1) : "";
+          }
+        }
+
+        calculateTotalJamLembur(); // Add this line to update total jam lembur
+      }
+
+      function calculateTotalJamLembur() {
+        var jamI = parseFloat(document.getElementById("addjamI").value) || 0;
+        var jamII = parseFloat(document.getElementById("addjamII").value) || 0;
+        var jamIII =
+          parseFloat(document.getElementById("addjamIII").value) || 0;
+        var jamIV = parseFloat(document.getElementById("addjamIV").value) || 0;
+
+        var totalJamLembur = jamI * 1.5 + jamII * 2 + jamIII * 3 + jamIV * 4;
+
+        document.getElementById("addtotalJamLembur").value =
+          totalJamLembur.toFixed(1);
+      }
+
+      // Event listeners
+      document
+        .getElementById("addjenisLembur")
+        .addEventListener("change", updateJamCategories);
+      document
+        .getElementById("addjamKerjaLembur")
+        .addEventListener("input", updateJamCategories);
+      document
+        .getElementById("addjamKeluar")
+        .addEventListener("change", updateJamKerjaLembur);
+      document
+        .getElementById("addjamI")
+        .addEventListener("input", calculateTotalJamLembur);
+      document
+        .getElementById("addjamII")
+        .addEventListener("input", calculateTotalJamLembur);
+      document
+        .getElementById("addjamIII")
+        .addEventListener("input", calculateTotalJamLembur);
+      document
+        .getElementById("addjamIV")
+        .addEventListener("input", calculateTotalJamLembur);
+
+      document
+        .getElementById("addtanggalLembur")
+        .addEventListener("change", function (e) {
+          var date = e.target.value;
+          var jenisLembur = document.getElementById("addjenisLembur");
+
+          jenisLembur.value = isWeekend(date)
+            ? "Weekend / Libur"
+            : "Hari Biasa";
+
+          // Set default times based on the selected date
+          setDefaultTimes(date);
+        });
+
+      document
+        .getElementById("addjenisLembur")
+        .addEventListener("change", function () {
+          updateJamCategories();
+
+          // Reset jamMasuk and jamKeluar if jenisLembur is set to "Weekend / Libur"
+          if (
+            document.getElementById("addjenisLembur").value ===
+            "Weekend / Libur"
+          ) {
+            document.getElementById("addjamMasuk").value = "";
+            document.getElementById("addjamKeluar").value = "";
+            document.getElementById("addjamMasuk").disabled = false;
+            document.getElementById("addjamKeluar").disabled = false;
+          }
+        });
+
+      // Function to calculate addupahLembur
+      function calculateUpahLembur() {
+        var gaji =
+          parseFloat(
+            document.getElementById("addgaji").value.replace(/[^0-9]/g, "")
+          ) || 0;
+        var totalJamLembur =
+          parseFloat(document.getElementById("addtotalJamLembur").value) || 0;
+
+        // Calculate hourly wage
+        var hourlyWage = gaji / 173;
+
+        // Round hourly wage to the nearest integer
+        hourlyWage = Math.round(hourlyWage);
+
+        // Calculate upah lembur
+        var upahLembur = hourlyWage * totalJamLembur;
+
+        // Set value of addupahLembur field
+        document.getElementById("addupahLembur").value = upahLembur.toFixed(0);
+      }
+
+      // Update function to recalculate upah lembur
+      function updateUpahLembur() {
+        calculateUpahLembur();
+      }
+
+      // Event listeners to trigger upah lembur calculation
+      document
+        .getElementById("addgaji")
+        .addEventListener("input", updateUpahLembur);
+
+      document
+        .getElementById("addtotalJamLembur")
+        .addEventListener("input", updateUpahLembur);
+
+      // Ensure upah lembur is updated on load if fields have default values
+      document.addEventListener("DOMContentLoaded", updateUpahLembur);
     </script>
   </body>
 </html>

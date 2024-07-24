@@ -156,7 +156,7 @@
             <h5>12 Juli 2024</h5>
           </div>
         </div>
-        <div class="dashboard">Perhitungan Lembur</div>
+        <div class="dashboard"><h2>Perhitungan Lembur</h2></div>
         <div class="header-section">
           <div class="card-header" id="tambahDataLembur">
             <i class="fas fa-plus-circle"></i>
@@ -220,8 +220,15 @@
                 <td>600,000</td>
                 <td>-</td>
                 <td>
-                  <button class="btn btn-warning btn-sm">Edit</button>
-                  <button class="btn btn-danger btn-sm">Hapus</button>
+                  <button
+                    id="edit-buttonLembur"
+                    class="btn btn-warning btn-sm edit-button"
+                  >
+                    Edit
+                  </button>
+                  <button class="btn btn-danger btn-sm delete-buttonLembur">
+                    Hapus
+                  </button>
                 </td>
               </tr>
               <!-- Additional rows as needed -->
@@ -304,6 +311,7 @@
           <div class="form-group">
             <label for="addJenisLembur">Jenis Lembur</label>
             <select class="form-control" id="addjenisLembur" required>
+              <option value="" selected disabled>Hari Biasa</option>
               <option value="Hari Biasa">Hari Biasa</option>
               <option value="Weekend / Libur">Weekend / Libur</option>
             </select>
@@ -363,27 +371,168 @@
         </form>
       </div>
     </div>
+
+    <!-- Modal for Editing Lembur -->
+    <div id="editLemburModal" class="modal">
+      <div class="modal-content">
+        <span class="close" id="closeEditLemburModal">&times;</span>
+        <h3 style="margin-bottom: 30px"><strong>Tambah Data Lembur</strong></h3>
+        <form id="editlemburForm">
+          <div class="form-group">
+            <label for="namaLengkap">Nama Lengkap</label>
+            <input
+              type="text"
+              class="form-control"
+              id="editnamaLengkap"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="editIDKaryawan">ID Karyawan</label>
+            <input
+              type="text"
+              class="form-control"
+              id="editIDKaryawan"
+              pattern="\d*"
+              title="Please enter numbers only"
+              required
+            />
+            <div id="editIDKaryawanError" style="display: none; color: red">
+              ID Karyawan should contain numbers only.
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="editTanggalLembur">Tanggal Lembur</label>
+            <input
+              type="date"
+              class="form-control"
+              id="edittanggalLembur"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="editJamMasuk">Jam Masuk</label>
+            <input
+              type="time"
+              class="form-control"
+              id="editjamMasuk"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="editJamKeluar">Jam Keluar</label>
+            <input
+              type="time"
+              class="form-control"
+              id="editjamKeluar"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="editJenisLembur">Jenis Lembur</label>
+            <select class="form-control" id="editjenisLembur" required>
+              <option value="" selected disabled>Hari Biasa</option>
+              <option value="Hari Biasa">Hari Biasa</option>
+              <option value="Weekend / Libur">Weekend / Libur</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="editGaji">Gaji</label>
+            <input type="text" class="form-control" id="editgaji" required />
+          </div>
+          <div class="form-group">
+            <label for="editJamKerjaLembur">Total Waktu Kerja</label>
+            <input
+              type="number"
+              class="form-control"
+              id="editjamKerjaLembur"
+              disabled
+            />
+          </div>
+          <div class="form-group">
+            <label for="editJamI">Jam I</label>
+            <input type="number" class="form-control" id="editjamI" disabled />
+          </div>
+          <div class="form-group">
+            <label for="editJamII">Jam II</label>
+            <input type="number" class="form-control" id="editjamII" disabled />
+          </div>
+          <div class="form-group">
+            <label for="editJamIII">Jam III</label>
+            <input
+              type="number"
+              class="form-control"
+              id="editjamIII"
+              disabled
+            />
+          </div>
+          <div class="form-group">
+            <label for="editJamIV">Jam IV</label>
+            <input type="number" class="form-control" id="editjamIV" disabled />
+          </div>
+          <div class="form-group">
+            <label for="editTotal Jam Lembur">Total Jam Lembur</label>
+            <input
+              type="number"
+              class="form-control"
+              id="edittotalJamLembur"
+              disabled
+            />
+          </div>
+          <div class="form-group">
+            <label for="editUpahLembur">Upah Lembur (Rp)</label>
+            <input
+              type="number"
+              class="form-control"
+              id="editupahLembur"
+              disabled
+            />
+          </div>
+          <div class="form-group">
+            <label for="editKeterangan">Keterangan</label>
+            <textarea class="form-control" id="editKeterangan"></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary">Simpan</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Modal for Deleting Data -->
+    <div id="deleteLemburModal" class="modal">
+      <div class="modal-content">
+        <span class="close" id="closeDeleteLemburModal">&times;</span>
+        <h3 style="margin-bottom: 30px">
+          <strong>Hapus Data Lembur</strong>
+        </h3>
+        <p>Apakah Anda yakin ingin menghapus data lembur ini?</p>
+        <form id="deleteLemburForm">
+          <input type="hidden" id="deleteLemburID" name="deleteLemburID" />
+          <button type="submit" class="btn btn-danger">Hapus</button>
+          <button
+            type="button"
+            class="btn btn-secondary"
+            id="cancelLemburDelete"
+          >
+            Batal
+          </button>
+        </form>
+      </div>
+    </div>
     <script>
-      // Get the modal
+      //Batas Add Lembur Modal
+      // Modal handling
       var modal = document.getElementById("addLemburModal");
-
-      // Get the button that opens the modal
       var btn = document.getElementById("tambahDataLembur");
-
-      // Get the <span> element that closes the modal
       var span = document.getElementById("closeAddLemburModal");
 
-      // Open the modal
       btn.onclick = function () {
         modal.style.display = "block";
       };
 
-      // Close the modal
       span.onclick = function () {
         modal.style.display = "none";
       };
 
-      // Close the modal if clicked outside
       window.onclick = function (event) {
         if (event.target == modal) {
           modal.style.display = "none";
@@ -392,14 +541,14 @@
 
       // Format numbers as Rupiah
       function formatRupiah(angka) {
-        var angka = angka.replace(/[^,\d]/g, "").toString(),
-          split = angka.split(","),
+        angka = angka.replace(/[^,\d]/g, "").toString();
+        var split = angka.split(","),
           sisa = split[0].length % 3,
           rupiah = split[0].substr(0, sisa),
           ribuan = split[0].substr(sisa).match(/\d{3}/gi);
 
         if (ribuan) {
-          separator = sisa ? "." : "";
+          var separator = sisa ? "." : "";
           rupiah += separator + ribuan.join(".");
         }
 
@@ -411,14 +560,7 @@
       document
         .getElementById("addgaji")
         .addEventListener("input", function (e) {
-          var value = e.target.value.replace(/\D/g, ""); // Remove non-numeric characters
-          e.target.value = formatRupiah(value);
-        });
-
-      document
-        .getElementById("addupahLembur")
-        .addEventListener("input", function (e) {
-          var value = e.target.value.replace(/\D/g, ""); // Remove non-numeric characters
+          var value = e.target.value.replace(/\D/g, "");
           e.target.value = formatRupiah(value);
         });
 
@@ -427,23 +569,20 @@
         .getElementById("addIDKaryawan")
         .addEventListener("input", function (e) {
           var value = e.target.value;
-          var isValid = /^\d*$/.test(value); // Check if the value is numeric
-
-          // Show or hide error message based on validity
+          var isValid = /^\d*$/.test(value);
           document.getElementById("addIDKaryawanError").style.display = isValid
             ? "none"
             : "block";
-
-          // Remove non-numeric characters from input value
           e.target.value = value.replace(/\D/g, "");
         });
 
       // Determine if a date is a weekend
       function isWeekend(date) {
         var day = new Date(date).getDay();
-        return day === 0 || day === 6; // Sunday = 0, Saturday = 6
+        return day === 0 || day === 6;
       }
 
+      // Set default times based on date and jenisLembur
       function setDefaultTimes(date) {
         var dayOfWeek = new Date(date).getDay();
         var jamMasuk = document.getElementById("addjamMasuk");
@@ -456,26 +595,25 @@
           jamMasuk.disabled = false;
           jamKeluar.disabled = false;
         } else if (jenisLembur === "Hari Biasa") {
-          jamMasuk.value = dayOfWeek === 5 ? "07:30" : "07:30";
+          jamMasuk.value = "07:30";
           jamMasuk.disabled = true;
-          jamKeluar.value = ""; // Reset jamKeluar for "Hari Biasa"
-          jamKeluar.disabled = false; // Allow manual input for jamKeluar
+          jamKeluar.value = "";
+          jamKeluar.disabled = false;
         }
       }
 
-      // Event listener for addjenisLembur change
       document
         .getElementById("addjenisLembur")
         .addEventListener("change", function () {
           var date = document.getElementById("addtanggalLembur").value;
-          setDefaultTimes(date); // Update default times based on jenisLembur
+          setDefaultTimes(date);
         });
 
       // Calculate time difference in hours
       function calculateTimeDifference(start, end) {
         var startTime = new Date("1970-01-01T" + start + ":00Z");
         var endTime = new Date("1970-01-01T" + end + ":00Z");
-        return (endTime - startTime) / 1000 / 60 / 60; // Difference in hours
+        return (endTime - startTime) / 1000 / 60 / 60;
       }
 
       // Round hours to the nearest 0.5
@@ -493,11 +631,9 @@
 
         if (!tanggalLembur || !jamKeluar) {
           jamKerjaLembur.value = "";
-          calculateTotalJamLembur(); // Update total jam lembur when clearing input
+          calculateTotalJamLembur();
           return;
         }
-
-        var endOfDay;
 
         if (jenisLembur === "Weekend / Libur") {
           if (jamMasuk && jamKeluar) {
@@ -508,13 +644,11 @@
           }
         } else {
           var dayOfWeek = new Date(tanggalLembur).getDay();
-          endOfDay = dayOfWeek === 5 ? "15:30" : "16:30";
-
+          var endOfDay = dayOfWeek === 5 ? "15:30" : "16:30";
           var difference = calculateTimeDifference(endOfDay, jamKeluar);
           jamKerjaLembur.value = roundToHalfHour(difference).toFixed(1);
         }
 
-        // Update jamI, jamII, jamIII, and jamIV
         updateJamCategories();
       }
 
@@ -529,7 +663,6 @@
         var jamIII = document.getElementById("addjamIII");
         var jamIV = document.getElementById("addjamIV");
 
-        // Reset fields
         jamI.value = "";
         jamII.value = "";
         jamIII.value = "";
@@ -554,7 +687,7 @@
           }
         }
 
-        calculateTotalJamLembur(); // Add this line to update total jam lembur
+        calculateTotalJamLembur();
       }
 
       function calculateTotalJamLembur() {
@@ -565,7 +698,6 @@
         var jamIV = parseFloat(document.getElementById("addjamIV").value) || 0;
 
         var totalJamLembur = jamI * 1.5 + jamII * 2 + jamIII * 3 + jamIV * 4;
-
         document.getElementById("addtotalJamLembur").value =
           totalJamLembur.toFixed(1);
       }
@@ -592,7 +724,6 @@
       document
         .getElementById("addjamIV")
         .addEventListener("input", calculateTotalJamLembur);
-
       document
         .getElementById("addtanggalLembur")
         .addEventListener("change", function (e) {
@@ -602,17 +733,13 @@
           jenisLembur.value = isWeekend(date)
             ? "Weekend / Libur"
             : "Hari Biasa";
-
-          // Set default times based on the selected date
           setDefaultTimes(date);
         });
-
       document
         .getElementById("addjenisLembur")
         .addEventListener("change", function () {
           updateJamCategories();
 
-          // Reset jamMasuk and jamKeluar if jenisLembur is set to "Weekend / Libur"
           if (
             document.getElementById("addjenisLembur").value ===
             "Weekend / Libur"
@@ -632,18 +759,12 @@
           ) || 0;
         var totalJamLembur =
           parseFloat(document.getElementById("addtotalJamLembur").value) || 0;
-
-        // Calculate hourly wage
         var hourlyWage = gaji / 173;
-
-        // Round hourly wage to the nearest integer
         hourlyWage = Math.round(hourlyWage);
-
-        // Calculate upah lembur
         var upahLembur = hourlyWage * totalJamLembur;
-
-        // Set value of addupahLembur field
-        document.getElementById("addupahLembur").value = upahLembur.toFixed(0);
+        document.getElementById("addupahLembur").value = upahLembur
+          .toFixed(0)
+          .replace(/\B(?=(\d{3})+(?!\d))/g, "."); // Format as Rupiah
       }
 
       // Update function to recalculate upah lembur
@@ -655,13 +776,318 @@
       document
         .getElementById("addgaji")
         .addEventListener("input", updateUpahLembur);
-
       document
         .getElementById("addtotalJamLembur")
         .addEventListener("input", updateUpahLembur);
-
-      // Ensure upah lembur is updated on load if fields have default values
       document.addEventListener("DOMContentLoaded", updateUpahLembur);
+      //Batas Add Lembur Modal
+
+      //Batas edit Lembur Modal
+      // Modal handling
+      var modal = document.getElementById("editLemburModal");
+      var btn = document.getElementById("edit-buttonLembur");
+      var span = document.getElementById("closeEditLemburModal");
+
+      btn.onclick = function () {
+        modal.style.display = "block";
+      };
+
+      span.onclick = function () {
+        modal.style.display = "none";
+      };
+
+      window.onclick = function (event) {
+        if (event.target == modal) {
+          modal.style.display = "none";
+        }
+      };
+
+      // Format numbers as Rupiah
+      function formatRupiah(angka) {
+        angka = angka.replace(/[^,\d]/g, "").toString();
+        var split = angka.split(","),
+          sisa = split[0].length % 3,
+          rupiah = split[0].substr(0, sisa),
+          ribuan = split[0].substr(sisa).match(/\d{3}/gi);
+
+        if (ribuan) {
+          var separator = sisa ? "." : "";
+          rupiah += separator + ribuan.join(".");
+        }
+
+        rupiah = split[1] != undefined ? rupiah + "," + split[1] : rupiah;
+        return "Rp " + rupiah;
+      }
+
+      // Handle input for editgaji field
+      document
+        .getElementById("editgaji")
+        .addEventListener("input", function (e) {
+          var value = e.target.value.replace(/\D/g, "");
+          e.target.value = formatRupiah(value);
+        });
+
+      // Handle input for editIDKaryawan field
+      document
+        .getElementById("editIDKaryawan")
+        .addEventListener("input", function (e) {
+          var value = e.target.value;
+          var isValid = /^\d*$/.test(value);
+          document.getElementById("editIDKaryawanError").style.display = isValid
+            ? "none"
+            : "block";
+          e.target.value = value.replace(/\D/g, "");
+        });
+
+      // Determine if a date is a weekend
+      function isWeekend(date) {
+        var day = new Date(date).getDay();
+        return day === 0 || day === 6;
+      }
+
+      // Set default times based on date and jenisLembur
+      function setDefaultTimes(date) {
+        var dayOfWeek = new Date(date).getDay();
+        var jamMasuk = document.getElementById("editjamMasuk");
+        var jamKeluar = document.getElementById("editjamKeluar");
+        var jenisLembur = document.getElementById("editjenisLembur").value;
+
+        if (jenisLembur === "Weekend / Libur") {
+          jamMasuk.value = "";
+          jamKeluar.value = "";
+          jamMasuk.disabled = false;
+          jamKeluar.disabled = false;
+        } else if (jenisLembur === "Hari Biasa") {
+          jamMasuk.value = "07:30";
+          jamMasuk.disabled = true;
+          jamKeluar.value = "";
+          jamKeluar.disabled = false;
+        }
+      }
+
+      document
+        .getElementById("editjenisLembur")
+        .addEventListener("change", function () {
+          var date = document.getElementById("edittanggalLembur").value;
+          setDefaultTimes(date);
+        });
+
+      // Calculate time difference in hours
+      function calculateTimeDifference(start, end) {
+        var startTime = new Date("1970-01-01T" + start + ":00Z");
+        var endTime = new Date("1970-01-01T" + end + ":00Z");
+        return (endTime - startTime) / 1000 / 60 / 60;
+      }
+
+      // Round hours to the nearest 0.5
+      function roundToHalfHour(value) {
+        return Math.round(value * 2) / 2;
+      }
+
+      // Update addjamKerjaLembur based on addjamKeluar
+      function updateJamKerjaLembur() {
+        var tanggalLembur = document.getElementById("edittanggalLembur").value;
+        var jamMasuk = document.getElementById("editjamMasuk").value;
+        var jamKeluar = document.getElementById("editjamKeluar").value;
+        var jamKerjaLembur = document.getElementById("editjamKerjaLembur");
+        var jenisLembur = document.getElementById("editjenisLembur").value;
+
+        if (!tanggalLembur || !jamKeluar) {
+          jamKerjaLembur.value = "";
+          calculateTotalJamLembur();
+          return;
+        }
+
+        if (jenisLembur === "Weekend / Libur") {
+          if (jamMasuk && jamKeluar) {
+            var difference = calculateTimeDifference(jamMasuk, jamKeluar);
+            jamKerjaLembur.value = roundToHalfHour(difference).toFixed(1);
+          } else {
+            jamKerjaLembur.value = "";
+          }
+        } else {
+          var dayOfWeek = new Date(tanggalLembur).getDay();
+          var endOfDay = dayOfWeek === 5 ? "15:30" : "16:30";
+          var difference = calculateTimeDifference(endOfDay, jamKeluar);
+          jamKerjaLembur.value = roundToHalfHour(difference).toFixed(1);
+        }
+
+        updateJamCategories();
+      }
+
+      // Update jamI, jamII, jamIII, and jamIV based on jenisLembur
+      function updateJamCategories() {
+        var jenisLembur = document.getElementById("editjenisLembur").value;
+        var jamKerjaLembur =
+          parseFloat(document.getElementById("editjamKerjaLembur").value) || 0;
+
+        var jamI = document.getElementById("editjamI");
+        var jamII = document.getElementById("editjamII");
+        var jamIII = document.getElementById("editjamIII");
+        var jamIV = document.getElementById("editjamIV");
+
+        jamI.value = "";
+        jamII.value = "";
+        jamIII.value = "";
+        jamIV.value = "";
+
+        if (jenisLembur === "Hari Biasa") {
+          if (jamKerjaLembur > 0) {
+            jamI.value = Math.min(jamKerjaLembur, 1).toFixed(1);
+            jamII.value = (
+              jamKerjaLembur > 1 ? jamKerjaLembur - 1 : ""
+            ).toFixed(1);
+          }
+        } else if (jenisLembur === "Weekend / Libur") {
+          if (jamKerjaLembur > 0) {
+            jamII.value = Math.min(jamKerjaLembur, 8).toFixed(1);
+            jamIII.value =
+              jamKerjaLembur > 8
+                ? Math.min(jamKerjaLembur - 8, 1).toFixed(1)
+                : "";
+            jamIV.value =
+              jamKerjaLembur > 9 ? (jamKerjaLembur - 9).toFixed(1) : "";
+          }
+        }
+
+        calculateTotalJamLembur();
+      }
+
+      function calculateTotalJamLembur() {
+        var jamI = parseFloat(document.getElementById("editjamI").value) || 0;
+        var jamII = parseFloat(document.getElementById("editjamII").value) || 0;
+        var jamIII =
+          parseFloat(document.getElementById("editjamIII").value) || 0;
+        var jamIV = parseFloat(document.getElementById("editjamIV").value) || 0;
+
+        var totalJamLembur = jamI * 1.5 + jamII * 2 + jamIII * 3 + jamIV * 4;
+        document.getElementById("edittotalJamLembur").value =
+          totalJamLembur.toFixed(1);
+      }
+
+      // Event listeners
+      document
+        .getElementById("editjenisLembur")
+        .addEventListener("change", updateJamCategories);
+      document
+        .getElementById("editjamKerjaLembur")
+        .addEventListener("input", updateJamCategories);
+      document
+        .getElementById("editjamKeluar")
+        .addEventListener("change", updateJamKerjaLembur);
+      document
+        .getElementById("editjamI")
+        .addEventListener("input", calculateTotalJamLembur);
+      document
+        .getElementById("editjamII")
+        .addEventListener("input", calculateTotalJamLembur);
+      document
+        .getElementById("editjamIII")
+        .addEventListener("input", calculateTotalJamLembur);
+      document
+        .getElementById("editjamIV")
+        .addEventListener("input", calculateTotalJamLembur);
+      document
+        .getElementById("edittanggalLembur")
+        .addEventListener("change", function (e) {
+          var date = e.target.value;
+          var jenisLembur = document.getElementById("editjenisLembur");
+
+          jenisLembur.value = isWeekend(date)
+            ? "Weekend / Libur"
+            : "Hari Biasa";
+          setDefaultTimes(date);
+        });
+      document
+        .getElementById("editjenisLembur")
+        .addEventListener("change", function () {
+          updateJamCategories();
+
+          if (
+            document.getElementById("editjenisLembur").value ===
+            "Weekend / Libur"
+          ) {
+            document.getElementById("editjamMasuk").value = "";
+            document.getElementById("editjamKeluar").value = "";
+            document.getElementById("editjamMasuk").disabled = false;
+            document.getElementById("editjamKeluar").disabled = false;
+          }
+        });
+
+      // Function to calculate editupahLembur
+      function calculateUpahLembur() {
+        var gaji =
+          parseFloat(
+            document.getElementById("editgaji").value.replace(/[^0-9]/g, "")
+          ) || 0;
+        var totalJamLembur =
+          parseFloat(document.getElementById("edittotalJamLembur").value) || 0;
+        var hourlyWage = gaji / 173;
+        hourlyWage = Math.round(hourlyWage);
+        var upahLembur = hourlyWage * totalJamLembur;
+        document.getElementById("editupahLembur").value = upahLembur
+          .toFixed(0)
+          .replace(/\B(?=(\d{3})+(?!\d))/g, "."); // Format as Rupiah
+      }
+
+      // Update function to recalculate upah lembur
+      function updateUpahLembur() {
+        calculateUpahLembur();
+      }
+
+      // Event listeners to trigger upah lembur calculation
+      document
+        .getElementById("editgaji")
+        .addEventListener("input", updateUpahLembur);
+      document
+        .getElementById("edittotalJamLembur")
+        .addEventListener("input", updateUpahLembur);
+      document.addEventListener("DOMContentLoaded", updateUpahLembur);
+      //Batas Edit Lembur Modal
+
+      //Batas Delete Lembur Modal
+      //Batas Delete Lembur Modal
+      var deleteModal = document.getElementById("deleteLemburModal");
+      var deleteButtons = document.getElementsByClassName(
+        "delete-buttonLembur"
+      );
+      var closeDeleteModal = document.getElementById("closeDeleteLemburModal");
+      var cancelDelete = document.getElementById("cancelLemburDelete");
+
+      // Listen for open click for delete modal
+      Array.from(deleteButtons).forEach(function (button) {
+        button.addEventListener("click", openDeleteModal);
+      });
+
+      closeDeleteModal.addEventListener("click", closeDeleteModalFunc);
+      cancelDelete.addEventListener("click", closeDeleteModalFunc);
+
+      // Function to open delete modal
+      function openDeleteModal() {
+        var employeeID =
+          this.closest("tr").querySelector("td:nth-child(3)").innerText;
+        document.getElementById("deleteLemburID").value = employeeID;
+        deleteModal.style.display = "block";
+      }
+
+      // Function to close delete modal
+      function closeDeleteModalFunc() {
+        deleteModal.style.display = "none";
+      }
+
+      // Function to close modal if outside click
+      function outsideClick(e) {
+        if (e.target == deleteModal) {
+          deleteModal.style.display = "none";
+        }
+      }
+
+      // Event listener for outside click
+      window.addEventListener("click", outsideClick);
+
+      //Batas Delete Lembur Modal
+
+      //Batas Delete Lembur Modal
     </script>
   </body>
 </html>

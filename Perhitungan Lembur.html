@@ -42,7 +42,7 @@
         border: 1px solid #11a634;
         border-radius: 0; /* Menghapus border-radius untuk membuat persegi */
         box-shadow: 0 2px 4px rgba(0, 255, 38, 0.1);
-        width: 235px; /* Menentukan lebar card */
+        width: 225px; /* Menentukan lebar card */
         height: 40px;
         background-color: #1bbc53;
         color: white;
@@ -159,6 +159,7 @@
         <div class="dashboard"><h2>Perhitungan Lembur</h2></div>
         <div class="header-section">
           <div class="card-header" id="tambahDataLembur">
+            <i></i>
             <i class="fas fa-plus-circle"></i>
             <h4>Tambah Data Lembur</h4>
           </div>
@@ -292,6 +293,7 @@
               type="date"
               class="form-control"
               id="addtanggalLembur"
+              onchange="checkDate('add')"
               required
             />
           </div>
@@ -313,7 +315,8 @@
             <select class="form-control" id="addjenisLembur" required>
               <option value="" selected disabled>Hari Biasa</option>
               <option value="Hari Biasa">Hari Biasa</option>
-              <option value="Weekend / Libur">Weekend / Libur</option>
+              <option value="Weekend">Weekend</option>
+              <option value="Libur">Libur</option>
             </select>
           </div>
           <div class="form-group">
@@ -407,6 +410,7 @@
               type="date"
               class="form-control"
               id="edittanggalLembur"
+              onchange="checkDate('edit')"
               required
             />
           </div>
@@ -431,9 +435,10 @@
           <div class="form-group">
             <label for="editJenisLembur">Jenis Lembur</label>
             <select class="form-control" id="editjenisLembur" required>
-              <option value="" selected disabled>Hari Biasa</option>
+              <option value="" selected disabled></option>
               <option value="Hari Biasa">Hari Biasa</option>
-              <option value="Weekend / Libur">Weekend / Libur</option>
+              <option value="Weekend">Weekend</option>
+              <option value="Libur">Libur</option>
             </select>
           </div>
           <div class="form-group">
@@ -589,7 +594,7 @@
         var jamKeluar = document.getElementById("addjamKeluar");
         var jenisLembur = document.getElementById("addjenisLembur").value;
 
-        if (jenisLembur === "Weekend / Libur") {
+        if (jenisLembur === "Weekend" || jenisLembur === "Libur") {
           jamMasuk.value = "";
           jamKeluar.value = "";
           jamMasuk.disabled = false;
@@ -635,7 +640,7 @@
           return;
         }
 
-        if (jenisLembur === "Weekend / Libur") {
+        if (jenisLembur === "Weekend" || jenisLembur === "Libur") {
           if (jamMasuk && jamKeluar) {
             var difference = calculateTimeDifference(jamMasuk, jamKeluar);
             jamKerjaLembur.value = roundToHalfHour(difference).toFixed(1);
@@ -675,7 +680,7 @@
               jamKerjaLembur > 1 ? jamKerjaLembur - 1 : ""
             ).toFixed(1);
           }
-        } else if (jenisLembur === "Weekend / Libur") {
+        } else if (jenisLembur === "Weekend" || jenisLembur === "Libur") {
           if (jamKerjaLembur > 0) {
             jamII.value = Math.min(jamKerjaLembur, 8).toFixed(1);
             jamIII.value =
@@ -731,7 +736,7 @@
           var jenisLembur = document.getElementById("addjenisLembur");
 
           jenisLembur.value = isWeekend(date)
-            ? "Weekend / Libur"
+            ? "Weekend" || "Libur"
             : "Hari Biasa";
           setDefaultTimes(date);
         });
@@ -741,8 +746,8 @@
           updateJamCategories();
 
           if (
-            document.getElementById("addjenisLembur").value ===
-            "Weekend / Libur"
+            document.getElementById("addjenisLembur").value === "Weekend" ||
+            document.getElementById("addjenisLembur").value === "Libur"
           ) {
             document.getElementById("addjamMasuk").value = "";
             document.getElementById("addjamKeluar").value = "";
@@ -852,7 +857,7 @@
         var jamKeluar = document.getElementById("editjamKeluar");
         var jenisLembur = document.getElementById("editjenisLembur").value;
 
-        if (jenisLembur === "Weekend / Libur") {
+        if (jenisLembur === "Weekend" || jenisLembur === "Libur") {
           jamMasuk.value = "";
           jamKeluar.value = "";
           jamMasuk.disabled = false;
@@ -898,7 +903,7 @@
           return;
         }
 
-        if (jenisLembur === "Weekend / Libur") {
+        if (jenisLembur === "Weekend" || jenisLembur === "Libur") {
           if (jamMasuk && jamKeluar) {
             var difference = calculateTimeDifference(jamMasuk, jamKeluar);
             jamKerjaLembur.value = roundToHalfHour(difference).toFixed(1);
@@ -938,7 +943,7 @@
               jamKerjaLembur > 1 ? jamKerjaLembur - 1 : ""
             ).toFixed(1);
           }
-        } else if (jenisLembur === "Weekend / Libur") {
+        } else if (jenisLembur === "Weekend" || jenisLembur === "Libur") {
           if (jamKerjaLembur > 0) {
             jamII.value = Math.min(jamKerjaLembur, 8).toFixed(1);
             jamIII.value =
@@ -994,7 +999,7 @@
           var jenisLembur = document.getElementById("editjenisLembur");
 
           jenisLembur.value = isWeekend(date)
-            ? "Weekend / Libur"
+            ? "Weekend" || "Libur"
             : "Hari Biasa";
           setDefaultTimes(date);
         });
@@ -1004,8 +1009,8 @@
           updateJamCategories();
 
           if (
-            document.getElementById("editjenisLembur").value ===
-            "Weekend / Libur"
+            document.getElementById("editjenisLembur").value === "Weekend" ||
+            document.getElementById("editjenisLembur").value === "Libur"
           ) {
             document.getElementById("editjamMasuk").value = "";
             document.getElementById("editjamKeluar").value = "";
@@ -1087,7 +1092,39 @@
 
       //Batas Delete Lembur Modal
 
-      //Batas Delete Lembur Modal
+      function checkDate(prefix) {
+        var dateField = document.getElementById(prefix + "tanggalLembur");
+        var jenisLemburField = document.getElementById(prefix + "jenisLembur");
+
+        var selectedDate = new Date(dateField.value);
+        var dayOfWeek = selectedDate.getDay(); // 0 (Sunday) to 6 (Saturday)
+
+        var weekendOption = jenisLemburField.querySelector(
+          'option[value="Weekend"]'
+        );
+        var hariBiasaOption = jenisLemburField.querySelector(
+          'option[value="Hari Biasa"]'
+        );
+        var liburOption = jenisLemburField.querySelector(
+          'option[value="Libur"]'
+        );
+
+        if (dayOfWeek === 0 || dayOfWeek === 6) {
+          // Weekend
+          weekendOption.disabled = false;
+          hariBiasaOption.disabled = true;
+          liburOption.disabled = false;
+        } else {
+          // Weekday
+          weekendOption.disabled = true;
+          hariBiasaOption.disabled = false;
+          liburOption.disabled = false;
+          // If currently selected value is 'Weekend', change it to 'Hari Biasa'
+          if (jenisLemburField.value === "Weekend") {
+            jenisLemburField.value = "Hari Biasa";
+          }
+        }
+      }
     </script>
   </body>
 </html>

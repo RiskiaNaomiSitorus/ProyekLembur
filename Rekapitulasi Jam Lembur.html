@@ -5,18 +5,9 @@
   <title>Summary</title>
   <link rel="stylesheet" href="styles.css" />
   <script src="https://kit.fontawesome.com/b99e675b6e.js"></script>
-  <link
-    rel="stylesheet"
-    href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
-  />
-  <link
-    rel="stylesheet"
-    href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css"
-  />
-  <link
-    rel="stylesheet"
-    href="https://cdn.datatables.net/buttons/1.6.2/css/buttons.dataTables.min.css"
-  />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css" />
+  <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.6.2/css/buttons.dataTables.min.css" />
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
   <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
@@ -48,6 +39,22 @@
     .action-buttons .btn {
       margin-right: 5px;
     }
+    .btn-csv {
+      background-color: #28a745;
+      color: white;
+    }
+    .btn-copy {
+      background-color: #17a2b8;
+      color: white;
+    }
+    .btn-colvis {
+      background-color: #ffc107;
+      color: white;
+    }
+    .btn-print {
+      background-color: #6c757d;
+      color: white;
+    }
   </style>
 </head>
 <body>
@@ -55,18 +62,10 @@
     <div class="sidebar">
       <h2>Lembur</h2>
       <ul>
-        <li>
-          <a href="Dashboard.html"><i class="fas fa-home"></i>Dashboard</a>
-        </li>
-        <li>
-          <a href="Data Karyawan.html"><i class="fas fa-user"></i>Data Karyawan</a>
-        </li>
-        <li>
-          <a href="Rekapitulasi Jam Lembur.html"><i class="fas fa-project-diagram"></i>Summary</a>
-        </li>
-        <li>
-          <a href="Perhitungan Lembur.html"><i class="fas fa-address-book"></i>Perhitungan Lembur</a>
-        </li>
+        <li><a href="Dashboard.html"><i class="fas fa-home"></i>Dashboard</a></li>
+        <li><a href="Data Karyawan.html"><i class="fas fa-user"></i>Data Karyawan</a></li>
+        <li><a href="Rekapitulasi Jam Lembur.html"><i class="fas fa-project-diagram"></i>Summary</a></li>
+        <li><a href="Perhitungan Lembur.html"><i class="fas fa-address-book"></i>Perhitungan Lembur</a></li>
       </ul>
     </div>
     <div class="main_content">
@@ -81,103 +80,57 @@
         </div>
       </div>
       <div class="info">
-        <div class="date">
-          <h5>12 Juli 2024</h5>
-        </div>
+        <div class="date"><h5>12 Juli 2024</h5></div>
       </div>
       <div class="dashboard"></div>
       <div class="header-section">
-        <div class="container">
-          <h1>Summary Lembur Karyawan</h1>
-        </div>
+        <div class="container"><h1>Summary Lembur Karyawan</h1></div>
 
         <div class="form-container">
           <form id="overtime-form">
             <div class="form-group">
               <label for="nama">Nama:</label>
-              <input
-                type="text"
-                id="nama"
-                name="nama"
-                class="form-control"
-                required
-              />
+              <input type="text" id="nama" name="nama" class="form-control" required />
             </div>
             <div class="form-group">
               <label for="in">In:</label>
-              <input
-                type="time"
-                id="in"
-                name="in"
-                class="form-control"
-                required
-              />
+              <input type="datetime-local" id="in" name="in" class="form-control" required />
             </div>
             <div class="form-group">
               <label for="out">Out:</label>
-              <input
-                type="time"
-                id="out"
-                name="out"
-                class="form-control"
-                required
-              />
+              <input type="datetime-local" id="out" name="out" class="form-control" required />
             </div>
             <div class="form-group">
               <label for="keterangan">Keterangan:</label>
-              <input
-                type="text"
-                id="keterangan"
-                name="keterangan"
-                class="form-control"
-                required
-              />
+              <input type="text" id="keterangan" name="keterangan" class="form-control" required />
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
           </form>
         </div>
-
-        <div class="table-container">
-          <table class="table table-striped table-bordered" id="overtime-table">
-            <thead>
-              <tr>
-                <th>No</th>
-                <th>Nama</th>
-                <th>Jumlah Jam</th>
-                <th>Rp</th>
-              </tr>
-            </thead>
-            <tbody id="summary-table">
-              <!-- Rows will be inserted here by JavaScript -->
-            </tbody>
-            <tfoot>
-              <tr>
-                <td colspan="2">Total</td>
-                <td id="total-jam" class="bold">0</td>
-                <td id="total-upah" class="bold">0</td>
-              </tr>
-            </tfoot>
-          </table>
-        </div>
-
-        <div class="summary-footer">
-          <div class="action-buttons">
-            <button class="btn btn-primary btn-sm" onclick="exportToExcel()">
-              <i class="fas fa-file-excel"></i> Excel
-            </button>
-            <button id="print-btn" class="btn btn-secondary btn-sm">
-              <i class="fas fa-print"></i> Print
-            </button>
-            <button id="csv-btn" class="btn btn-success btn-sm">
-              <i class="fas fa-file-csv"></i> CSV
-            </button>
-            <button id="copy-btn" class="btn btn-info btn-sm">
-              <i class="fas fa-copy"></i> Copy
-            </button>
-            <button id="colvis-btn" class="btn btn-warning btn-sm">
-              <i class="fas fa-eye"></i> Column Visibility
-            </button>
+        
+          <div class="table-container">
+            <table class="table table-striped table-bordered" id="overtime-table">
+              <thead>
+                <tr>
+                  <th>No</th>
+                  <th>Nama</th>
+                  <th>Jumlah Jam</th>
+                  <th>Rp</th>
+                </tr>
+              </thead>
+              <tbody id="summary-table">
+                <!-- Rows will be inserted here by JavaScript -->
+              </tbody>
+              <tfoot>
+                <tr>
+                  <td colspan="2">Total</td>
+                  <td id="total-jam" class="bold">0</td>
+                  <td id="total-upah" class="bold">0</td>
+                </tr>
+              </tfoot>
+            </table>
           </div>
+          
           <p>Alamat: Jalan Example No.123, Jakarta</p>
           <p>Tanggal: 12 Juli 2024</p>
           <p>Approved by: Manager Name</p>
@@ -186,19 +139,52 @@
     </div>
   </div>
   <script>
+    $(document).ready(function() {
+      $('#overtime-table').DataTable({
+        dom: 'Bfrtip',
+        buttons: [
+          {
+            extend: 'excelHtml5',
+            text: '<i class="fas fa-file-excel"></i> Excel',
+            className: 'btn btn-primary btn-sm'
+          },
+          {
+            extend: 'csvHtml5',
+            text: '<i class="fas fa-file-csv"></i> CSV',
+            className: 'btn btn-csv btn-sm'
+          },
+          {
+            extend: 'copyHtml5',
+            text: '<i class="fas fa-copy"></i> Copy',
+            className: 'btn btn-copy btn-sm'
+          },
+          {
+            extend: 'colvis',
+            text: '<i class="fas fa-eye"></i> Column Visibility',
+            className: 'btn btn-colvis btn-sm'
+          },
+          {
+            extend: 'print',
+            text: '<i class="fas fa-print"></i> Print',
+            className: 'btn btn-print btn-sm',
+            customize: function (win) {
+              $(win.document.body).css('font-size', '10pt');
+              $(win.document.body).find('table').addClass('compact').css('font-size', 'inherit');
+            }
+          }
+        ]
+      });
+    });
+
     // Data lembur
     const overtimeData = [];
 
     // Function untuk menghitung lembur
     function calculateOvertime(inTime, outTime) {
-      const inParts = inTime.split(":");
-      const outParts = outTime.split(":");
-      const inDate = new Date(0, 0, 0, inParts[0], inParts[1], 0);
-      const outDate = new Date(0, 0, 0, outParts[0], outParts[1], 0);
-      const diff = outDate.getTime() - inDate.getTime();
-      const hours = Math.floor(diff / 1000 / 60 / 60);
-      const minutes = Math.floor((diff - hours * 60 * 60 * 1000) / 1000 / 60);
-      const totalHours = hours + minutes / 60;
+      const inDate = new Date(inTime);
+      const outDate = new Date(outTime);
+      const diff = outDate - inDate;
+      const totalHours = diff / 1000 / 60 / 60;
 
       const jam1 = Math.min(totalHours, 1);
       const jam2 = totalHours > 1 ? Math.min(totalHours - 1, 1) : 0;
@@ -289,44 +275,6 @@
 
       XLSX.writeFile(wb, "Summary_Lembur.xlsx");
     }
-
-    // Initialize DataTable dengan tombol-tombol
-    $(document).ready(function() {
-      const table = $('#overtime-table').DataTable({
-        dom: 'Bfrtip',
-        buttons: [
-          {
-            extend: 'print',
-            title: 'Summary Lembur Karyawan',
-            messageTop: 'Tanggal: 12 Juli 2024',
-            messageBottom: 'Alamat: Jalan Example No.123, Jakarta\nApproved by: Manager Name'
-          },
-          {
-            extend: 'csv',
-            title: 'Summary_Lembur_Karyawan',
-            filename: 'Summary_Lembur_Karyawan'
-          },
-          'copy',
-          'colvis'
-        ]
-      });
-
-      $('#print-btn').on('click', function() {
-        table.button('.buttons-print').trigger();
-      });
-
-      $('#csv-btn').on('click', function() {
-        table.button('.buttons-csv').trigger();
-      });
-
-      $('#copy-btn').on('click', function() {
-        table.button('.buttons-copy').trigger();
-      });
-
-      $('#colvis-btn').on('click', function() {
-        table.button('.buttons-colvis').trigger();
-      });
-    });
 
     // Populate table on page load
     document.addEventListener("DOMContentLoaded", () => {

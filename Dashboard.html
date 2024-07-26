@@ -58,6 +58,36 @@
       .report-container a:hover {
         text-decoration: underline; /* Underline on hover */
       }
+
+      /* Ensure the wrapper takes the full height of the viewport */
+      .wrapper {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+      }
+
+      .main_content {
+        flex: 1;
+      }
+
+      /* Footer styles */
+      footer {
+        padding: 10px;
+        text-align: center;
+      }
+
+      .footer-links {
+        margin-top: 10px;
+      }
+
+      .footer-links a {
+        margin: 0 10px;
+        text-decoration: none;
+      }
+
+      .footer-links a:hover {
+        text-decoration: underline;
+      }
     </style>
   </head>
   <body>
@@ -171,15 +201,15 @@
             <div class="calendar-container" id="calendar"></div>
           </div>
         </div>
-        <footer>
-          <p>&copy; 2024 PT. Tolan Tiga Indonesia. All rights reserved.</p>
-          <div class="footer-links">
-            <a href="#">Privacy Policy</a>
-            <a href="#">Terms of Service</a>
-            <a href="#">Contact Us</a>
-          </div>
-        </footer>
       </div>
+      <footer>
+        <p>&copy; 2024 PT. Tolan Tiga Indonesia. All rights reserved.</p>
+        <div class="footer-links">
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms of Service</a>
+          <a href="#">Contact Us</a>
+        </div>
+      </footer>
     </div>
     <script src="scripts.js"></script>
     <script>

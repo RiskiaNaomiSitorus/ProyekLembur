@@ -309,125 +309,312 @@
             </ul>
           </div>
         </div>
-        <div id="tambahDataKaryawanModal" class="modal">
-          <div class="modal-content">
-            <span class="close">&times;</span>
-            <h2>Tambah Data Karyawan</h2>
-            <form>
-              <div class="form-group">
-                <label for="idKaryawan">ID Karyawan:</label>
-                <input type="text" id="idKaryawan" name="idKaryawan" />
-              </div>
-              <div class="form-group">
-                <label for="namaKaryawan">Nama Karyawan:</label>
-                <input type="text" id="namaKaryawan" name="namaKaryawan" />
-              </div>
-              <div class="form-group">
-                <label for="jenisKelamin">Jenis Kelamin:</label>
-                <select id="jenisKelamin" name="jenisKelamin">
-                  <option value="Laki-laki">Laki-laki</option>
-                  <option value="Perempuan">Perempuan</option>
-                </select>
-              </div>
-              <div class="form-group">
-                <label for="jabatan">Jabatan:</label>
-                <input type="text" id="jabatan" name="jabatan" />
-              </div>
-              <div class="form-group">
-                <label for="status">Status:</label>
-                <input type="text" id="status" name="status" />
-              </div>
-              <div class="form-group">
-                <label for="gaji">Gaji:</label>
-                <input type="text" id="gaji" name="gaji" />
-              </div>
-              <div class="form-group">
-                <label for="photo">Photo:</label>
-                <input type="file" id="photo" name="photo" />
-              </div>
-              <button type="submit" class="btn btn-primary">Simpan</button>
-            </form>
+      <!-- Modal for Editing Data -->
+    <div id="editModal" class="modal">
+      <div class="modal-content">
+        <span class="close" id="closeModal">&times;</span>
+        <h3 style="margin-bottom: 30px">
+          <strong>Edit Data Karyawan</strong>
+        </h3>
+        <form id="editForm">
+          <div class="form-group">
+            <label for="editID">ID Karyawan</label>
+            <input
+              type="text"
+              class="form-control"
+              id="editID"
+              name="editID"
+              required
+            />
           </div>
-        </div>
+          <div class="form-group">
+            <label for="editName">Nama Karyawan</label>
+            <input
+              type="text"
+              class="form-control"
+              id="editName"
+              name="editName"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="editGender">Jenis Kelamin</label>
+            <select
+              class="form-control"
+              id="editGender"
+              name="editGender"
+              required
+            >
+              <option value="" selected disabled></option>
+              <option value="Laki-laki">Laki-laki</option>
+              <option value="Perempuan">Perempuan</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="editPosition">Jabatan</label>
+            <input
+              type="text"
+              class="form-control"
+              id="editPosition"
+              name="editPosition"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="editStatus">Status</label>
+            <input
+              type="text"
+              class="form-control"
+              id="editStatus"
+              name="editStatus"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="editSalary">Gaji</label>
+            <input
+              type="text"
+              class="form-control"
+              id="editSalary"
+              name="editSalary"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="editPhoto">Photo</label>
+            <input
+              type="file"
+              class="form-control"
+              id="editPhoto"
+              name="editPhoto"
+            />
+          </div>
+          <button type="submit" class="btn btn-primary">Save Changes</button>
+        </form>
+      </div>
+    </div>
+    <!-- Modal for Deleting Data -->
+    <div id="deleteModal" class="modal">
+      <div class="modal-content">
+        <span class="close" id="closeDeleteModal">&times;</span>
+        <h3 style="margin-bottom: 30px">
+          <strong>Hapus Data Karyawan</strong>
+        </h3>
+        <p>Apakah Anda yakin ingin menghapus data karyawan ini?</p>
+        <form id="deleteForm">
+          <input type="hidden" id="deleteID" name="deleteID" />
+          <button type="submit" class="btn btn-danger">Hapus</button>
+          <button type="button" class="btn btn-secondary" id="cancelDelete">
+            Batal
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Modal for Adding Data -->
+    <div id="addModal" class="modal">
+      <div class="modal-content">
+        <span class="close" id="closeAddModal">&times;</span>
+        <h3 style="margin-bottom: 30px">
+          <strong>Tambah Data Karyawan</strong>
+        </h3>
+
+        <form id="addForm">
+          <div class="form-group">
+            <label for="addID">ID Karyawan</label>
+            <input
+              type="text"
+              class="form-control"
+              id="addID"
+              name="addID"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="addName">Nama Karyawan</label>
+            <input
+              type="text"
+              class="form-control"
+              id="addName"
+              name="addName"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="addGender">Jenis Kelamin</label>
+            <select
+              class="form-control"
+              id="addGender"
+              name="addGender"
+              required
+            >
+              <option value="" selected disabled></option>
+              <option value="Laki-laki">Laki-laki</option>
+              <option value="Perempuan">Perempuan</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="addPosition">Jabatan</label>
+            <input
+              type="text"
+              class="form-control"
+              id="addPosition"
+              name="addPosition"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="addStatus">Status</label>
+            <input
+              type="text"
+              class="form-control"
+              id="addStatus"
+              name="addStatus"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="addSalary">Gaji</label>
+            <input
+              type="text"
+              class="form-control"
+              id="addSalary"
+              name="addSalary"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="addPhoto">Photo</label>
+            <input
+              type="file"
+              class="form-control"
+              id="addPhoto"
+              name="addPhoto"
+            />
+          </div>
+          <button type="submit" class="btn btn-primary">Add Karyawan</button>
+        </form>
+      </div>
+    </div>
         <script>
-      $(function () {
-        $("#datepicker").datepicker();
+
+       // Get modal elements
+       var editmodal = document.getElementById("editModal");
+      var addModal = document.getElementById("addModal");
+      var deleteModal = document.getElementById("deleteModal");
+
+      // Get open modal buttons
+      var editButtons = document.getElementsByClassName("edit-button");
+      var tambahDataKaryawan = document.getElementById("tambahDataKaryawan");
+      var deleteButtons = document.getElementsByClassName("delete-button");
+
+      // Get close buttons
+      var closeModal = document.getElementById("closeModal");
+      var closeAddModal = document.getElementById("closeAddModal");
+      var closeDeleteModal = document.getElementById("closeDeleteModal");
+      var cancelDelete = document.getElementById("cancelDelete");
+
+      // Listen for open click for edit modal
+      Array.from(editButtons).forEach(function (button) {
+        button.addEventListener("click", openEditModal);
       });
 
-      // Chart.js code
-      const ctx = document.getElementById("myChart").getContext("2d");
-      const myChart = new Chart(ctx, {
-        type: "line",
-        data: {
-          labels: ["January", "February", "March", "April", "May", "June", "July"],
-          datasets: [
-            {
-              label: "Lembur",
-              data: [65, 59, 80, 81, 56, 55, 40],
-              backgroundColor: "rgba(75, 192, 192, 0.2)",
-              borderColor: "rgba(75, 192, 192, 1)",
-              borderWidth: 1,
-            },
-          ],
-        },
-        options: {
-          scales: {
-            y: {
-              beginAtZero: true,
-            },
-          },
-        },
+      // Listen for open click for add modal
+      tambahDataKaryawan.addEventListener("click", openAddModal);
+
+      // Listen for open click for delete modal
+      Array.from(deleteButtons).forEach(function (button) {
+        button.addEventListener("click", openDeleteModal);
       });
 
-      // Time and date script
-      function updateTime() {
-        const now = new Date();
-        const hours = String(now.getHours()).padStart(2, "0");
-        const minutes = String(now.getMinutes()).padStart(2, "0");
-        const seconds = String(now.getSeconds()).padStart(2, "0");
-        const currentTime = `${hours}:${minutes}:${seconds}`;
-        const currentDate = now.toLocaleDateString();
+      // Listen for close click
+      closeModal.addEventListener("click", closeEditModal);
+      closeAddModal.addEventListener("click", closeAddModalFunc);
+      closeDeleteModal.addEventListener("click", closeDeleteModalFunc);
+      cancelDelete.addEventListener("click", closeDeleteModalFunc);
 
-        document.getElementById("currentTime").textContent = currentTime;
-        document.getElementById("currentDate").textContent = currentDate;
+      // Outside click
+      window.addEventListener("click", outsideClick);
+
+      // Function to open edit modal
+      function openEditModal() {
+        editmodal.style.display = "block";
       }
 
-      setInterval(updateTime, 1000);
-      updateTime(); // Initial call to set the time immediately
-
-      // Modal functionality
-      const modal = document.getElementById("detailModal");
-      const span = document.getElementsByClassName("close-button")[0];
-
-      function showDetails(title, content) {
-        document.getElementById("modalTitle").textContent = title;
-        document.getElementById("modalBody").innerHTML = content;
-        modal.style.display = "block";
+      // Function to open add modal
+      function openAddModal() {
+        addModal.style.display = "block";
       }
 
-      span.onclick = function () {
-        modal.style.display = "none";
-      };
+      // Function to open delete modal
+      function openDeleteModal() {
+        var employeeID =
+          this.closest("tr").querySelector("td:nth-child(2)").innerText;
+        document.getElementById("deleteID").value = employeeID;
+        deleteModal.style.display = "block";
+      }
 
-      window.onclick = function (event) {
-        if (event.target == modal) {
-          modal.style.display = "none";
+      // Function to close edit modal
+      function closeEditModal() {
+        editmodal.style.display = "none";
+      }
+
+      // Function to close add modal
+      function closeAddModalFunc() {
+        addModal.style.display = "none";
+      }
+
+      // Function to close delete modal
+      function closeDeleteModalFunc() {
+        deleteModal.style.display = "none";
+      }
+
+      // Function to close modal if outside click
+      function outsideClick(e) {
+        if (e.target == modal) {
+          editmodal.style.display = "none";
         }
-      };
+        if (e.target == addModal) {
+          addModal.style.display = "none";
+        }
+        if (e.target == deleteModal) {
+          deleteModal.style.display = "none";
+        }
+      }
 
-      // Example usage for "View Details" links
-      document.querySelectorAll(".view-details").forEach((link) => {
-        link.addEventListener("click", function (event) {
-          event.preventDefault();
-          const title = this.getAttribute("data-title");
-          const content = this.getAttribute("data-content");
-          showDetails(title, content);
+      // Event listener for changes in gaji
+      document
+        .getElementById("editSalary")
+        .addEventListener("input", function (e) {
+          let value = e.target.value.replace(/[^,\d]/g, "");
+          let formattedValue = new Intl.NumberFormat("id-ID", {
+            style: "currency",
+            currency: "IDR",
+            minimumFractionDigits: 0,
+          }).format(value);
+          e.target.value = formattedValue.replace("IDR", "Rp").trim();
+
+          // Recalculate upahLembur when gaji changes
+          calculateUpahLembur();
         });
-      });
+      // Event listener for changes in gaji
+      document
+        .getElementById("addSalary")
+        .addEventListener("input", function (e) {
+          let value = e.target.value.replace(/[^,\d]/g, "");
+          let formattedValue = new Intl.NumberFormat("id-ID", {
+            style: "currency",
+            currency: "IDR",
+            minimumFractionDigits: 0,
+          }).format(value);
+          e.target.value = formattedValue.replace("IDR", "Rp").trim();
 
-      // Logout function
+          // Recalculate upahLembur when gaji changes
+          calculateUpahLembur();
+        });
+
+        // Logout function
       function logout() {
-        // Perform logout actions here (e.g., clearing session, redirecting to login page, etc.)
         alert("You have logged out successfully.");
         window.location.href = "login.html";
       }

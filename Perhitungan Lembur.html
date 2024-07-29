@@ -113,6 +113,47 @@
         text-decoration: none;
         cursor: pointer;
       }
+
+      /* Dropdown Styles */
+      .dropdown {
+        position: relative;
+        display: inline-block;
+      }
+      .dropbtn {
+        background-color: #f8f9fa;
+        border: none;
+        cursor: pointer;
+        padding: 10px 20px;
+        font-size: 16px;
+        display: flex;
+        align-items: center;
+      }
+      .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: #f9f9f9;
+        min-width: 160px;
+        box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+        z-index: 1;
+      }
+      .dropdown-content a {
+        color: black;
+        padding: 12px 16px;
+        text-decoration: none;
+        display: block;
+      }
+      .dropdown-content a:hover {
+        background-color: #f1f1f1;
+      }
+      .dropdown:hover .dropdown-content {
+        display: block;
+      }
+      .dropdown:hover .dropbtn {
+        background-color: #e2e6ea;
+      }
+      .dropdown .fa-chevron-down {
+        margin-left: 10px;
+      }
     </style>
   </head>
   <body>
@@ -148,7 +189,15 @@
             <div class="profile-picture">
               <img src="assets/img.png" alt="Profile Picture" />
             </div>
-            <div class="username">Riskia Sitorus</div>
+            <div class="dropdown">
+              <div class="username">
+                Riskia Sitorus <i class="fa fa-caret-down"></i>
+              </div>
+              <div class="dropdown-content">
+                <a href="settings.html">Settings</a>
+                <a href="javascript:void(0);" onclick="logout();">Logout</a>
+              </div>
+            </div>
           </div>
         </div>
         <div class="info">
@@ -1124,6 +1173,12 @@
             jenisLemburField.value = "Hari Biasa";
           }
         }
+      }
+
+      // Logout function
+      function logout() {
+        alert("You have logged out successfully.");
+        window.location.href = "login.html";
       }
     </script>
   </body>

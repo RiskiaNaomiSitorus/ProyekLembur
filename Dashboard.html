@@ -1,21 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="UTF-8" />
     <title>Dashboard</title>
     <link rel="stylesheet" href="styles.css" />
     <script src="https://kit.fontawesome.com/b99e675b6e.js"></script>
-    <link
-      rel="stylesheet"
-      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
-    />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
-    <link
-      rel="stylesheet"
-      href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css"
-    />
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css" />
     <style>
       /* Modal Styles */
       .modal {
@@ -50,47 +44,66 @@
         cursor: pointer;
       }
 
-      /* Style for View Details links */
-      .report-container a {
-        color: #337ab7; /* Link color */
-        text-decoration: none; /* Remove underline */
+      /* Dropdown Styles */
+      .dropdown {
+        position: relative;
+        display: inline-block;
       }
-      .report-container a:hover {
-        text-decoration: underline; /* Underline on hover */
-      }
-
-      /* Ensure the wrapper takes the full height of the viewport */
-      .wrapper {
+      .dropbtn {
+        background-color: #f8f9fa;
+        border: none;
+        cursor: pointer;
+        padding: 10px 20px;
+        font-size: 16px;
         display: flex;
-        flex-direction: column;
-        min-height: 100vh;
+        align-items: center;
       }
-
-      .main_content {
-        flex: 1;
+      .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: #f9f9f9;
+        min-width: 160px;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        z-index: 1;
       }
-
-      /* Footer styles */
-      footer {
-        padding: 10px;
-        text-align: center;
-      }
-
-      .footer-links {
-        margin-top: 10px;
-      }
-
-      .footer-links a {
-        margin: 0 10px;
+      .dropdown-content a {
+        color: black;
+        padding: 12px 16px;
         text-decoration: none;
+        display: block;
+      }
+      .dropdown-content a:hover {background-color: #f1f1f1}
+      .dropdown:hover .dropdown-content {
+        display: block;
+      }
+      .dropdown:hover .dropbtn {
+        background-color: #e2e6ea;
+      }
+      .dropdown .fa-chevron-down {
+        margin-left: 10px;
       }
 
-      .footer-links a:hover {
-        text-decoration: underline;
+      .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px;
+        background-color: #f8f9fa;
+      }
+      .title {
+        font-size: 24px;
+        font-weight: bold;
+      }
+      .user-info {
+        display: flex;
+        align-items: center;
+      }
+      .user-info .username {
+        margin-right: 15px;
       }
     </style>
-  </head>
-  <body>
+</head>
+<body>
     <div class="wrapper">
       <div class="sidebar">
         <h2>Lembur</h2>
@@ -99,19 +112,13 @@
             <a href="Dashboard.html"><i class="fas fa-home"></i> Dashboard</a>
           </li>
           <li>
-            <a href="Data Karyawan.html"
-              ><i class="fas fa-user"></i> Data Karyawan</a
-            >
+            <a href="Data Karyawan.html"><i class="fas fa-user"></i> Data Karyawan</a>
           </li>
           <li>
-            <a href="Rekapitulasi Jam Lembur.html"
-              ><i class="fas fa-project-diagram"></i> Rekapitulasi Jam Lembur</a
-            >
+            <a href="Rekapitulasi Jam Lembur.html"><i class="fas fa-project-diagram"></i> Rekapitulasi Jam Lembur</a>
           </li>
           <li>
-            <a href="Perhitungan Lembur.html"
-              ><i class="fas fa-address-book"></i> Perhitungan Lembur</a
-            >
+            <a href="Perhitungan Lembur.html"><i class="fas fa-address-book"></i> Perhitungan Lembur</a>
           </li>
         </ul>
       </div>
@@ -121,10 +128,15 @@
           <input type="text" placeholder="Search..." />
           <div class="user-info">
             <i class="fa fa-bell"></i>
-            <div class="profile-picture">
-              <img src="assets/img.png" alt="Profile Picture" />
-            </div>
             <div class="username">Riskia Sitorus</div>
+            <!-- Dropdown Menu -->
+            <div class="dropdown">
+              <button class="dropbtn"><i class="fa fa-chevron-down"></i></button>
+              <div class="dropdown-content">
+                <a href="settings.html">Settings</a>
+                <a href="javascript:void(0);" onclick="logout();">Logout</a>
+              </div>
+            </div>
           </div>
         </div>
         <div class="dashboard-title">Dashboard</div>
@@ -168,48 +180,30 @@
             <ul>
               <li>
                 <span>Per Minggu</span>
-                <a
-                  href="#"
-                  class="view-details"
-                  data-title="Laporan Per Minggu"
-                  data-content="Details for Laporan Per Minggu."
-                  >View Details</a
-                >
+                <a href="#" class="view-details" data-title="Laporan Per Minggu" data-content="Details for Laporan Per Minggu.">View Details</a>
               </li>
               <li>
                 <span>Per Bulan</span>
-                <a
-                  href="#"
-                  class="view-details"
-                  data-title="Laporan Per Bulan"
-                  data-content="Details for Laporan Per Bulan."
-                  >View Details</a
-                >
+                <a href="#" class="view-details" data-title="Laporan Per Bulan" data-content="Details for Laporan Per Bulan.">View Details</a>
               </li>
               <li>
                 <span>Per Tahun</span>
-                <a
-                  href="#"
-                  class="view-details"
-                  data-title="Laporan Per Tahun"
-                  data-content="Details for Laporan Per Tahun."
-                  >View Details</a
-                >
+                <a href="#" class="view-details" data-title="Laporan Per Tahun" data-content="Details for Laporan Per Tahun.">View Details</a>
               </li>
             </ul>
             <!-- Calendar Container -->
             <div class="calendar-container" id="calendar"></div>
           </div>
         </div>
+        <footer>
+          <p>&copy; 2024 PT. Tolan Tiga Indonesia. All rights reserved.</p>
+          <div class="footer-links">
+            <a href="#">Privacy Policy</a>
+            <a href="#">Terms of Service</a>
+            <a href="#">Contact Us</a>
+          </div>
+        </footer>
       </div>
-      <footer>
-        <p>&copy; 2024 PT. Tolan Tiga Indonesia. All rights reserved.</p>
-        <div class="footer-links">
-          <a href="#">Privacy Policy</a>
-          <a href="#">Terms of Service</a>
-          <a href="#">Contact Us</a>
-        </div>
-      </footer>
     </div>
     <script src="scripts.js"></script>
     <script>
@@ -222,15 +216,7 @@
       const myChart = new Chart(ctx, {
         type: "line",
         data: {
-          labels: [
-            "January",
-            "February",
-            "March",
-            "April",
-            "May",
-            "June",
-            "July",
-          ],
+          labels: ["January", "February", "March", "April", "May", "June", "July"],
           datasets: [
             {
               label: "Lembur",
@@ -250,59 +236,44 @@
         },
       });
 
-      // Time and date script
+      // Clock and Date functions
       function updateTime() {
         const now = new Date();
-        const hours = String(now.getHours()).padStart(2, "0");
-        const minutes = String(now.getMinutes()).padStart(2, "0");
-        const seconds = String(now.getSeconds()).padStart(2, "0");
-        const currentTime = `${hours}:${minutes}:${seconds}`;
-        const currentDate = now.toLocaleDateString();
-
-        document.getElementById("currentTime").textContent = currentTime;
-        document.getElementById("currentDate").textContent = currentDate;
+        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        document.getElementById("currentTime").textContent = now.toLocaleTimeString();
+        document.getElementById("currentDate").textContent = now.toLocaleDateString('id-ID', options);
       }
-
       setInterval(updateTime, 1000);
-      updateTime(); // Initial call to set the time immediately
 
-      // Modal functionality
-      const modal = document.getElementById("detailModal");
+      // Modal script
+      const modal = document.querySelector(".modal");
       const span = document.getElementsByClassName("close-button")[0];
 
-      function showDetails(title, content) {
-        document.getElementById("modalTitle").textContent = title;
-        document.getElementById("modalBody").innerHTML = content;
-        modal.style.display = "block";
-      }
+      document.querySelectorAll(".view-details").forEach(link => {
+        link.onclick = function () {
+          const title = this.getAttribute("data-title");
+          const content = this.getAttribute("data-content");
+          document.querySelector(".modal-content h2").textContent = title;
+          document.querySelector(".modal-content p").textContent = content;
+          modal.style.display = "block";
+        };
+      });
 
       span.onclick = function () {
         modal.style.display = "none";
       };
 
       window.onclick = function (event) {
-        if (event.target == modal) {
+        if (event.target === modal) {
           modal.style.display = "none";
         }
       };
 
-      // Example usage for "View Details" links
-      document.querySelectorAll(".view-details").forEach((link) => {
-        link.addEventListener("click", function (event) {
-          event.preventDefault();
-          const title = this.getAttribute("data-title");
-          const content = this.getAttribute("data-content");
-          showDetails(title, content);
-        });
-      });
+      // Logout function
+      function logout() {
+        alert("You have logged out successfully.");
+        window.location.href = "login.html";
+      }
     </script>
-    <!-- Modal HTML -->
-    <div id="detailModal" class="modal">
-      <div class="modal-content">
-        <span class="close-button">&times;</span>
-        <h3 id="modalTitle"></h3>
-        <div id="modalBody"></div>
-      </div>
-    </div>
-  </body>
+</body>
 </html>

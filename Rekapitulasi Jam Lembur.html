@@ -55,6 +55,42 @@
       background-color: #6c757d;
       color: white;
     }
+    .dropdown {
+      position: relative;
+      display: inline-block;
+    }
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      right: 0;
+      background-color: white;
+      min-width: 160px;
+      box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+      z-index: 1;
+    }
+    .dropdown-content a {
+      color: black;
+      padding: 12px 16px;
+      text-decoration: none;
+      display: block;
+    }
+    .dropdown-content a:hover {
+      background-color: #f1f1f1;
+    }
+    .dropdown:hover .dropdown-content {
+      display: block;
+    }
+    .dropdown:hover .dropbtn {
+      background-color: #3e8e41;
+    }
+    .username {
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+    }
+    .username i {
+      margin-left: 5px;
+    }
   </style>
 </head>
 <body>
@@ -76,7 +112,13 @@
           <div class="profile-picture">
             <img src="assets/img.png" alt="Profile Picture" />
           </div>
-          <div class="username">Riskia Sitorus</div>
+          <div class="dropdown">
+            <div class="username">Riskia Sitorus <i class="fa fa-caret-down"></i></div>
+            <div class="dropdown-content">
+              <a href="settings.html">Settings</a>
+              <a href="javascript:void(0);" onclick="logout();">Logout</a>
+            </div>
+          </div>
         </div>
       </div>
       <div class="info">
@@ -108,33 +150,32 @@
           </form>
         </div>
         
-          <div class="table-container">
-            <table class="table table-striped table-bordered" id="overtime-table">
-              <thead>
-                <tr>
-                  <th>No</th>
-                  <th>Nama</th>
-                  <th>Jumlah Jam</th>
-                  <th>Rp</th>
-                </tr>
-              </thead>
-              <tbody id="summary-table">
-                <!-- Rows will be inserted here by JavaScript -->
-              </tbody>
-              <tfoot>
-                <tr>
-                  <td colspan="2">Total</td>
-                  <td id="total-jam" class="bold">0</td>
-                  <td id="total-upah" class="bold">0</td>
-                </tr>
-              </tfoot>
-            </table>
-          </div>
-          
-          <p>Alamat: Jalan Example No.123, Jakarta</p>
-          <p>Tanggal: 12 Juli 2024</p>
-          <p>Approved by: Manager Name</p>
+        <div class="table-container">
+          <table class="table table-striped table-bordered" id="overtime-table">
+            <thead>
+              <tr>
+                <th>No</th>
+                <th>Nama</th>
+                <th>Jumlah Jam</th>
+                <th>Rp</th>
+              </tr>
+            </thead>
+            <tbody id="summary-table">
+              <!-- Rows will be inserted here by JavaScript -->
+            </tbody>
+            <tfoot>
+              <tr>
+                <td colspan="2">Total</td>
+                <td id="total-jam" class="bold">0</td>
+                <td id="total-upah" class="bold">0</td>
+              </tr>
+            </tfoot>
+          </table>
         </div>
+        
+        <p>Alamat: Jalan Example No.123, Jakarta</p>
+        <p>Tanggal: 12 Juli 2024</p>
+        <p>Approved by: Manager Name</p>
       </div>
     </div>
   </div>
@@ -274,6 +315,12 @@
       }
 
       XLSX.writeFile(wb, "Summary_Lembur.xlsx");
+    }
+
+    // Function to handle logout
+    function logout() {
+      alert("You have been logged out.");
+      // Implement your logout functionality here
     }
 
     // Populate table on page load

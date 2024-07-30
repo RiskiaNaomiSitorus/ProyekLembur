@@ -317,23 +317,29 @@
           </div>
           <div class="form-group">
             <label for="editPosition">Jabatan</label>
-            <input
-              type="text"
+            <select
               class="form-control"
               id="editPosition"
               name="editPosition"
               required
-            />
+            >
+              <option value="" selected disabled></option>
+              <option value="Driver">Driver</option>
+              <option value="Security">Security</option>
+            </select>
           </div>
           <div class="form-group">
             <label for="editStatus">Status</label>
-            <input
-              type="text"
+            <select
               class="form-control"
               id="editStatus"
               name="editStatus"
               required
-            />
+            >
+              <option value="" selected disabled></option>
+              <option value="Laki-laki">Aktif</option>
+              <option value="Perempuan">Tidak Aktif</option>
+            </select>
           </div>
           <div class="form-group">
             <label for="editSalary">Gaji</label>
@@ -344,16 +350,7 @@
               name="editSalary"
               required
             />
-          </div>
-          <div class="form-group">
-            <label for="editPhoto">Photo</label>
-            <input
-              type="file"
-              class="form-control"
-              id="editPhoto"
-              name="editPhoto"
-            />
-          </div>
+          </div>        
           <button type="submit" class="btn btn-primary">Save Changes</button>
         </form>
       </div>
@@ -420,23 +417,29 @@
           </div>
           <div class="form-group">
             <label for="addPosition">Jabatan</label>
-            <input
-              type="text"
+            <select
               class="form-control"
               id="addPosition"
               name="addPosition"
               required
-            />
+            >
+              <option value="" selected disabled></option>
+              <option value="Driver">Driver</option>
+              <option value="Security">Security</option>
+            </select>
           </div>
-          <div class="form-group">
-            <label for="addStatus">Status</label>
-            <input
-              type="text"
-              class="form-control"
-              id="addStatus"
-              name="addStatus"
-              required
-            />
+            <div class="form-group">
+              <label for="addStatus">Status</label>
+              <select
+                class="form-control"
+                id="addStatus"
+                name="addStatus"
+                required
+              >
+                <option value="" selected disabled></option>
+                <option value="Aktif">Aktif</option>
+                <option value="Tidak Aktif">Tidak Aktif</option>
+              </select>
           </div>
           <div class="form-group">
             <label for="addSalary">Gaji</label>
@@ -446,15 +449,6 @@
               id="addSalary"
               name="addSalary"
               required
-            />
-          </div>
-          <div class="form-group">
-            <label for="addPhoto">Photo</label>
-            <input
-              type="file"
-              class="form-control"
-              id="addPhoto"
-              name="addPhoto"
             />
           </div>
           <button type="submit" class="btn btn-primary">Add Karyawan</button>

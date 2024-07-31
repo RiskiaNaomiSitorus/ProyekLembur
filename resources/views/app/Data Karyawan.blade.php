@@ -154,9 +154,9 @@
           <div class="user-info">
             <i class="fa fa-bell"></i>
             <div class="dropdown">
-              <div class="username">
-                Riskia Sitorus <i class="fa fa-caret-down"></i>
-              </div>
+            <div class="username">
+    {{ Auth::user()->name }} <i class="fa fa-caret-down"></i>
+</div>
               <div class="dropdown-content">
               <a href="settings.html">Settings</a>
               <a href="{{ url('logout') }}" class="logout-link" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
@@ -235,6 +235,11 @@
         @endforeach
     </tbody>
 </table>
+@if (session('success'))
+    <div class="alert alert-success">
+        {{ session('success') }}
+    </div>
+@endif
 
 <!-- Pagination Links -->
 <div class="pagination">
@@ -348,78 +353,46 @@
           <strong>Tambah Data Karyawan</strong>
         </h3>
 
-        <form id="addForm">
-          <div class="form-group">
-            <label for="addID">ID Karyawan</label>
-            <input
-              type="text"
-              class="form-control"
-              id="addID"
-              name="addID"
-              required
-            />
-            <div id="addIDKaryawanError" style="display: none; color: red">
-              ID Karyawan should contain numbers only.
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="addName">Nama Karyawan</label>
-            <input
-              type="text"
-              class="form-control"
-              id="addName"
-              name="addName"
-              required
-            />
-          </div>
-          <div class="form-group">
-            <label for="addGender">Jenis Kelamin</label>
-            <select
-              class="form-control"
-              id="addGender"
-              name="addGender"
-              required
-            >
-              <option value="" selected disabled></option>
-              <option value="Laki-laki">Laki-laki</option>
-              <option value="Perempuan">Perempuan</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label for="addPosition">Jabatan</label>
-            <input
-              type="text"
-              class="form-control"
-              id="addPosition"
-              name="addPosition"
-              required
-            />
-          </div>
-            <div class="form-group">
-              <label for="addStatus">Status</label>
-              <select
-                class="form-control"
-                id="addStatus"
-                name="addStatus"
-                required
-              >
-                <option value="" selected disabled></option>
-                <option value="Aktif">Aktif</option>
-                <option value="Tidak Aktif">Tidak Aktif</option>
-              </select>
-          </div>
-          <div class="form-group">
-            <label for="addSalary">Gaji</label>
-            <input
-              type="text"
-              class="form-control"
-              id="addSalary"
-              name="addSalary"
-              required
-            />
-          </div>
-          <button type="submit" class="btn btn-primary">Add Karyawan</button>
-        </form>
+        <form id="addForm" method="POST" action="{{ route('store-karyawan') }}">
+    @csrf
+    <div class="form-group">
+        <label for="addID">ID Karyawan</label>
+        <input type="text" class="form-control" id="addID" name="id_karyawan" required />
+        <div id="addIDKaryawanError" style="display: none; color: red">
+            ID Karyawan should contain numbers only.
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="addName">Nama Karyawan</label>
+        <input type="text" class="form-control" id="addName" name="nama_karyawan" required />
+    </div>
+    <div class="form-group">
+        <label for="addGender">Jenis Kelamin</label>
+        <<select class="form-control" id="addGender" name="jenis_kelamin" required>
+            <option value="" selected disabled></option>
+            <option value="Laki-laki">Laki-laki</option>
+            <option value="Perempuan">Perempuan</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="addPosition">Jabatan</label>
+        <input type="text" class="form-control" id="addPosition" name="jabatan" required />
+    </div>
+    <div class="form-group">
+        <label for="addStatus">Status</label>
+        <select class="form-control" id="addStatus" name="status" required>
+            <option value="" selected disabled></option>
+            <option value="Aktif">Aktif</option>
+            <option value="Tidak Aktif">Tidak Aktif</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="addSalary">Gaji</label>
+        <input type="text" class="form-control" id="addSalary" name="gaji" required />
+    </div>
+    <button type="submit" class="btn btn-primary">Add Karyawan</button>
+</form>
+
       </div>
     </div>
         <script>

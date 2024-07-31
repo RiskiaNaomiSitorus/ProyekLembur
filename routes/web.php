@@ -36,3 +36,6 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('actionlogout');
 Route::get('data-karyawan', [DataKaryawanController::class, 'index'])->name('data-karyawan')->middleware('auth');
 Route::get('perhitungan-lembur', [PerhitunganLemburController::class, 'index'])->name('perhitungan-lembur')->middleware('auth');
 Route::get('rekapitulasi-jam-lembur', [RekapitulasiJamLemburController::class, 'index'])->name('rekapitulasi-jam-lembur')->middleware('auth');
+
+// In routes/web.php
+Route::post('store-karyawan', [DataKaryawanController::class, 'store'])->name('store-karyawan');

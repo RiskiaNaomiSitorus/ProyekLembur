@@ -99,9 +99,9 @@
           <div class="user-info">
             <i class="fa fa-bell"></i>
             <div class="dropdown">
-              <div class="username">
-                Riskia Sitorus <i class="fa fa-caret-down"></i>
-              </div>
+            <div class="username">
+    {{ Auth::user()->name }} <i class="fa fa-caret-down"></i>
+</div>
               <div class="dropdown-content">
               <a href="settings.html">Settings</a>
               <a href="{{ url('logout') }}" class="logout-link" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>

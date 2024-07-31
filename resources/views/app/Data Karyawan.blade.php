@@ -200,73 +200,46 @@
           </div>
         </div>
         <div class="container table-container">
-          <table class="table table-striped table-bordered">
-            <thead>
-              <tr>
-                <th>No</th>
-                <th>ID Karyawan</th>
-                <th>Nama Karyawan</th>
-                <th>Jenis Kelamin</th>
-                <th>Jabatan</th>
-                <th>Status</th>
-                <th>Gaji</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>1</td>
-                <td>012</td>
-                <td>Dwi Purba</td>
-                <td>Laki-laki</td>
-                <td>OB</td>
-                <td>Aktif</td>
-                <td>Rp. 2.000.000</td>
-                <td>
-                  <button class="btn btn-warning btn-sm edit-button">
+        <table class="table table-striped table-bordered">
+    <thead>
+        <tr>
+            <th>No</th>
+            <th>ID Karyawan</th>
+            <th>Nama Karyawan</th>
+            <th>Jenis Kelamin</th>
+            <th>Jabatan</th>
+            <th>Status</th>
+            <th>Gaji</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach ($karyawan as $item)
+        <tr>
+            <td>{{ $loop->iteration }}</td>
+            <td>{{ $item->id_karyawan }}</td>
+            <td>{{ $item->nama_karyawan }}</td>
+            <td>{{ $item->jenis_kelamin }}</td>
+            <td>{{ $item->jabatan }}</td>
+            <td>{{ $item->status }}</td>
+            <td>{{ 'Rp. ' . number_format($item->gaji, 0, ',', '.') }}</td>
+            <td>
+                <button class="btn btn-warning btn-sm edit-button">
                     Edit
-                  </button>
-                  <button class="btn btn-danger btn-sm delete-button">
+                </button>
+                <button class="btn btn-danger btn-sm delete-button">
                     Hapus
-                  </button>
-                </td>
-              </tr>
-              <tr>
-                <td>2</td>
-                <td>046</td>
-                <td>Riskia Naomi</td>
-                <td>Perempuan</td>
-                <td>Staff</td>
-                <td>Aktif</td>
-                <td>Rp. 2.000.000</td>
-                <td>
-                  <button class="btn btn-warning btn-sm edit-button">
-                    Edit
-                  </button>
-                  <button class="btn btn-danger btn-sm delete-button">
-                    Hapus
-                  </button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-          <div class="pagination">
-            <ul class="pagination justify-content-center">
-              <li class="page-item">
-                <a class="page-link" href="#" aria-label="Previous">
-                  <span aria-hidden="true">&laquo;</span>
-                </a>
-              </li>
-              <li class="page-item"><a class="page-link" href="#">1</a></li>
-              <li class="page-item"><a class="page-link" href="#">2</a></li>
-              <li class="page-item"><a class="page-link" href="#">3</a></li>
-              <li class="page-item">
-                <a class="page-link" href="#" aria-label="Next">
-                  <span aria-hidden="true">&raquo;</span>
-                </a>
-              </li>
-            </ul>
-          </div>
+                </button>
+            </td>
+        </tr>
+        @endforeach
+    </tbody>
+</table>
+
+<!-- Pagination Links -->
+<div class="pagination">
+    {{ $karyawan->links() }}
+</div>
         </div>
       <!-- Modal for Editing Data -->
     <div id="editModal" class="modal">
@@ -285,6 +258,9 @@
               name="editID"
               required
             />
+            <div id="editIDKaryawanError" style="display: none; color: red">
+              ID Karyawan should contain numbers only.
+            </div>
           </div>
           <div class="form-group">
             <label for="editName">Nama Karyawan</label>
@@ -382,6 +358,9 @@
               name="addID"
               required
             />
+            <div id="addIDKaryawanError" style="display: none; color: red">
+              ID Karyawan should contain numbers only.
+            </div>
           </div>
           <div class="form-group">
             <label for="addName">Nama Karyawan</label>
@@ -558,6 +537,28 @@
 
           // Recalculate upahLembur when gaji changes
           calculateUpahLembur();
+        });
+
+        document
+        .getElementById("addID")
+        .addEventListener("input", function (e) {
+          var value = e.target.value;
+          var isValid = /^\d*$/.test(value);
+          document.getElementById("addIDKaryawanError").style.display = isValid
+            ? "none"
+            : "block";
+          e.target.value = value.replace(/\D/g, "");
+        });
+
+        document
+        .getElementById("editID")
+        .addEventListener("input", function (e) {
+          var value = e.target.value;
+          var isValid = /^\d*$/.test(value);
+          document.getElementById("editIDKaryawanError").style.display = isValid
+            ? "none"
+            : "block";
+          e.target.value = value.replace(/\D/g, "");
         });
     </script>
     <!-- Modal HTML -->

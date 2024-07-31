@@ -196,34 +196,49 @@
     </script>
 </head>
 <body>
-    <div class="wrapper">
+<div class="wrapper">
         <div class="logo">
-            <img src="assets/img2.png" alt="Twitter Logo">
+            <img src="{{ asset('assets/img2.png') }}" alt="Logo">
         </div>
         <div class="text-center mt-4 name">PT Tolan Tiga Indonesia</div>
-        <form class="p-3 mt-3" onsubmit="validateRegister(event)">
+        <form class="p-3 mt-3" method="POST" action="{{ url('/register') }}">
+            @csrf
             <div class="form-field d-flex align-items-center">
                 <i class="fa fa-user"></i>
-                <input type="text" name="fullName" id="fullName" placeholder="Nama Lengkap">
+                <input type="text" name="fullName" id="fullName" placeholder="Nama Lengkap" value="{{ old('fullName') }}">
             </div>
+            @error('fullName')
+            <div class="alert">{{ $message }}</div>
+            @enderror
+
             <div class="form-field d-flex align-items-center">
                 <i class="fa fa-user"></i>
-                <input type="text" name="userName" id="userName" placeholder="Username">
+                <input type="text" name="userName" id="userName" placeholder="Email" value="{{ old('userName') }}">
             </div>
+            @error('userName')
+            <div class="alert">{{ $message }}</div>
+            @enderror
+
             <div class="form-field d-flex align-items-center">
                 <i class="fa fa-key"></i>
                 <input type="password" name="password" id="pwd" placeholder="Password">
             </div>
+            @error('password')
+            <div class="alert">{{ $message }}</div>
+            @enderror
+
             <div class="form-field d-flex align-items-center">
                 <i class="fa fa-key"></i>
-                <input type="password" name="confirmPassword" id="confirmPwd" placeholder="Konfirmasi Password">
+                <input type="password" name="password_confirmation" id="confirmPwd" placeholder="Konfirmasi Password">
             </div>
+
             <button class="btn mt-3" type="submit">Register</button>
         </form>
-        <div class="alert" id="alertBox"></div>
-        <div class="success" id="successBox"></div>
+        @if (session('success'))
+        <div class="success">{{ session('success') }}</div>
+        @endif
         <div class="text-center fs-6">
-            <a href="login.html">Already have an account? Login</a>
+            <a href="{{ route('login') }}">Already have an account? Login</a>
         </div>
     </div>
 </body>

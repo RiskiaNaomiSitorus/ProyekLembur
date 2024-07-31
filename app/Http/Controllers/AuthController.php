@@ -38,4 +38,10 @@ class AuthController extends Controller
     return redirect()->route('login'); // Redirect to login page
 }
 
+public function showLoginForm()
+    {
+        return view('auth.login'); // Adjust this path to where your login.blade.php file is located
+    }
+
+
 }

@@ -142,8 +142,8 @@
         </form>
         <div class="alert" id="alertBox"></div>
         <div class="text-center fs-6">
-            <a href="register.html">Don't have an account? Register</a>
-        </div>
+    <a href="{{ route('register') }}">Don't have an account? Register</a>
+</div>
     </div>
 </body>
 </html>

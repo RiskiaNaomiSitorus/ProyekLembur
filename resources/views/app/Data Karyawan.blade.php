@@ -368,7 +368,7 @@
     </div>
     <div class="form-group">
         <label for="addGender">Jenis Kelamin</label>
-        <<select class="form-control" id="addGender" name="jenis_kelamin" required>
+        <select class="form-control" id="addGender" name="jenis_kelamin" required>
             <option value="" selected disabled></option>
             <option value="Laki-laki">Laki-laki</option>
             <option value="Perempuan">Perempuan</option>
@@ -391,12 +391,11 @@
         <input type="text" class="form-control" id="addSalary" name="gaji" required />
     </div>
     <button type="submit" class="btn btn-primary">Add Karyawan</button>
-</form>
+    </form>
 
       </div>
     </div>
         <script>
-
        // Get modal elements
        var editmodal = document.getElementById("editModal");
       var addModal = document.getElementById("addModal");

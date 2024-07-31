@@ -117,7 +117,7 @@
         </div>
         <div class="dashboard"></div>
         <div class="header-section">
-          <div class="container"><h1>Summary Lembur Karyawan</h1></div>
+<h1>Summary Lembur Karyawan</h1>
 
           <div class="form-container">
             <form id="overtime-form">

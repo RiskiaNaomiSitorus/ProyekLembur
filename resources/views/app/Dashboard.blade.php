@@ -76,24 +76,18 @@
       <div class="sidebar">
         <h2>Lembur</h2>
         <ul>
-          <li>
-            <a href="Dashboard.html"><i class="fas fa-home"></i> Dashboard</a>
-          </li>
-          <li>
-            <a href="Data Karyawan.html"
-              ><i class="fas fa-user"></i> Data Karyawan</a
-            >
-          </li>
-          <li>
-            <a href="Rekapitulasi Jam Lembur.html"
-              ><i class="fas fa-project-diagram"></i> Rekapitulasi Jam Lembur</a
-            >
-          </li>
-          <li>
-            <a href="Perhitungan Lembur.html"
-              ><i class="fas fa-address-book"></i> Perhitungan Lembur</a
-            >
-          </li>
+        <li>
+    <a href="{{ route('home') }}"><i class="fas fa-home"></i> Dashboard</a>
+</li>
+<li>
+    <a href="{{ route('data-karyawan') }}"><i class="fas fa-user"></i> Data Karyawan</a>
+</li>
+<li>
+    <a href="{{ route('rekapitulasi-jam-lembur') }}"><i class="fas fa-project-diagram"></i> Rekapitulasi Jam Lembur</a>
+</li>
+<li>
+    <a href="{{ route('perhitungan-lembur') }}"><i class="fas fa-address-book"></i> Perhitungan Lembur</a>
+</li>
         </ul>
       </div>
       <div class="main_content">
@@ -106,8 +100,11 @@
                 Riskia Sitorus <i class="fa fa-caret-down"></i>
               </div>
               <div class="dropdown-content">
-                <a href="settings.html">Settings</a>
-                <a href="javascript:void(0);" onclick="logout();">Logout</a>
+              <a href="settings.html">Settings</a>
+              <a href="{{ url('logout') }}" class="logout-link" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
+<form id="logout-form" action="{{ url('logout') }}" method="POST" style="display: none;">
+    @csrf
+</form>
               </div>
             </div>
           </div>
@@ -196,105 +193,123 @@
         </footer>
       </div>
     </div>
-    <script src="{{ asset('assets/script.js') }}"></script>
-    <script>
-      $(function () {
-        $("#datepicker").datepicker();
-      });
+  <script>
+ $(document).ready(function() {
+  // Initialize datepicker
+  $("#datepicker").datepicker();
+  $("#calendar").datepicker();
 
-      // Chart.js code
-      const ctx = document.getElementById("myChart").getContext("2d");
-      const myChart = new Chart(ctx, {
-        type: "line",
-        data: {
-          labels: [
-            "January",
-            "February",
-            "March",
-            "April",
-            "May",
-            "June",
-            "July",
-          ],
-          datasets: [
-            {
-              label: "Lembur",
-              data: [65, 59, 80, 81, 56, 55, 40],
-              backgroundColor: "rgba(75, 192, 192, 0.2)",
-              borderColor: "rgba(75, 192, 192, 1)",
-              borderWidth: 1,
-            },
-          ],
+  // Toggle kalender dropdown
+  $("#calendarButton").on("click", function() {
+    $("#calendar").toggle();
+  });
+
+  // Set current time and date in WIB
+  function updateTime() {
+    var now = new Date();
+    var optionsTime = { 
+      timeZone: 'Asia/Jakarta', 
+      hour: '2-digit', 
+      minute: '2-digit',
+    };
+    var optionsDate = { 
+      timeZone: 'Asia/Jakarta', 
+      day: '2-digit', 
+      month: '2-digit', 
+      year: 'numeric'
+    };
+    var formatterTime = new Intl.DateTimeFormat('id-ID', optionsTime);
+    var formatterDate = new Intl.DateTimeFormat('id-ID', optionsDate);
+    var formattedTime = formatterTime.format(now);
+    var formattedDate = formatterDate.format(now);
+    $("#currentTime").text(formattedTime);
+    $("#currentDate").text(formattedDate);
+  }
+
+  updateTime();
+  setInterval(updateTime, 60000); // Update time every minute
+
+  // Chart.js code
+  const ctx = document.getElementById("myChart").getContext("2d");
+  const myChart = new Chart(ctx, {
+    type: "line",
+    data: {
+      labels: [
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+      ],
+      datasets: [
+        {
+          label: "Lembur",
+          data: [65, 59, 80, 81, 56, 55, 40],
+          backgroundColor: "rgba(75, 192, 192, 0.2)",
+          borderColor: "rgba(75, 192, 192, 1)",
+          borderWidth: 1,
         },
-        options: {
-          scales: {
-            y: {
-              beginAtZero: true,
-            },
-          },
+      ],
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true,
         },
-      });
+      },
+    },
+  });
 
-      // Clock and Date functions
-      function updateTime() {
-        const now = new Date();
-        const options = {
-          weekday: "long",
-          year: "numeric",
-          month: "long",
-          day: "numeric",
-        };
-        document.getElementById("currentTime").textContent =
-          now.toLocaleTimeString();
-        document.getElementById("currentDate").textContent =
-          now.toLocaleDateString("id-ID", options);
-      }
-      setInterval(updateTime, 1000);
-
-      // Modal script
-      const modal = document.querySelector(".modal");
-      const span = document.getElementsByClassName("close-button")[0];
-
-      document.querySelectorAll(".view-details").forEach((link) => {
-        link.onclick = function () {
-          const title = this.getAttribute("data-title");
-          const content = this.getAttribute("data-content");
-          document.querySelector(".modal-content h2").textContent = title;
-          document.querySelector(".modal-content p").textContent = content;
-          modal.style.display = "block";
-        };
-      });
-
-      span.onclick = function () {
-        modal.style.display = "none";
-      };
-
-      window.onclick = function (event) {
-        if (event.target === modal) {
-          modal.style.display = "none";
+  var ctxLembur = document.getElementById('lemburChart').getContext('2d');
+  var lemburChart = new Chart(ctxLembur, {
+    type: 'bar',
+    data: {
+      labels: ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'],
+      datasets: [{
+        label: 'Total Jam Lembur',
+        data: [30, 45, 60, 40, 50, 55, 70, 65, 60, 75, 80, 90], // contoh data lembur per bulan
+        backgroundColor: 'rgba(0, 123, 255, 0.5)',
+        borderColor: 'rgba(0, 123, 255, 1)',
+        borderWidth: 1
+      }]
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true
         }
-      };
-
-      // Logout function
-      function logout() {
-        const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-
-        fetch('{{ route('actionlogout') }}', {
-            method: 'GET',
-            headers: {
-                'X-Requested-With': 'XMLHttpRequest',
-                'X-CSRF-TOKEN': csrfToken
-            }
-        })
-        .then(response => {
-            if (response.ok) {
-                window.location.href = '{{ route('login') }}'; // Redirect to login page
-            } else {
-                console.error('Logout failed.');
-            }
-        })
-        .catch(error => console.error('Error:', error));
       }
-    </script>
+    }
+  });
+
+  // Modal script
+  const modal = document.querySelector(".modal");
+  const span = document.getElementsByClassName("close-button")[0];
+
+  document.querySelectorAll(".view-details").forEach((link) => {
+    link.onclick = function () {
+      const title = this.getAttribute("data-title");
+      const content = this.getAttribute("data-content");
+      document.querySelector(".modal-content h2").textContent = title;
+      document.querySelector(".modal-content p").textContent = content;
+      modal.style.display = "block";
+    };
+  });
+
+  span.onclick = function () {
+    modal.style.display = "none";
+  };
+
+  window.onclick = function (event) {
+    if (event.target === modal) {
+      modal.style.display = "none";
+    }
+  };
+});
+
+</script>
+
   </body>
 </html>

@@ -4,8 +4,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Auth\RegisterController;
-
-
+use App\Http\Controllers\DataKaryawanController;
+use App\Http\Controllers\PerhitunganLemburController;
+use App\Http\Controllers\RekapitulasiJamLemburController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,15 +21,18 @@ use App\Http\Controllers\Auth\RegisterController;
 
 Route::get('/', [AuthController::class, 'login'])->name('login');
 Route::post('actionlogin', [AuthController::class, 'actionlogin'])->name('actionlogin');
-// Add this route to handle the login page
+
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
+Route::get('/register', function () {
+    return view('auth.register');
+})->name('register');
+Route::post('/register', [RegisterController::class, 'register']);
 
 Route::get('home', [DashboardController::class, 'index'])->name('home')->middleware('auth');
-Route::get('actionlogout', [AuthController::class, 'actionlogout'])->name('actionlogout')->middleware('auth');
+Route::post('/logout', [AuthController::class, 'logout'])->name('actionlogout');
 
-Route::get('/register', function () {
-  return view('auth.register');
-})->name('register');
 
-// Route to handle form submission
-Route::post('/register', [RegisterController::class, 'register']);
+// Define routes for the pages
+Route::get('data-karyawan', [DataKaryawanController::class, 'index'])->name('data-karyawan')->middleware('auth');
+Route::get('perhitungan-lembur', [PerhitunganLemburController::class, 'index'])->name('perhitungan-lembur')->middleware('auth');
+Route::get('rekapitulasi-jam-lembur', [RekapitulasiJamLemburController::class, 'index'])->name('rekapitulasi-jam-lembur')->middleware('auth');

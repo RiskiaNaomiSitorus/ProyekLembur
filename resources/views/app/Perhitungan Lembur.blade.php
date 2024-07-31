@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <title>Perhitungan Lembur</title>
-    <link rel="stylesheet" href="{{ assets ('assets/styles.css')}}" />
+    <link rel="stylesheet" href="{{ asset ('assets/styles.css')}}" />
     <script src="https://kit.fontawesome.com/b99e675b6e.js"></script>
     <link
       rel="stylesheet"
@@ -120,24 +120,18 @@
       <div class="sidebar">
         <h2>Lembur</h2>
         <ul>
-          <li>
-            <a href="Dashboard.html"><i class="fas fa-home"></i>Dashboard</a>
-          </li>
-          <li>
-            <a href="Data Karyawan.html"
-              ><i class="fas fa-user"></i>Data Karyawan</a
-            >
-          </li>
-          <li>
-            <a href="Rekapitulasi Jam Lembur.html"
-              ><i class="fas fa-project-diagram"></i>Rekapitulasi Jam Lembur</a
-            >
-          </li>
-          <li>
-            <a href="Perhitungan Lembur.html"
-              ><i class="fas fa-address-book"></i>Perhitungan Lembur</a
-            >
-          </li>
+        <li>
+    <a href="{{ route('home') }}"><i class="fas fa-home"></i> Dashboard</a>
+</li>
+<li>
+    <a href="{{ route('data-karyawan') }}"><i class="fas fa-user"></i> Data Karyawan</a>
+</li>
+<li>
+    <a href="{{ route('rekapitulasi-jam-lembur') }}"><i class="fas fa-project-diagram"></i> Rekapitulasi Jam Lembur</a>
+</li>
+<li>
+    <a href="{{ route('perhitungan-lembur') }}"><i class="fas fa-address-book"></i> Perhitungan Lembur</a>
+</li>
         </ul>
       </div>
       <div class="main_content">
@@ -150,8 +144,11 @@
                 Riskia Sitorus <i class="fa fa-caret-down"></i>
               </div>
               <div class="dropdown-content">
-                <a href="settings.html">Settings</a>
-                <a href="javascript:void(0);" onclick="logout();">Logout</a>
+              <a href="settings.html">Settings</a>
+              <a href="{{ url('logout') }}" class="logout-link" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
+<form id="logout-form" action="{{ url('logout') }}" method="POST" style="display: none;">
+    @csrf
+</form>
               </div>
             </div>
           </div>
@@ -1129,12 +1126,6 @@
             jenisLemburField.value = "Hari Biasa";
           }
         }
-      }
-
-      // Logout function
-      function logout() {
-        alert("You have logged out successfully.");
-        window.location.href = "login.html";
       }
     </script>
   </body>

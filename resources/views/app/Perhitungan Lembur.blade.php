@@ -381,7 +381,7 @@
     <div id="editLemburModal" class="modal">
       <div class="modal-content">
         <span class="close" id="closeEditLemburModal">&times;</span>
-        <h3 style="margin-bottom: 30px"><strong>Edit Data Lembur</strong></h3>
+        <h3 style="margin-bottom: 30px"><strong>Tambah Data Lembur</strong></h3>
         <form id="editlemburForm">
           <div class="form-group">
             <label for="namaLengkap">Nama Lengkap</label>
@@ -546,7 +546,7 @@
         }
       };
 
-      // // Format numbers as Rupiah
+      // Format numbers as Rupiah
       // function formatRupiah(angka) {
       //   angka = angka.replace(/[^,\d]/g, "").toString();
       //   var split = angka.split(","),
@@ -563,7 +563,7 @@
       //   return "Rp " + rupiah;
       // }
 
-      // // Handle input for addgaji field
+      // Handle input for addgaji field
       // document
       //   .getElementById("addgaji")
       //   .addEventListener("input", function (e) {
@@ -826,7 +826,7 @@
       //   return "Rp " + rupiah;
       // }
 
-      // // Handle input for editgaji field
+      // Handle input for editgaji field
       // document
       //   .getElementById("editgaji")
       //   .addEventListener("input", function (e) {
@@ -843,7 +843,7 @@
           document.getElementById("editIDKaryawanError").style.display = isValid
             ? "none"
             : "block";
-          e.target.value = value.replace(/\D/g, "");
+          // e.target.value = value.replace(/\D/g, "");
         });
 
       // Determine if a date is a weekend

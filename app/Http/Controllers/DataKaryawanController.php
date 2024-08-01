@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule; // Import Rule class
 use App\Models\Karyawan;
 
 class DataKaryawanController extends Controller
@@ -35,8 +36,6 @@ class DataKaryawanController extends Controller
             'gaji.required' => 'Gaji harus diisi.',
             'gaji.min' => 'Gaji tidak boleh kurang dari 0.',
         ]);
-    
-   
 
         // Check if validation fails
         if ($validator->fails()) {
@@ -45,40 +44,44 @@ class DataKaryawanController extends Controller
                 ->withInput()
                 ->with('error', 'Gagal menambahkan data karyawan.'); // Custom error message
         }
-    
 
         // Create a new Karyawan record
         Karyawan::create($validator->validated());
-    
+
         // Redirect back with success message
         return redirect()->route('data-karyawan')->with('success', 'Karyawan added successfully.');
     }
 
     public function destroy($id)
-{
-    // Find and delete the Karyawan record
-    $karyawan = Karyawan::where('id', $id)->first();
+    {
+        // Find and delete the Karyawan record
+        $karyawan = Karyawan::where('id', $id)->first();
 
-    if ($karyawan) {
-        // Delete the Karyawan record
-        $karyawan->delete();
+        if ($karyawan) {
+            // Delete the Karyawan record
+            $karyawan->delete();
 
-        // Redirect back with success message
-        return redirect()->route('data-karyawan')->with('success', 'Karyawan deleted successfully.');
-    } else {
-        // Redirect back with error message
-        return redirect()->route('data-karyawan')->with('error', 'No Karyawan found with ID: ' . $id);
+            // Redirect back with success message
+            return redirect()->route('data-karyawan')->with('success', 'Karyawan deleted successfully.');
+        } else {
+            // Redirect back with error message
+            return redirect()->route('data-karyawan')->with('error', 'No Karyawan found with ID: ' . $id);
+        }
     }
-}
 
-public function update(Request $request)
+
+    public function update(Request $request)
 {
-    $id = $request->input('editID');
+    $id = $request->input('editID'); // Retrieve the ID of the record being updated
 
     // Define validation rules and custom messages
     $validator = Validator::make($request->all(), [
-        'editIDKaryawan' => 'required|numeric|unique:karyawan,id_karyawan,' . $id . ',id',
-        'editName' => 'required|string|max:255',
+        // Ensure that `id_karyawan` is unique, except for the current record
+        'editIDKaryawan' => 'required|numeric|unique:karyawan,id_karyawan,' . $id,
+        
+        // Ensure that `nama_karyawan` is unique, except for the current record
+        'editName' => 'required|string|max:255|unique:karyawan,nama_karyawan,' . $id,
+        
         'editGender' => 'required|in:Laki-laki,Perempuan',
         'editPosition' => 'required|string|max:255',
         'editStatus' => 'required|in:Aktif,Tidak Aktif',
@@ -87,6 +90,7 @@ public function update(Request $request)
         'editIDKaryawan.required' => 'ID Karyawan harus diisi.',
         'editIDKaryawan.unique' => 'ID Karyawan sudah terdaftar.',
         'editName.required' => 'Nama Karyawan harus diisi.',
+        'editName.unique' => 'Nama Karyawan sudah terdaftar.',
         'editGender.required' => 'Jenis Kelamin harus dipilih.',
         'editPosition.required' => 'Jabatan harus diisi.',
         'editStatus.required' => 'Status harus dipilih.',
@@ -97,7 +101,8 @@ public function update(Request $request)
     if ($validator->fails()) {
         return redirect()->back()
             ->withErrors($validator)
-            ->withInput();
+            ->withInput()
+            ->with('error', 'Gagal mengedit data karyawan.'); // Custom error message;
     }
 
     // Find and update the Karyawan record
@@ -114,6 +119,6 @@ public function update(Request $request)
     return redirect()->route('data-karyawan')->with('success', 'Karyawan updated successfully.');
 }
 
-
-
+    
+    
 }

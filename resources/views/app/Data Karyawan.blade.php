@@ -252,11 +252,13 @@
         {{ session('success') }}
     </div>
 @endif
+
 @if (session('error'))
     <div class="alert alert-danger">
         {{ session('error') }}
     </div>
 @endif
+
 
 <!-- Pagination Links -->
 <div class="pagination">
@@ -480,6 +482,14 @@
         </form>
       </div>
     </div>
+    <footer>
+          <p>&copy; 2024 PT. Tolan Tiga Indonesia. All rights reserved.</p>
+          <div class="footer-links">
+            <a href="#">Privacy Policy</a>
+            <a href="#">Terms of Service</a>
+            <a href="#">Contact Us</a>
+          </div>
+        </footer>
     <script>
     // Get modal elements
     var editModal = document.getElementById("editModal");

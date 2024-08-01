@@ -75,3 +75,5 @@ Route::delete('delete-karyawan/{id}', [DataKaryawanController::class, 'destroy']
 // It uses the update method in DataKaryawanController to modify employee information
 Route::put('update-karyawan', [DataKaryawanController::class, 'update'])->name('update-karyawan');
 
+// In web.php or api.php
+Route::get('/api/nama-karyawan', [DataKaryawanController::class, 'getNamaKaryawan']);

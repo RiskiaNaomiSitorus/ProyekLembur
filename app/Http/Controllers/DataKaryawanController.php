@@ -10,7 +10,8 @@ class DataKaryawanController extends Controller
 {
     public function index()
     {
-        $karyawan = Karyawan::latest()->paginate(10);
+        // Fetch the Karyawan records sorted alphabetically by 'nama_karyawan'
+        $karyawan = Karyawan::orderBy('nama_karyawan', 'asc')->paginate(10);
         return view('app.Data Karyawan', compact('karyawan'));
     }
 
@@ -41,7 +42,8 @@ class DataKaryawanController extends Controller
         if ($validator->fails()) {
             return redirect()->route('data-karyawan')
                 ->withErrors($validator)
-                ->withInput();
+                ->withInput()
+                ->with('error', 'Gagal menambahkan data karyawan.'); // Custom error message
         }
     
 
@@ -53,24 +55,65 @@ class DataKaryawanController extends Controller
     }
 
     public function destroy($id)
-    {
-        
-        // Find and delete the Karyawan record
-        $karyawan = Karyawan::where('id_karyawan', $id)->first();
-    
-        if ($karyawan) {
+{
+    // Find and delete the Karyawan record
+    $karyawan = Karyawan::where('id', $id)->first();
 
-            // Delete the Karyawan record
-            $karyawan->delete();
-    
-            // Redirect back with success message
-            return redirect()->route('data-karyawan')->with('success', 'Karyawan deleted successfully.');
-        } else {
-            // Dump a message if no Karyawan is found with the given ID
-            dd('No Karyawan found with ID: ' . $id);
-        }
+    if ($karyawan) {
+        // Delete the Karyawan record
+        $karyawan->delete();
+
+        // Redirect back with success message
+        return redirect()->route('data-karyawan')->with('success', 'Karyawan deleted successfully.');
+    } else {
+        // Redirect back with error message
+        return redirect()->route('data-karyawan')->with('error', 'No Karyawan found with ID: ' . $id);
     }
-    
+}
+
+public function update(Request $request)
+{
+    $id = $request->input('editID');
+
+    // Define validation rules and custom messages
+    $validator = Validator::make($request->all(), [
+        'editIDKaryawan' => 'required|numeric|unique:karyawan,id_karyawan,' . $id . ',id',
+        'editName' => 'required|string|max:255',
+        'editGender' => 'required|in:Laki-laki,Perempuan',
+        'editPosition' => 'required|string|max:255',
+        'editStatus' => 'required|in:Aktif,Tidak Aktif',
+        'editSalary' => 'required|numeric|min:0',
+    ], [
+        'editIDKaryawan.required' => 'ID Karyawan harus diisi.',
+        'editIDKaryawan.unique' => 'ID Karyawan sudah terdaftar.',
+        'editName.required' => 'Nama Karyawan harus diisi.',
+        'editGender.required' => 'Jenis Kelamin harus dipilih.',
+        'editPosition.required' => 'Jabatan harus diisi.',
+        'editStatus.required' => 'Status harus dipilih.',
+        'editSalary.required' => 'Gaji harus diisi.',
+        'editSalary.min' => 'Gaji tidak boleh kurang dari 0.',
+    ]);
+
+    if ($validator->fails()) {
+        return redirect()->back()
+            ->withErrors($validator)
+            ->withInput();
+    }
+
+    // Find and update the Karyawan record
+    $karyawan = Karyawan::findOrFail($id);
+    $karyawan->id_karyawan = $request->input('editIDKaryawan');
+    $karyawan->nama_karyawan = $request->input('editName');
+    $karyawan->jenis_kelamin = $request->input('editGender');
+    $karyawan->jabatan = $request->input('editPosition');
+    $karyawan->status = $request->input('editStatus');
+    $karyawan->gaji = $request->input('editSalary');
+    $karyawan->save();
+
+    // Redirect back with success message
+    return redirect()->route('data-karyawan')->with('success', 'Karyawan updated successfully.');
+}
+
 
 
 }

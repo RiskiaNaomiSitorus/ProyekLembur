@@ -214,30 +214,47 @@
         </tr>
     </thead>
     <tbody>
-        @foreach ($karyawan as $item)
-        <tr>
-            <td>{{ $loop->iteration }}</td>
-            <td>{{ $item->id_karyawan }}</td>
-            <td>{{ $item->nama_karyawan }}</td>
-            <td>{{ $item->jenis_kelamin }}</td>
-            <td>{{ $item->jabatan }}</td>
-            <td>{{ $item->status }}</td>
-            <td>{{ 'Rp. ' . number_format($item->gaji, 0, ',', '.') }}</td>
-            <td>
-                <button class="btn btn-warning btn-sm edit-button">
-                    Edit
-                </button>
-                <button class="btn btn-danger btn-sm delete-button">
-                    Hapus
-                </button>
-            </td>
-        </tr>
-        @endforeach
-    </tbody>
+    @foreach ($karyawan as $item)
+    <tr>
+        <td>{{ $loop->iteration }}</td>
+        <td class="hidden">{{ $item->id }}</td>
+        <td>{{ $item->id_karyawan }}</td>
+        <td>{{ $item->nama_karyawan }}</td>
+        <td>{{ $item->jenis_kelamin }}</td>
+        <td>{{ $item->jabatan }}</td>
+        <td>{{ $item->status }}</td>
+        <td>{{ 'Rp. ' . number_format($item->gaji, 0, ',', '.') }}</td>
+        <td>
+            <button 
+                class="btn btn-warning btn-sm edit-button" 
+                data-id="{{ $item->id }}"
+                data-idkaryawan="{{ $item->id_karyawan }}"
+                data-nama="{{ $item->nama_karyawan }}"
+                data-gender="{{ $item->jenis_kelamin }}"
+                data-position="{{ $item->jabatan }}"
+                data-status="{{ $item->status }}"
+                data-salary="{{ $item->gaji }}"
+            >
+                Edit
+            </button>
+            <button class="btn btn-danger btn-sm delete-button">
+                Hapus
+            </button>
+        </td>
+    </tr>
+    @endforeach
+</tbody>
+
+
 </table>
 @if (session('success'))
     <div class="alert alert-success">
         {{ session('success') }}
+    </div>
+@endif
+@if (session('error'))
+    <div class="alert alert-danger">
+        {{ session('error') }}
     </div>
 @endif
 
@@ -246,87 +263,92 @@
     {{ $karyawan->links() }}
 </div>
         </div>
-      <!-- Modal for Editing Data -->
-    <div id="editModal" class="modal">
-      <div class="modal-content">
+     <!-- Modal for Editing Data -->
+<div id="editModal" class="modal">
+    <div class="modal-content">
         <span class="close" id="closeModal">&times;</span>
         <h3 style="margin-bottom: 30px">
-          <strong>Edit Data Karyawan</strong>
+            <strong>Edit Data Karyawan</strong>
         </h3>
-        <form id="editForm">
-          <div class="form-group">
-            <label for="editID">ID Karyawan</label>
-            <input
-              type="text"
-              class="form-control"
-              id="editID"
-              name="editID"
-              required
-            />
-            <div id="editIDKaryawanError" style="display: none; color: red">
-              ID Karyawan should contain numbers only.
+        <form id="editForm" method="POST" action="{{ route('update-karyawan') }}">
+            @csrf
+            @method('PUT')
+            <input type="hidden" id="editID" name="editID" />
+            <div class="form-group">
+                <label for="editIDKaryawan">ID Karyawan</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="editIDKaryawan"
+                  name="editIDKaryawan"
+                  required
+                />
+                <div id="editIDKaryawanError" style="display: none; color: red">
+                  ID Karyawan should contain numbers only.
+                </div>
             </div>
-          </div>
-          <div class="form-group">
-            <label for="editName">Nama Karyawan</label>
-            <input
-              type="text"
-              class="form-control"
-              id="editName"
-              name="editName"
-              required
-            />
-          </div>
-          <div class="form-group">
-            <label for="editGender">Jenis Kelamin</label>
-            <select
-              class="form-control"
-              id="editGender"
-              name="editGender"
-              required
-            >
-              <option value="" selected disabled></option>
-              <option value="Laki-laki">Laki-laki</option>
-              <option value="Perempuan">Perempuan</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label for="editPosition">Jabatan</label>
-            <input
-              type="text"
-              class="form-control"
-              id="editPosition"
-              name="editPosition"
-              required
-            />
-          </div>
-          <div class="form-group">
-            <label for="editStatus">Status</label>
-            <select
-              class="form-control"
-              id="editStatus"
-              name="editStatus"
-              required
-            >
-              <option value="" selected disabled></option>
-              <option value="Laki-laki">Aktif</option>
-              <option value="Perempuan">Tidak Aktif</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label for="editSalary">Gaji</label>
-            <input
-              type="text"
-              class="form-control"
-              id="editSalary"
-              name="editSalary"
-              required
-            />
-          </div>        
-          <button type="submit" class="btn btn-primary">Save Changes</button>
+            <div class="form-group">
+                <label for="editName">Nama Karyawan</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="editName"
+                  name="editName"
+                  required
+                />
+            </div>
+            <div class="form-group">
+                <label for="editGender">Jenis Kelamin</label>
+                <select
+                  class="form-control"
+                  id="editGender"
+                  name="editGender"
+                  required
+                >
+                  <option value="" selected disabled></option>
+                  <option value="Laki-laki">Laki-laki</option>
+                  <option value="Perempuan">Perempuan</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="editPosition">Jabatan</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="editPosition"
+                  name="editPosition"
+                  required
+                />
+            </div>
+            <div class="form-group">
+                <label for="editStatus">Status</label>
+                <select
+                  class="form-control"
+                  id="editStatus"
+                  name="editStatus"
+                  required
+                >
+                  <option value="" selected disabled></option>
+                  <option value="Aktif">Aktif</option>
+                  <option value="Tidak Aktif">Tidak Aktif</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="editSalary">Gaji</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="editSalary"
+                  name="editSalary"
+                  required
+                />
+            </div>        
+            <button type="submit" class="btn btn-primary">Save Changes</button>
         </form>
-      </div>
     </div>
+</div>
+
+
    <!-- Modal for Deleting Data -->
 <div id="deleteModal" class="modal">
   <div class="modal-content">
@@ -426,7 +448,7 @@
     </div>
     <script>
     // Get modal elements
-    var editmodal = document.getElementById("editModal");
+    var editModal = document.getElementById("editModal");
     var addModal = document.getElementById("addModal");
     var deleteModal = document.getElementById("deleteModal");
 
@@ -463,9 +485,27 @@
     // Outside click
     window.addEventListener("click", outsideClick);
 
-    // Function to open edit modal
+    // Function to open edit modal and populate data
     function openEditModal() {
-        editmodal.style.display = "block";
+        var button = this;
+        var id = button.getAttribute("data-id");
+        var idKaryawan = button.getAttribute("data-idkaryawan");
+        var nama = button.getAttribute("data-nama");
+        var gender = button.getAttribute("data-gender");
+        var position = button.getAttribute("data-position");
+        var status = button.getAttribute("data-status");
+        var salary = button.getAttribute("data-salary");
+
+        // Populate the edit modal with data
+        document.getElementById("editID").value = id;
+        document.getElementById("editIDKaryawan").value = idKaryawan;
+        document.getElementById("editName").value = nama;
+        document.getElementById("editGender").value = gender;
+        document.getElementById("editPosition").value = position;
+        document.getElementById("editStatus").value = status;
+        document.getElementById("editSalary").value = salary;
+
+        editModal.style.display = "block";
     }
 
     // Function to open add modal
@@ -487,7 +527,7 @@
 
     // Function to close edit modal
     function closeEditModal() {
-        editmodal.style.display = "none";
+        editModal.style.display = "none";
     }
 
     // Function to close add modal
@@ -502,8 +542,8 @@
 
     // Function to close modal if outside click
     function outsideClick(e) {
-        if (e.target == editmodal) {
-            editmodal.style.display = "none";
+        if (e.target == editModal) {
+            editModal.style.display = "none";
         }
         if (e.target == addModal) {
             addModal.style.display = "none";

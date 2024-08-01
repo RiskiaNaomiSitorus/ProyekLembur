@@ -41,3 +41,5 @@ Route::get('rekapitulasi-jam-lembur', [RekapitulasiJamLemburController::class, '
 Route::post('store-karyawan', [DataKaryawanController::class, 'store'])->name('store-karyawan');
 // Route for deleting Karyawan
 Route::delete('delete-karyawan/{id}', [DataKaryawanController::class, 'destroy'])->name('delete-karyawan');
+Route::put('update-karyawan', [DataKaryawanController::class, 'update'])->name('update-karyawan');
+

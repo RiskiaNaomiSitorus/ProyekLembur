@@ -77,3 +77,6 @@ Route::put('update-karyawan', [DataKaryawanController::class, 'update'])->name('
 
 // In web.php or api.php
 Route::get('/api/nama-karyawan', [DataKaryawanController::class, 'getNamaKaryawan']);
+
+Route::get('/lembur', [PerhitunganLemburController::class, 'index'])->name('lembur.index');
+

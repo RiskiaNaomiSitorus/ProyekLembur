@@ -34,8 +34,8 @@ class Lembur extends Model
     // The attributes that should be cast to native types.
     protected $casts = [
         'tanggal_lembur' => 'date',
-        'jam_masuk' => 'time',
-        'jam_keluar' => 'time',
+        'jam_masuk' => 'datetime:H:i', // Time format
+        'jam_keluar' => 'datetime:H:i', // Time format
         'gaji' => 'decimal:2',
         'jam_kerja_lembur' => 'decimal:2',
         'jam_i' => 'decimal:2',

@@ -184,59 +184,64 @@
           </div>
         </div>
         <div class="container table-container">
-          <table class="table table-striped table-bordered">
-            <thead>
-              <tr>
-                <th>No</th>
-                <th>Nama Lengkap</th>
-                <th>ID Karyawan</th>
-                <th>Tanggal Lembur</th>
-                <th>Jam Masuk</th>
-                <th>Jam Keluar</th>
-                <th>Jenis Lembur</th>
-                <th>Gaji</th>
-                <th>Jam Kerja Lembur</th>
-                <th>Jam I</th>
-                <th>Jam II</th>
-                <th>Jam III</th>
-                <th>Jam IV</th>
-                <th>Upah Lembur (Rp)</th>
-                <th>Keterangan</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>1</td>
-                <td>John Doe</td>
-                <td>12345</td>
-                <td>2024-07-18</td>
-                <td>08:00</td>
-                <td>17:00</td>
-                <td>Hari Biasa</td>
-                <td>5,000,000</td>
-                <td>8</td>
-                <td>1</td>
-                <td>7</td>
-                <td>0</td>
-                <td>0</td>
-                <td>600,000</td>
-                <td>-</td>
+        <table class="table table-striped table-bordered">
+    <thead>
+        <tr>
+            <th>No</th>
+            <th>Nama Lengkap</th>
+            <th>ID Karyawan</th>
+            <th>Tanggal Lembur</th>
+            <th>Jam Masuk</th>
+            <th>Jam Keluar</th>
+            <th>Jenis Lembur</th>
+            <th>Gaji</th>
+            <th>Jam Kerja Lembur</th>
+            <th>Jam I</th>
+            <th>Jam II</th>
+            <th>Jam III</th>
+            <th>Jam IV</th>
+            <th>Upah Lembur (Rp)</th>
+            <th>Keterangan</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach($lemburRecords as $index => $lembur)
+            <tr>
+                <td>{{ $index + 1 }}</td>
+                <td>{{ $lembur->nama_lengkap }}</td>
+                <td>{{ $lembur->id_karyawan }}</td>
+                <td>{{ $lembur->tanggal_lembur->format('Y-m-d') }}</td>
+                <td>{{ $lembur->jam_masuk->format('H:i') }}</td>
+                <td>{{ $lembur->jam_keluar->format('H:i') }}</td>
+                <td>{{ $lembur->jenis_lembur }}</td>
+                <td>{{ number_format($lembur->gaji, 0, ',', '.') }}</td>
+                <td>{{ number_format($lembur->jam_kerja_lembur, 1, ',', '.') }}</td>
+                <td>{{ number_format($lembur->jam_i, 1, ',', '.') }}</td>
+                <td>{{ number_format($lembur->jam_ii, 1, ',', '.') }}</td>
+                <td>{{ number_format($lembur->jam_iii, 1, ',', '.') }}</td>
+                <td>{{ number_format($lembur->jam_iv, 1, ',', '.') }}</td>
+                <td>{{ number_format($lembur->upah_lembur, 0, ',', '.') }}</td>
+                <td>{{ $lembur->keterangan }}</td>
                 <td>
-                  <button
-                    id="edit-buttonLembur"
-                    class="btn btn-warning btn-sm edit-button"
-                  >
-                    Edit
-                  </button>
-                  <button class="btn btn-danger btn-sm delete-buttonLembur">
-                    Hapus
-                  </button>
+                    <button
+                        id="edit-buttonLembur"
+                        class="btn btn-warning btn-sm edit-button"
+                        data-id="{{ $lembur->id }}"
+                    >
+                        Edit
+                    </button>
+                    <button
+                        class="btn btn-danger btn-sm delete-buttonLembur"
+                        data-id="{{ $lembur->id }}"
+                    >
+                        Hapus
+                    </button>
                 </td>
-              </tr>
-              <!-- Additional rows as needed -->
-            </tbody>
-          </table>
+            </tr>
+        @endforeach
+    </tbody>
+</table>
         </div>
       </div>
     </div>

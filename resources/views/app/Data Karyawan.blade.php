@@ -327,23 +327,26 @@
         </form>
       </div>
     </div>
-    <!-- Modal for Deleting Data -->
-    <div id="deleteModal" class="modal">
-      <div class="modal-content">
-        <span class="close" id="closeDeleteModal">&times;</span>
-        <h3 style="margin-bottom: 30px">
-          <strong>Hapus Data Karyawan</strong>
-        </h3>
-        <p>Apakah Anda yakin ingin menghapus data karyawan ini?</p>
-        <form id="deleteForm">
-          <input type="hidden" id="deleteID" name="deleteID" />
-          <button type="submit" class="btn btn-danger">Hapus</button>
-          <button type="button" class="btn btn-secondary" id="cancelDelete">
-            Batal
-          </button>
-        </form>
-      </div>
-    </div>
+   <!-- Modal for Deleting Data -->
+<div id="deleteModal" class="modal">
+  <div class="modal-content">
+    <span class="close" id="closeDeleteModal">&times;</span>
+    <h3 style="margin-bottom: 30px">
+      <strong>Hapus Data Karyawan</strong>
+    </h3>
+    <p>Apakah Anda yakin ingin menghapus data karyawan ini?</p>
+    <form id="deleteForm" method="POST" action="">
+      @csrf
+      @method('DELETE')
+      <input type="hidden" id="deleteID" name="id_karyawan" />
+      <button type="submit" class="btn btn-danger">Hapus</button>
+      <button type="button" class="btn btn-secondary" id="cancelDelete">
+        Batal
+      </button>
+    </form>
+  </div>
+</div>
+
 
     <!-- Modal for Adding Data -->
     <div id="addModal" class="modal">
@@ -419,116 +422,120 @@
             </div>
             <button type="submit" class="btn btn-primary">Add Karyawan</button>
         </form>
-
       </div>
     </div>
-        <script>
-       // Get modal elements
-       var editmodal = document.getElementById("editModal");
-      var addModal = document.getElementById("addModal");
-      var deleteModal = document.getElementById("deleteModal");
+    <script>
+    // Get modal elements
+    var editmodal = document.getElementById("editModal");
+    var addModal = document.getElementById("addModal");
+    var deleteModal = document.getElementById("deleteModal");
 
-      // Get open modal buttons
-      var editButtons = document.getElementsByClassName("edit-button");
-      var tambahDataKaryawan = document.getElementById("tambahDataKaryawan");
-      var deleteButtons = document.getElementsByClassName("delete-button");
+    // Get open modal buttons
+    var editButtons = document.getElementsByClassName("edit-button");
+    var tambahDataKaryawan = document.getElementById("tambahDataKaryawan");
+    var deleteButtons = document.getElementsByClassName("delete-button");
 
-      // Get close buttons
-      var closeModal = document.getElementById("closeModal");
-      var closeAddModal = document.getElementById("closeAddModal");
-      var closeDeleteModal = document.getElementById("closeDeleteModal");
-      var cancelDelete = document.getElementById("cancelDelete");
+    // Get close buttons
+    var closeModal = document.getElementById("closeModal");
+    var closeAddModal = document.getElementById("closeAddModal");
+    var closeDeleteModal = document.getElementById("closeDeleteModal");
+    var cancelDelete = document.getElementById("cancelDelete");
 
-      // Listen for open click for edit modal
-      Array.from(editButtons).forEach(function (button) {
+    // Listen for open click for edit modal
+    Array.from(editButtons).forEach(function (button) {
         button.addEventListener("click", openEditModal);
-      });
+    });
 
-      // Listen for open click for add modal
-      tambahDataKaryawan.addEventListener("click", openAddModal);
+    // Listen for open click for add modal
+    tambahDataKaryawan.addEventListener("click", openAddModal);
 
-      // Listen for open click for delete modal
-      Array.from(deleteButtons).forEach(function (button) {
+    // Listen for open click for delete modal
+    Array.from(deleteButtons).forEach(function (button) {
         button.addEventListener("click", openDeleteModal);
-      });
+    });
 
-      // Listen for close click
-      closeModal.addEventListener("click", closeEditModal);
-      closeAddModal.addEventListener("click", closeAddModalFunc);
-      closeDeleteModal.addEventListener("click", closeDeleteModalFunc);
-      cancelDelete.addEventListener("click", closeDeleteModalFunc);
+    // Listen for close click
+    closeModal.addEventListener("click", closeEditModal);
+    closeAddModal.addEventListener("click", closeAddModalFunc);
+    closeDeleteModal.addEventListener("click", closeDeleteModalFunc);
+    cancelDelete.addEventListener("click", closeDeleteModalFunc);
 
-      // Outside click
-      window.addEventListener("click", outsideClick);
+    // Outside click
+    window.addEventListener("click", outsideClick);
 
-      // Function to open edit modal
-      function openEditModal() {
+    // Function to open edit modal
+    function openEditModal() {
         editmodal.style.display = "block";
-      }
+    }
 
-      // Function to open add modal
-      function openAddModal() {
+    // Function to open add modal
+    function openAddModal() {
         addModal.style.display = "block";
-      }
+    }
 
-      // Function to open delete modal
-      function openDeleteModal() {
+    // Function to open delete modal
+    function openDeleteModal() {
         var employeeID =
-          this.closest("tr").querySelector("td:nth-child(2)").innerText;
+            this.closest("tr").querySelector("td:nth-child(2)").innerText;
         document.getElementById("deleteID").value = employeeID;
         deleteModal.style.display = "block";
-      }
+        
+        // Set the delete form action URL dynamically
+        var deleteForm = document.getElementById("deleteForm");
+        deleteForm.action = `/delete-karyawan/${employeeID}`;
+    }
 
-      // Function to close edit modal
-      function closeEditModal() {
+    // Function to close edit modal
+    function closeEditModal() {
         editmodal.style.display = "none";
-      }
+    }
 
-      // Function to close add modal
-      function closeAddModalFunc() {
+    // Function to close add modal
+    function closeAddModalFunc() {
         addModal.style.display = "none";
-      }
+    }
 
-      // Function to close delete modal
-      function closeDeleteModalFunc() {
+    // Function to close delete modal
+    function closeDeleteModalFunc() {
         deleteModal.style.display = "none";
-      }
+    }
 
-      // Function to close modal if outside click
-      function outsideClick(e) {
-        if (e.target == modal) {
-          editmodal.style.display = "none";
+    // Function to close modal if outside click
+    function outsideClick(e) {
+        if (e.target == editmodal) {
+            editmodal.style.display = "none";
         }
         if (e.target == addModal) {
-          addModal.style.display = "none";
+            addModal.style.display = "none";
         }
         if (e.target == deleteModal) {
-          deleteModal.style.display = "none";
+            deleteModal.style.display = "none";
         }
-      }
+    }
 
-        document
+    // Input validation for ID fields
+    document
         .getElementById("addID")
         .addEventListener("input", function (e) {
-          var value = e.target.value;
-          var isValid = /^\d*$/.test(value);
-          document.getElementById("addIDKaryawanError").style.display = isValid
-            ? "none"
-            : "block";
-          e.target.value = value.replace(/\D/g, "");
+            var value = e.target.value;
+            var isValid = /^\d*$/.test(value);
+            document.getElementById("addIDKaryawanError").style.display = isValid
+                ? "none"
+                : "block";
+            e.target.value = value.replace(/\D/g, "");
         });
 
-        document
+    document
         .getElementById("editID")
         .addEventListener("input", function (e) {
-          var value = e.target.value;
-          var isValid = /^\d*$/.test(value);
-          document.getElementById("editIDKaryawanError").style.display = isValid
-            ? "none"
-            : "block";
-          e.target.value = value.replace(/\D/g, "");
+            var value = e.target.value;
+            var isValid = /^\d*$/.test(value);
+            document.getElementById("editIDKaryawanError").style.display = isValid
+                ? "none"
+                : "block";
+            e.target.value = value.replace(/\D/g, "");
         });
-    </script>
+</script>
     <!-- Modal HTML -->
     <div id="detailModal" class="modal">
       <div class="modal-content">

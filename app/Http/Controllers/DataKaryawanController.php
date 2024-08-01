@@ -35,6 +35,7 @@ class DataKaryawanController extends Controller
             'gaji.min' => 'Gaji tidak boleh kurang dari 0.',
         ]);
     
+   
 
         // Check if validation fails
         if ($validator->fails()) {
@@ -50,5 +51,26 @@ class DataKaryawanController extends Controller
         // Redirect back with success message
         return redirect()->route('data-karyawan')->with('success', 'Karyawan added successfully.');
     }
+
+    public function destroy($id)
+    {
+        
+        // Find and delete the Karyawan record
+        $karyawan = Karyawan::where('id_karyawan', $id)->first();
     
+        if ($karyawan) {
+
+            // Delete the Karyawan record
+            $karyawan->delete();
+    
+            // Redirect back with success message
+            return redirect()->route('data-karyawan')->with('success', 'Karyawan deleted successfully.');
+        } else {
+            // Dump a message if no Karyawan is found with the given ID
+            dd('No Karyawan found with ID: ' . $id);
+        }
+    }
+    
+
+
 }

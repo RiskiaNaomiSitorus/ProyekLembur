@@ -34,6 +34,7 @@ class DataKaryawanController extends Controller
             'gaji.required' => 'Gaji harus diisi.',
             'gaji.min' => 'Gaji tidak boleh kurang dari 0.',
         ]);
+    
 
         // Check if validation fails
         if ($validator->fails()) {
@@ -41,11 +42,13 @@ class DataKaryawanController extends Controller
                 ->withErrors($validator)
                 ->withInput();
         }
+    
 
         // Create a new Karyawan record
         Karyawan::create($validator->validated());
-
+    
         // Redirect back with success message
         return redirect()->route('data-karyawan')->with('success', 'Karyawan added successfully.');
     }
+    
 }

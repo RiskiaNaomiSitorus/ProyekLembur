@@ -354,44 +354,71 @@
         </h3>
 
         <form id="addForm" method="POST" action="{{ route('store-karyawan') }}">
-    @csrf
-    <div class="form-group">
-        <label for="addID">ID Karyawan</label>
-        <input type="text" class="form-control" id="addID" name="id_karyawan" required />
-        <div id="addIDKaryawanError" style="display: none; color: red">
-            ID Karyawan should contain numbers only.
-        </div>
-    </div>
-    <div class="form-group">
-        <label for="addName">Nama Karyawan</label>
-        <input type="text" class="form-control" id="addName" name="nama_karyawan" required />
-    </div>
-    <div class="form-group">
-        <label for="addGender">Jenis Kelamin</label>
-        <select class="form-control" id="addGender" name="jenis_kelamin" required>
-            <option value="" selected disabled></option>
-            <option value="Laki-laki">Laki-laki</option>
-            <option value="Perempuan">Perempuan</option>
-        </select>
-    </div>
-    <div class="form-group">
-        <label for="addPosition">Jabatan</label>
-        <input type="text" class="form-control" id="addPosition" name="jabatan" required />
-    </div>
-    <div class="form-group">
-        <label for="addStatus">Status</label>
-        <select class="form-control" id="addStatus" name="status" required>
-            <option value="" selected disabled></option>
-            <option value="Aktif">Aktif</option>
-            <option value="Tidak Aktif">Tidak Aktif</option>
-        </select>
-    </div>
-    <div class="form-group">
-        <label for="addSalary">Gaji</label>
-        <input type="text" class="form-control" id="addSalary" name="gaji" required />
-    </div>
-    <button type="submit" class="btn btn-primary">Add Karyawan</button>
-    </form>
+            @csrf
+            <div class="form-group">
+                <label for="addID">ID Karyawan</label>
+                <input type="text" class="form-control" id="addID" name="id_karyawan" value="{{ old('id_karyawan') }}" required />
+                @error('id_karyawan')
+                    <div id="addIDKaryawanError" style="color: red">
+                        {{ $message }}
+                    </div>
+                @enderror
+            </div>
+            <div class="form-group">
+                <label for="addName">Nama Karyawan</label>
+                <input type="text" class="form-control" id="addName" name="nama_karyawan" value="{{ old('nama_karyawan') }}" required />
+                @error('nama_karyawan')
+                    <div style="color: red">
+                        {{ $message }}
+                    </div>
+                @enderror
+            </div>
+            <div class="form-group">
+                <label for="addGender">Jenis Kelamin</label>
+                <select class="form-control" id="addGender" name="jenis_kelamin" required>
+                    <option value="" selected disabled></option>
+                    <option value="Laki-laki" {{ old('jenis_kelamin') == 'Laki-laki' ? 'selected' : '' }}>Laki-laki</option>
+                    <option value="Perempuan" {{ old('jenis_kelamin') == 'Perempuan' ? 'selected' : '' }}>Perempuan</option>
+                </select>
+                @error('jenis_kelamin')
+                    <div style="color: red">
+                        {{ $message }}
+                    </div>
+                @enderror
+            </div>
+            <div class="form-group">
+                <label for="addPosition">Jabatan</label>
+                <input type="text" class="form-control" id="addPosition" name="jabatan" value="{{ old('jabatan') }}" required />
+                @error('jabatan')
+                    <div style="color: red">
+                        {{ $message }}
+                    </div>
+                @enderror
+            </div>
+            <div class="form-group">
+                <label for="addStatus">Status</label>
+                <select class="form-control" id="addStatus" name="status" required>
+                    <option value="" selected disabled></option>
+                    <option value="Aktif" {{ old('status') == 'Aktif' ? 'selected' : '' }}>Aktif</option>
+                    <option value="Tidak Aktif" {{ old('status') == 'Tidak Aktif' ? 'selected' : '' }}>Tidak Aktif</option>
+                </select>
+                @error('status')
+                    <div style="color: red">
+                        {{ $message }}
+                    </div>
+                @enderror
+            </div>
+            <div class="form-group">
+                <label for="addSalary">Gaji</label>
+                <input type="text" class="form-control" id="addSalary" name="gaji" value="{{ old('gaji') }}" required />
+                @error('gaji')
+                    <div style="color: red">
+                        {{ $message }}
+                    </div>
+                @enderror
+            </div>
+            <button type="submit" class="btn btn-primary">Add Karyawan</button>
+        </form>
 
       </div>
     </div>
@@ -479,37 +506,6 @@
           deleteModal.style.display = "none";
         }
       }
-
-      // Event listener for changes in gaji
-      document
-        .getElementById("editSalary")
-        .addEventListener("input", function (e) {
-          let value = e.target.value.replace(/[^,\d]/g, "");
-          let formattedValue = new Intl.NumberFormat("id-ID", {
-            style: "currency",
-            currency: "IDR",
-            minimumFractionDigits: 0,
-          }).format(value);
-          e.target.value = formattedValue.replace("IDR", "Rp").trim();
-
-          // Recalculate upahLembur when gaji changes
-          calculateUpahLembur();
-        });
-      // Event listener for changes in gaji
-      document
-        .getElementById("addSalary")
-        .addEventListener("input", function (e) {
-          let value = e.target.value.replace(/[^,\d]/g, "");
-          let formattedValue = new Intl.NumberFormat("id-ID", {
-            style: "currency",
-            currency: "IDR",
-            minimumFractionDigits: 0,
-          }).format(value);
-          e.target.value = formattedValue.replace("IDR", "Rp").trim();
-
-          // Recalculate upahLembur when gaji changes
-          calculateUpahLembur();
-        });
 
         document
         .getElementById("addID")

@@ -563,13 +563,13 @@
         return "Rp " + rupiah;
       }
 
-      // Handle input for addgaji field
-      document
-        .getElementById("addgaji")
-        .addEventListener("input", function (e) {
-          var value = e.target.value.replace(/\D/g, "");
-          e.target.value = formatRupiah(value);
-        });
+      // // Handle input for addgaji field
+      // document
+      //   .getElementById("addgaji")
+      //   .addEventListener("input", function (e) {
+      //     var value = e.target.value.replace(/\D/g, "");
+      //     e.target.value = formatRupiah(value);
+      //   });
 
       // Handle input for addIDKaryawan field
       document
@@ -826,13 +826,13 @@
         return "Rp " + rupiah;
       }
 
-      // Handle input for editgaji field
-      document
-        .getElementById("editgaji")
-        .addEventListener("input", function (e) {
-          var value = e.target.value.replace(/\D/g, "");
-          e.target.value = formatRupiah(value);
-        });
+      // // Handle input for editgaji field
+      // document
+      //   .getElementById("editgaji")
+      //   .addEventListener("input", function (e) {
+      //     var value = e.target.value.replace(/\D/g, "");
+      //     e.target.value = formatRupiah(value);
+      //   });
 
       // Handle input for editIDKaryawan field
       document

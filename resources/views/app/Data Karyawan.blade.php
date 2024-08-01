@@ -271,80 +271,114 @@
             <strong>Edit Data Karyawan</strong>
         </h3>
         <form id="editForm" method="POST" action="{{ route('update-karyawan') }}">
-            @csrf
-            @method('PUT')
-            <input type="hidden" id="editID" name="editID" />
-            <div class="form-group">
-                <label for="editIDKaryawan">ID Karyawan</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  id="editIDKaryawan"
-                  name="editIDKaryawan"
-                  required
-                />
-                <div id="editIDKaryawanError" style="display: none; color: red">
-                  ID Karyawan should contain numbers only.
-                </div>
+    @csrf
+    @method('PUT')
+
+    <input type="hidden" id="editID" name="editID" value="{{ old('editID') }}" />
+
+    <div class="form-group">
+        <label for="editIDKaryawan">ID Karyawan</label>
+        <input
+            type="text"
+            class="form-control"
+            id="editIDKaryawan"
+            name="editIDKaryawan"
+            value="{{ old('editIDKaryawan') }}"
+            required
+        />
+        @error('editIDKaryawan')
+            <div id="editIDKaryawanError" style="color: red">
+                {{ $message }}
             </div>
-            <div class="form-group">
-                <label for="editName">Nama Karyawan</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  id="editName"
-                  name="editName"
-                  required
-                />
+        @enderror
+    </div>
+    <div class="form-group">
+        <label for="editName">Nama Karyawan</label>
+        <input
+            type="text"
+            class="form-control"
+            id="editName"
+            name="editName"
+            value="{{ old('editName') }}"
+            required
+        />
+        @error('editName')
+            <div style="color: red">
+                {{ $message }}
             </div>
-            <div class="form-group">
-                <label for="editGender">Jenis Kelamin</label>
-                <select
-                  class="form-control"
-                  id="editGender"
-                  name="editGender"
-                  required
-                >
-                  <option value="" selected disabled></option>
-                  <option value="Laki-laki">Laki-laki</option>
-                  <option value="Perempuan">Perempuan</option>
-                </select>
+        @enderror
+    </div>
+    <div class="form-group">
+        <label for="editGender">Jenis Kelamin</label>
+        <select
+            class="form-control"
+            id="editGender"
+            name="editGender"
+            required
+        >
+            <option value="" selected disabled></option>
+            <option value="Laki-laki" {{ old('editGender') == 'Laki-laki' ? 'selected' : '' }}>Laki-laki</option>
+            <option value="Perempuan" {{ old('editGender') == 'Perempuan' ? 'selected' : '' }}>Perempuan</option>
+        </select>
+        @error('editGender')
+            <div style="color: red">
+                {{ $message }}
             </div>
-            <div class="form-group">
-                <label for="editPosition">Jabatan</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  id="editPosition"
-                  name="editPosition"
-                  required
-                />
+        @enderror
+    </div>
+    <div class="form-group">
+        <label for="editPosition">Jabatan</label>
+        <input
+            type="text"
+            class="form-control"
+            id="editPosition"
+            name="editPosition"
+            value="{{ old('editPosition') }}"
+            required
+        />
+        @error('editPosition')
+            <div style="color: red">
+                {{ $message }}
             </div>
-            <div class="form-group">
-                <label for="editStatus">Status</label>
-                <select
-                  class="form-control"
-                  id="editStatus"
-                  name="editStatus"
-                  required
-                >
-                  <option value="" selected disabled></option>
-                  <option value="Aktif">Aktif</option>
-                  <option value="Tidak Aktif">Tidak Aktif</option>
-                </select>
+        @enderror
+    </div>
+    <div class="form-group">
+        <label for="editStatus">Status</label>
+        <select
+            class="form-control"
+            id="editStatus"
+            name="editStatus"
+            required
+        >
+            <option value="" selected disabled></option>
+            <option value="Aktif" {{ old('editStatus') == 'Aktif' ? 'selected' : '' }}>Aktif</option>
+            <option value="Tidak Aktif" {{ old('editStatus') == 'Tidak Aktif' ? 'selected' : '' }}>Tidak Aktif</option>
+        </select>
+        @error('editStatus')
+            <div style="color: red">
+                {{ $message }}
             </div>
-            <div class="form-group">
-                <label for="editSalary">Gaji</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  id="editSalary"
-                  name="editSalary"
-                  required
-                />
-            </div>        
-            <button type="submit" class="btn btn-primary">Save Changes</button>
-        </form>
+        @enderror
+    </div>
+    <div class="form-group">
+        <label for="editSalary">Gaji</label>
+        <input
+            type="number"
+            class="form-control"
+            id="editSalary"
+            name="editSalary"
+            value="{{ old('editSalary') }}"
+            required
+        />
+        @error('editSalary')
+            <div style="color: red">
+                {{ $message }}
+            </div>
+        @enderror
+    </div>
+    <button type="submit" class="btn btn-primary">Save Changes</button>
+</form>
+
     </div>
 </div>
 
@@ -435,7 +469,7 @@
             </div>
             <div class="form-group">
                 <label for="addSalary">Gaji</label>
-                <input type="text" class="form-control" id="addSalary" name="gaji" value="{{ old('gaji') }}" required />
+                <input type="number" class="form-control" id="addSalary" name="gaji" value="{{ old('gaji') }}" required />
                 @error('gaji')
                     <div style="color: red">
                         {{ $message }}

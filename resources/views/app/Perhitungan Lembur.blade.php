@@ -381,7 +381,7 @@
     <div id="editLemburModal" class="modal">
       <div class="modal-content">
         <span class="close" id="closeEditLemburModal">&times;</span>
-        <h3 style="margin-bottom: 30px"><strong>Tambah Data Lembur</strong></h3>
+        <h3 style="margin-bottom: 30px"><strong>Edit Data Lembur</strong></h3>
         <form id="editlemburForm">
           <div class="form-group">
             <label for="namaLengkap">Nama Lengkap</label>
@@ -546,22 +546,22 @@
         }
       };
 
-      // Format numbers as Rupiah
-      function formatRupiah(angka) {
-        angka = angka.replace(/[^,\d]/g, "").toString();
-        var split = angka.split(","),
-          sisa = split[0].length % 3,
-          rupiah = split[0].substr(0, sisa),
-          ribuan = split[0].substr(sisa).match(/\d{3}/gi);
+      // // Format numbers as Rupiah
+      // function formatRupiah(angka) {
+      //   angka = angka.replace(/[^,\d]/g, "").toString();
+      //   var split = angka.split(","),
+      //     sisa = split[0].length % 3,
+      //     rupiah = split[0].substr(0, sisa),
+      //     ribuan = split[0].substr(sisa).match(/\d{3}/gi);
 
-        if (ribuan) {
-          var separator = sisa ? "." : "";
-          rupiah += separator + ribuan.join(".");
-        }
+      //   if (ribuan) {
+      //     var separator = sisa ? "." : "";
+      //     rupiah += separator + ribuan.join(".");
+      //   }
 
-        rupiah = split[1] != undefined ? rupiah + "," + split[1] : rupiah;
-        return "Rp " + rupiah;
-      }
+      //   rupiah = split[1] != undefined ? rupiah + "," + split[1] : rupiah;
+      //   return "Rp " + rupiah;
+      // }
 
       // // Handle input for addgaji field
       // document
@@ -770,8 +770,8 @@
         hourlyWage = Math.round(hourlyWage);
         var upahLembur = hourlyWage * totalJamLembur;
         document.getElementById("addupahLembur").value = upahLembur
-          .toFixed(0)
-          .replace(/\B(?=(\d{3})+(?!\d))/g, "."); // Format as Rupiah
+          .toFixed(0);
+          // .replace(/\B(?=(\d{3})+(?!\d))/g, "."); // Format as Rupiah
       }
 
       // Update function to recalculate upah lembur
@@ -810,21 +810,21 @@
       };
 
       // Format numbers as Rupiah
-      function formatRupiah(angka) {
-        angka = angka.replace(/[^,\d]/g, "").toString();
-        var split = angka.split(","),
-          sisa = split[0].length % 3,
-          rupiah = split[0].substr(0, sisa),
-          ribuan = split[0].substr(sisa).match(/\d{3}/gi);
+      // function formatRupiah(angka) {
+      //   angka = angka.replace(/[^,\d]/g, "").toString();
+      //   var split = angka.split(","),
+      //     sisa = split[0].length % 3,
+      //     rupiah = split[0].substr(0, sisa),
+      //     ribuan = split[0].substr(sisa).match(/\d{3}/gi);
 
-        if (ribuan) {
-          var separator = sisa ? "." : "";
-          rupiah += separator + ribuan.join(".");
-        }
+      //   if (ribuan) {
+      //     var separator = sisa ? "." : "";
+      //     rupiah += separator + ribuan.join(".");
+      //   }
 
-        rupiah = split[1] != undefined ? rupiah + "," + split[1] : rupiah;
-        return "Rp " + rupiah;
-      }
+      //   rupiah = split[1] != undefined ? rupiah + "," + split[1] : rupiah;
+      //   return "Rp " + rupiah;
+      // }
 
       // // Handle input for editgaji field
       // document
@@ -1033,8 +1033,8 @@
         hourlyWage = Math.round(hourlyWage);
         var upahLembur = hourlyWage * totalJamLembur;
         document.getElementById("editupahLembur").value = upahLembur
-          .toFixed(0)
-          .replace(/\B(?=(\d{3})+(?!\d))/g, "."); // Format as Rupiah
+          .toFixed(0);
+          // .replace(/\B(?=(\d{3})+(?!\d))/g, "."); // Format as Rupiah
       }
 
       // Update function to recalculate upah lembur

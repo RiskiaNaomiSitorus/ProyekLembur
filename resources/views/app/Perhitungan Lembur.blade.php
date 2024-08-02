@@ -316,7 +316,7 @@
           <div class="form-group">
             <label for="addJenisLembur">Jenis Lembur</label>
             <select class="form-control" id="addjenisLembur" name="jenisLembur" required>
-              <option value="" selected disabled>Hari Biasa</option>
+              <option value="" selected readOnly>Hari Biasa</option>
               <option value="Hari Biasa">Hari Biasa</option>
               <option value="Weekend">Weekend</option>
               <option value="Libur">Libur</option>
@@ -330,27 +330,27 @@
 
           <div class="form-group">
             <label for="addJamKerjaLembur">Total Waktu Kerja</label>
-            <input type="number" class="form-control" id="addjamKerjaLembur" name="jamKerjaLembur" disabled />
+            <input type="number" class="form-control" id="addjamKerjaLembur" name="jamKerjaLembur" readOnly />
           </div>
 
           <div class="form-group">
             <label for="addJamI">Jam I</label>
-            <input type="number" class="form-control" id="addjamI" name="jamI" disabled />
+            <input type="number" class="form-control" id="addjamI" name="jamI" readOnly />
           </div>
 
           <div class="form-group">
             <label for="addJamII">Jam II</label>
-            <input type="number" class="form-control" id="addjamII" name="jamII" disabled />
+            <input type="number" class="form-control" id="addjamII" name="jamII" readOnly />
           </div>
 
           <div class="form-group">
             <label for="addJamIII">Jam III</label>
-            <input type="number" class="form-control" id="addjamIII" name="jamIII" disabled />
+            <input type="number" class="form-control" id="addjamIII" name="jamIII" readOnly />
           </div>
 
           <div class="form-group">
             <label for="addJamIV">Jam IV</label>
-            <input type="number" class="form-control" id="addjamIV" name="jamIV" disabled />
+            <input type="number" class="form-control" id="addjamIV" name="jamIV" readOnly />
           </div>
 
           <div class="form-group">
@@ -360,7 +360,7 @@
               class="form-control"
               id="addtotalJamLembur"
               name="totalJamLembur"
-              disabled
+              readOnly
             />
           </div>
 
@@ -371,7 +371,7 @@
               class="form-control"
               id="addupahLembur"
               name="upahLembur"
-              disabled
+              readOnly
             />
           </div>
 
@@ -445,7 +445,7 @@
           <div class="form-group">
             <label for="editJenisLembur">Jenis Lembur</label>
             <select class="form-control" id="editjenisLembur" required>
-              <option value="" selected disabled></option>
+              <option value="" selected readOnly></option>
               <option value="Hari Biasa">Hari Biasa</option>
               <option value="Weekend">Weekend</option>
               <option value="Libur">Libur</option>
@@ -461,16 +461,16 @@
               type="number"
               class="form-control"
               id="editjamKerjaLembur"
-              disabled
+              readOnly
             />
           </div>
           <div class="form-group">
             <label for="editJamI">Jam I</label>
-            <input type="number" class="form-control" id="editjamI" disabled />
+            <input type="number" class="form-control" id="editjamI" readOnly />
           </div>
           <div class="form-group">
             <label for="editJamII">Jam II</label>
-            <input type="number" class="form-control" id="editjamII" disabled />
+            <input type="number" class="form-control" id="editjamII" readOnly />
           </div>
           <div class="form-group">
             <label for="editJamIII">Jam III</label>
@@ -478,12 +478,12 @@
               type="number"
               class="form-control"
               id="editjamIII"
-              disabled
+              readOnly
             />
           </div>
           <div class="form-group">
             <label for="editJamIV">Jam IV</label>
-            <input type="number" class="form-control" id="editjamIV" disabled />
+            <input type="number" class="form-control" id="editjamIV" readOnly />
           </div>
           <div class="form-group">
             <label for="editTotal Jam Lembur">Total Jam Lembur</label>
@@ -491,7 +491,7 @@
               type="number"
               class="form-control"
               id="edittotalJamLembur"
-              disabled
+              readOnly
             />
           </div>
           <div class="form-group">
@@ -500,7 +500,7 @@
               type="number"
               class="form-control"
               id="editupahLembur"
-              disabled
+              readOnly
             />
           </div>
           <div class="form-group">
@@ -534,8 +534,6 @@
       </div>
     </div>
     <script>
-
-
  // Get modal elements
  var addModal = document.getElementById("addLemburModal");
     var editModal = document.getElementById("editLemburModal");
@@ -610,7 +608,7 @@
 
   // Function to close modal if outside click
   function outsideClick(e) {
-        if (e.target === addModal) {
+    if (e.target === addModal) {
         closeAddModalFunc();
     } else if (e.target === editModal) {
         closeEditModalFunc();
@@ -618,6 +616,8 @@
         closeDeleteModalFunc();
     }
 }
+
+
 
     // Event listener for outside click
     window.addEventListener("click", outsideClick);
@@ -650,16 +650,15 @@ function setAddDefaultTimes(date) {
   if (jenisLembur === "Weekend" || jenisLembur === "Libur") {
     jamMasuk.value = "";
     jamKeluar.value = "";
-    jamMasuk.disabled = false;
-    jamKeluar.disabled = false;
+    jamMasuk.readOnly = false;
+    jamKeluar.readOnly = false;
   } else if (jenisLembur === "Hari Biasa") {
     jamMasuk.value = "07:30";
-    jamMasuk.disabled = true;
+    jamMasuk.readOnly = true;
     jamKeluar.value = "";
-    jamKeluar.disabled = false;
-  }
+    jamKeluar.readOnly = false;
+  }
 }
-
 document
   .getElementById("addjenisLembur")
   .addEventListener("change", function () {
@@ -760,7 +759,47 @@ function calculateAddTotalJamLembur() {
     totalJamLembur.toFixed(1);
 }
 
+
+ // Function to calculate addupahLembur
+ function addcalculateUpahLembur() {
+        var gaji =
+          parseFloat(
+            document.getElementById("addgaji").value.replace(/[^0-9]/g, "")
+          ) || 0;
+        var totalJamLembur =
+          parseFloat(document.getElementById("addtotalJamLembur").value) || 0;
+        var hourlyWage = gaji / 173;
+        hourlyWage = Math.round(hourlyWage);
+        var upahLembur = hourlyWage * totalJamLembur;
+        document.getElementById("addupahLembur").value = upahLembur
+          .toFixed(0);
+
+      }
+
+      // Function to calculate addupahLembur
+ function editcalculateUpahLembur() {
+        var gaji =
+          parseFloat(
+            document.getElementById("editgaji").value.replace(/[^0-9]/g, "")
+          ) || 0;
+        var totalJamLembur =
+          parseFloat(document.getElementById("edittotalJamLembur").value) || 0;
+        var hourlyWage = gaji / 173;
+        hourlyWage = Math.round(hourlyWage);
+        var upahLembur = hourlyWage * totalJamLembur;
+        document.getElementById("editupahLembur").value = upahLembur
+          .toFixed(0);
+
+      }
+
+
 // Event listeners for Add Lembur Modal
+document
+  .getElementById("addgaji")
+  .addEventListener("change", addcalculateUpahLembur);
+  document
+  .getElementById("editgaji")
+  .addEventListener("change", editcalculateUpahLembur);
 document
   .getElementById("addjenisLembur")
   .addEventListener("change", updateAddJamCategories);
@@ -804,10 +843,10 @@ document
     ) {
       document.getElementById("addjamMasuk").value = "";
       document.getElementById("addjamKeluar").value = "";
-      document.getElementById("addjamMasuk").disabled = false;
+      document.getElementById("addjamMasuk").readOnly = false;
     } else {
       document.getElementById("addjamMasuk").value = "07:30";
-      document.getElementById("addjamKeluar").disabled = false;
+      document.getElementById("addjamKeluar").readOnly = false;
     }
   });
 // Edit Lembur Modal
@@ -838,13 +877,13 @@ function setEditDefaultTimes(date) {
   if (jenisLembur === "Weekend" || jenisLembur === "Libur") {
     jamMasuk.value = "";
     jamKeluar.value = "";
-    jamMasuk.disabled = false;
-    jamKeluar.disabled = false;
+    jamMasuk.readOnly = false;
+    jamKeluar.readOnly = false;
   } else if (jenisLembur === "Hari Biasa") {
     jamMasuk.value = "07:30";
-    jamMasuk.disabled = true;
+    jamMasuk.readOnly = true;
     jamKeluar.value = "";
-    jamKeluar.disabled = false;
+    jamKeluar.readOnly = false;
   }
 }
 
@@ -992,10 +1031,10 @@ document
     ) {
       document.getElementById("editjamMasuk").value = "";
       document.getElementById("editjamKeluar").value = "";
-      document.getElementById("editjamMasuk").disabled = false;
+      document.getElementById("editjamMasuk").readOnly = false;
     } else {
       document.getElementById("editjamMasuk").value = "07:30";
-      document.getElementById("editjamMasuk").disabled = true;
+      document.getElementById("editjamMasuk").readOnly = true;
     }
   });    
 
@@ -1020,14 +1059,14 @@ document
 
         if (dayOfWeek === 0 || dayOfWeek === 6) {
           // Weekend
-          weekendOption.disabled = false;
-          hariBiasaOption.disabled = true;
-          liburOption.disabled = false;
+          weekendOption.readOnly = false;
+          hariBiasaOption.readOnly = true;
+          liburOption.readOnly = false;
         } else {
           // Weekday
-          weekendOption.disabled = true;
-          hariBiasaOption.disabled = false;
-          liburOption.disabled = false;
+          weekendOption.readOnly = true;
+          hariBiasaOption.readOnly = false;
+          liburOption.readOnly = false;
           // If currently selected value is 'Weekend', change it to 'Hari Biasa'
           if (jenisLemburField.value === "Weekend") {
             jenisLemburField.value = "Hari Biasa";

@@ -19,64 +19,61 @@ use App\Http\Controllers\RekapitulasiJamLemburController;
 |
 */
 
+// Authentication Routes
 // Route for the root URL ('/') that points to the login method of AuthController
-// This is usually the default landing page for users
 Route::get('/', [AuthController::class, 'login'])->name('login');
 
 // Route to handle the login action, POST request
-// It uses the actionlogin method in AuthController to process user authentication
 Route::post('actionlogin', [AuthController::class, 'actionlogin'])->name('actionlogin');
 
 // Route to show the login form
-// This route maps to the showLoginForm method of AuthController and is named 'login'
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 
+// Route to handle user logout
+Route::post('/logout', [AuthController::class, 'logout'])->name('actionlogout');
+
+// Registration Routes
 // Route to show the registration form
-// This route returns the 'auth.register' view when accessed
-// It does not require a controller as it directly returns a view
 Route::get('/register', function () {
     return view('auth.register');
 })->name('register');
 
 // Route to handle registration form submission
-// It uses the register method in RegisterController to create a new user
 Route::post('/register', [RegisterController::class, 'register']);
 
+// Dashboard Routes
 // Route to the home page, which is controlled by the DashboardController
-// It is protected by the 'auth' middleware to ensure only authenticated users can access it
 Route::get('home', [DashboardController::class, 'index'])->name('home')->middleware('auth');
 
-// Route to handle user logout
-// This route maps to the logout method of AuthController and is named 'actionlogout'
-Route::post('/logout', [AuthController::class, 'logout'])->name('actionlogout');
-
+// Data Karyawan Routes
 // Route to view employee data
-// It is managed by DataKaryawanController and is protected by the 'auth' middleware
 Route::get('data-karyawan', [DataKaryawanController::class, 'index'])->name('data-karyawan')->middleware('auth');
 
-// Route to view overtime calculation
-// It is managed by PerhitunganLemburController and is protected by the 'auth' middleware
-Route::get('perhitungan-lembur', [PerhitunganLemburController::class, 'index'])->name('perhitungan-lembur')->middleware('auth');
-
-// Route to view overtime summary
-// It is managed by RekapitulasiJamLemburController and is protected by the 'auth' middleware
-Route::get('rekapitulasi-jam-lembur', [RekapitulasiJamLemburController::class, 'index'])->name('rekapitulasi-jam-lembur')->middleware('auth');
-
 // Route to store new employee data
-// It uses the store method in DataKaryawanController to save employee information
 Route::post('store-karyawan', [DataKaryawanController::class, 'store'])->name('store-karyawan');
 
 // Route to delete an employee record by ID
-// The ID is passed as a parameter in the URL
-// It uses the destroy method in DataKaryawanController to remove the employee record
 Route::delete('delete-karyawan/{id}', [DataKaryawanController::class, 'destroy'])->name('delete-karyawan');
 
 // Route to update an existing employee record
-// It uses the update method in DataKaryawanController to modify employee information
 Route::put('update-karyawan', [DataKaryawanController::class, 'update'])->name('update-karyawan');
 
-// In web.php or api.php
+// API Routes
+// Route to get employee names for use in APIs
 Route::get('/api/nama-karyawan', [DataKaryawanController::class, 'getNamaKaryawan']);
 
+// Overtime Calculation Routes
+// Route to view overtime calculation
+Route::get('perhitungan-lembur', [PerhitunganLemburController::class, 'index'])->name('perhitungan-lembur')->middleware('auth');
+
+// Overtime Summary Routes
+// Route to view overtime summary
+Route::get('rekapitulasi-jam-lembur', [RekapitulasiJamLemburController::class, 'index'])->name('rekapitulasi-jam-lembur')->middleware('auth');
+
+// Additional Route
+// Route for the Lembur Index page
 Route::get('/lembur', [PerhitunganLemburController::class, 'index'])->name('lembur.index');
+
+// Add this to your web.php
+Route::post('/store-lembur', [PerhitunganLemburController::class, 'store'])->name('store-lembur');
 

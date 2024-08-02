@@ -265,6 +265,26 @@
     {{ $karyawan->links() }}
 </div>
         </div>
+
+        <footer
+      style="
+        background-color: #f8f9fa;
+        padding: 20px;
+        text-align: center;
+        margin-top: 20px;
+      "
+    >
+      <p>&copy; 2024 PT. Tolan Tiga Indonesia. All rights reserved.</p>
+      <div style="display: flex; justify-content: center; gap: 20px">
+        <a href="#" style="text-decoration: none; color: #007bff"
+          >Privacy Policy</a
+        >
+        <a href="#" style="text-decoration: none; color: #007bff"
+          >Terms of Service</a
+        >
+        <a href="#" style="text-decoration: none; color: #007bff">Contact Us</a>
+      </div>
+    </footer>
      <!-- Modal for Editing Data -->
 <div id="editModal" class="modal">
     <div class="modal-content">
@@ -363,7 +383,7 @@
         @enderror
     </div>
     <div class="form-group">
-        <label for="editSalary">Gaji</label>
+        <label for="editSalary">Gaji (Rp)</label>
         <input
             type="number"
             class="form-control"
@@ -470,7 +490,7 @@
                 @enderror
             </div>
             <div class="form-group">
-                <label for="addSalary">Gaji</label>
+                <label for="addSalary">Gaji (Rp)</label>
                 <input type="number" class="form-control" id="addSalary" name="gaji" value="{{ old('gaji') }}" required />
                 @error('gaji')
                     <div style="color: red">
@@ -482,14 +502,6 @@
         </form>
       </div>
     </div>
-    <footer>
-          <p>&copy; 2024 PT. Tolan Tiga Indonesia. All rights reserved.</p>
-          <div class="footer-links">
-            <a href="#">Privacy Policy</a>
-            <a href="#">Terms of Service</a>
-            <a href="#">Contact Us</a>
-          </div>
-        </footer>
     <script>
     // Get modal elements
     var editModal = document.getElementById("editModal");

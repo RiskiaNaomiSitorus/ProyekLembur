@@ -61,10 +61,6 @@ class PerhitunganLemburController extends Controller
                 ->with('error', 'Gagal menambahkan data lembur.'); // Custom error message
         }
     
-
-//  // Dump validated data
-//  dd($validator->validated());
-
       // Insert data using Query Builder
     DB::table('lembur')->insert([
         'nama_lengkap' => $request->input('namaLengkap'),

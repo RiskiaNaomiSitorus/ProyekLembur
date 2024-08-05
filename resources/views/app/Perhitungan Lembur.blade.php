@@ -9,6 +9,11 @@
       rel="stylesheet"
       href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
     />
+    <!-- Include jQuery and jQuery UI -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
+
     <style>
       /* Add your styles here */
       html,
@@ -284,177 +289,179 @@
 
     <!-- Modal for Adding Lembur -->
     <div id="addLemburModal" class="modal">
-      <div class="modal-content">
+    <div class="modal-content">
         <span class="close" id="closeAddLemburModal">&times;</span>
         <h3 style="margin-bottom: 30px"><strong>Tambah Data Lembur</strong></h3>
         <form id="addlemburForm" method="POST" action="{{ route('store-lembur') }}">
-    @csrf
-    <div class="form-group">
-        <label for="addIDKaryawan">ID Karyawan</label>
-        <input type="text" class="form-control @error('IDKaryawan') is-invalid @enderror" id="addIDKaryawan" name="IDKaryawan" pattern="\d*" title="Please enter numbers only" value="{{ old('IDKaryawan') }}" required />
-        @error('IDKaryawan')
-            <div class="invalid-feedback">
-                {{ $message }}
+            @csrf
+            <div class="form-group">
+                <label for="addIDKaryawan">ID Karyawan</label>
+                <input type="text" class="form-control @error('IDKaryawan') is-invalid @enderror" id="addIDKaryawan" name="IDKaryawan" pattern="\d*" title="Please enter numbers only" value="{{ old('IDKaryawan') }}" required />
+                @error('IDKaryawan')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                @enderror
             </div>
-        @enderror
-    </div>
-    <div class="form-group">
-        <label for="namaLengkap">Nama Lengkap</label>
-        <input type="text" class="form-control @error('namaLengkap') is-invalid @enderror" id="addnamaLengkap" name="namaLengkap" value="{{ old('namaLengkap') }}" required />
-        @error('namaLengkap')
-            <div class="invalid-feedback">
-                {{ $message }}
-            </div>
-        @enderror
-    </div>
-    <div class="form-group">
-        <label for="addTanggalLembur">Tanggal Lembur</label>
-        <input
-          type="date"
-          class="form-control @error('tanggalLembur') is-invalid @enderror"
-          id="addtanggalLembur"
-          name="tanggalLembur"
-          onchange="checkDate('add')"
-          value="{{ old('tanggalLembur') }}"
-          required
-        />
-        @error('tanggalLembur')
-            <div class="invalid-feedback">
-                {{ $message }}
-            </div>
-        @enderror
-    </div>
 
-    <div class="form-group">
-        <label for="addJenisLembur">Jenis Lembur</label>
-        <select class="form-control @error('jenisLembur') is-invalid @enderror" id="addjenisLembur" name="jenisLembur" required>
-          <option value="" selected readOnly>Hari Biasa</option>
-          <option value="Hari Biasa" {{ old('jenisLembur') == 'Hari Biasa' ? 'selected' : '' }}>Hari Biasa</option>
-          <option value="Weekend" {{ old('jenisLembur') == 'Weekend' ? 'selected' : '' }}>Weekend</option>
-          <option value="Libur" {{ old('jenisLembur') == 'Libur' ? 'selected' : '' }}>Libur</option>
-        </select>
-        @error('jenisLembur')
-            <div class="invalid-feedback">
-                {{ $message }}
+            <div class="form-group">
+                <label for="addnamaLengkap">Nama Lengkap</label>
+                <input type="text" class="form-control @error('namaLengkap') is-invalid @enderror" id="addnamaLengkap" name="namaLengkap" value="{{ old('namaLengkap') }}" required />
+                @error('namaLengkap')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                @enderror
             </div>
-        @enderror
-    </div>
 
-    <div class="form-group">
-        <label for="addJamMasuk">Jam Masuk</label>
-        <input type="time" class="form-control @error('jamMasuk') is-invalid @enderror" id="addjamMasuk" name="jamMasuk" value="{{ old('jamMasuk') }}" required />
-        @error('jamMasuk')
-            <div class="invalid-feedback">
-                {{ $message }}
+            <div class="form-group">
+                <label for="addTanggalLembur">Tanggal Lembur</label>
+                <input
+                    type="date"
+                    class="form-control @error('tanggalLembur') is-invalid @enderror"
+                    id="addtanggalLembur"
+                    name="tanggalLembur"
+                    onchange="checkDate('add')"
+                    value="{{ old('tanggalLembur') }}"
+                    required
+                />
+                @error('tanggalLembur')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                @enderror
             </div>
-        @enderror
-    </div>
 
-    <div class="form-group">
-        <label for="addJamKeluar">Jam Keluar</label>
-        <input type="time" class="form-control @error('jamKeluar') is-invalid @enderror" id="addjamKeluar" name="jamKeluar" value="{{ old('jamKeluar') }}" required />
-        @error('jamKeluar')
-            <div class="invalid-feedback">
-                {{ $message }}
+            <div class="form-group">
+                <label for="addJenisLembur">Jenis Lembur</label>
+                <select class="form-control @error('jenisLembur') is-invalid @enderror" id="addjenisLembur" name="jenisLembur" required>
+                    <option value="" selected readOnly>Hari Biasa</option>
+                    <option value="Hari Biasa" {{ old('jenisLembur') == 'Hari Biasa' ? 'selected' : '' }}>Hari Biasa</option>
+                    <option value="Weekend" {{ old('jenisLembur') == 'Weekend' ? 'selected' : '' }}>Weekend</option>
+                    <option value="Libur" {{ old('jenisLembur') == 'Libur' ? 'selected' : '' }}>Libur</option>
+                </select>
+                @error('jenisLembur')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                @enderror
             </div>
-        @enderror
-    </div>
 
-
-    <div class="form-group">
-        <label for="addGaji">Gaji (Rp)</label>
-        <input type="text" class="form-control @error('gaji') is-invalid @enderror" id="addgaji" name="gaji" value="{{ old('gaji') }}" required />
-        @error('gaji')
-            <div class="invalid-feedback">
-                {{ $message }}
+            <div class="form-group">
+                <label for="addJamMasuk">Jam Masuk</label>
+                <input type="time" class="form-control @error('jamMasuk') is-invalid @enderror" id="addjamMasuk" name="jamMasuk" value="{{ old('jamMasuk') }}" required />
+                @error('jamMasuk')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                @enderror
             </div>
-        @enderror
-    </div>
 
-    <div class="form-group">
-        <label for="addJamKerjaLembur">Total Waktu Kerja</label>
-        <input type="number" class="form-control @error('jamKerjaLembur') is-invalid @enderror" id="addjamKerjaLembur" name="jamKerjaLembur" value="{{ old('jamKerjaLembur') }}" readOnly />
-        @error('jamKerjaLembur')
-            <div class="invalid-feedback">
-                {{ $message }}
+            <div class="form-group">
+                <label for="addJamKeluar">Jam Keluar</label>
+                <input type="time" class="form-control @error('jamKeluar') is-invalid @enderror" id="addjamKeluar" name="jamKeluar" value="{{ old('jamKeluar') }}" required />
+                @error('jamKeluar')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                @enderror
             </div>
-        @enderror
-    </div>
 
-    <div class="form-group">
-        <label for="addJamI">Jam I</label>
-        <input type="number" class="form-control @error('jamI') is-invalid @enderror" id="addjamI" name="jamI" value="{{ old('jamI') }}" readOnly />
-        @error('jamI')
-            <div class="invalid-feedback">
-                {{ $message }}
+            <div class="form-group">
+                <label for="addGaji">Gaji (Rp)</label>
+                <input type="text" class="form-control @error('gaji') is-invalid @enderror" id="addgaji" name="gaji" value="{{ old('gaji') }}" readOnly/>
+                <button type="button" class="btn btn-secondary" onclick="addcalculateUpahLembur()">Calculate Upah Lembur</button>
+                @error('gaji')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                @enderror
             </div>
-        @enderror
-    </div>
 
-    <div class="form-group">
-        <label for="addJamII">Jam II</label>
-        <input type="number" class="form-control @error('jamII') is-invalid @enderror" id="addjamII" name="jamII" value="{{ old('jamII') }}" readOnly />
-        @error('jamII')
-            <div class="invalid-feedback">
-                {{ $message }}
+            <div class="form-group">
+                <label for="addJamKerjaLembur">Total Waktu Kerja</label>
+                <input type="number" class="form-control @error('jamKerjaLembur') is-invalid @enderror" id="addjamKerjaLembur" name="jamKerjaLembur" value="{{ old('jamKerjaLembur') }}" readOnly />
+                @error('jamKerjaLembur')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                @enderror
             </div>
-        @enderror
-    </div>
 
-    <div class="form-group">
-        <label for="addJamIII">Jam III</label>
-        <input type="number" class="form-control @error('jamIII') is-invalid @enderror" id="addjamIII" name="jamIII" value="{{ old('jamIII') }}" readOnly />
-        @error('jamIII')
-            <div class="invalid-feedback">
-                {{ $message }}
+            <div class="form-group">
+                <label for="addJamI">Jam I</label>
+                <input type="number" class="form-control @error('jamI') is-invalid @enderror" id="addjamI" name="jamI" value="{{ old('jamI') }}" readOnly />
+                @error('jamI')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                @enderror
             </div>
-        @enderror
-    </div>
 
-    <div class="form-group">
-        <label for="addJamIV">Jam IV</label>
-        <input type="number" class="form-control @error('jamIV') is-invalid @enderror" id="addjamIV" name="jamIV" value="{{ old('jamIV') }}" readOnly />
-        @error('jamIV')
-            <div class="invalid-feedback">
-                {{ $message }}
+            <div class="form-group">
+                <label for="addJamII">Jam II</label>
+                <input type="number" class="form-control @error('jamII') is-invalid @enderror" id="addjamII" name="jamII" value="{{ old('jamII') }}" readOnly />
+                @error('jamII')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                @enderror
             </div>
-        @enderror
-    </div>
 
-    <div class="form-group">
-        <label for="addTotalJamLembur">Total Jam Lembur</label>
-        <input type="number" class="form-control @error('totalJamLembur') is-invalid @enderror" id="addtotalJamLembur" name="totalJamLembur" value="{{ old('totalJamLembur') }}" readOnly />
-        @error('totalJamLembur')
-            <div class="invalid-feedback">
-                {{ $message }}
+            <div class="form-group">
+                <label for="addJamIII">Jam III</label>
+                <input type="number" class="form-control @error('jamIII') is-invalid @enderror" id="addjamIII" name="jamIII" value="{{ old('jamIII') }}" readOnly />
+                @error('jamIII')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                @enderror
             </div>
-        @enderror
-    </div>
 
-    <div class="form-group">
-        <label for="addUpahLembur">Upah Lembur (Rp)</label>
-        <input type="number" class="form-control @error('upahLembur') is-invalid @enderror" id="addupahLembur" name="upahLembur" value="{{ old('upahLembur') }}" readOnly />
-        @error('upahLembur')
-            <div class="invalid-feedback">
-                {{ $message }}
+            <div class="form-group">
+                <label for="addJamIV">Jam IV</label>
+                <input type="number" class="form-control @error('jamIV') is-invalid @enderror" id="addjamIV" name="jamIV" value="{{ old('jamIV') }}" readOnly />
+                @error('jamIV')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                @enderror
             </div>
-        @enderror
-    </div>
 
-    <div class="form-group">
-        <label for="addKeterangan">Keterangan</label>
-        <textarea class="form-control @error('keterangan') is-invalid @enderror" id="addKeterangan" name="keterangan">{{ old('keterangan') }}</textarea>
-        @error('keterangan')
-            <div class="invalid-feedback">
-                {{ $message }}
+            <div class="form-group">
+                <label for="addTotalJamLembur">Total Jam Lembur</label>
+                <input type="number" class="form-control @error('totalJamLembur') is-invalid @enderror" id="addtotalJamLembur" name="totalJamLembur" value="{{ old('totalJamLembur') }}" readOnly />
+                @error('totalJamLembur')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                @enderror
             </div>
-        @enderror
-    </div>
 
-    <button type="submit" class="btn btn-primary">Simpan</button>
-</form>
-      </div>
+            <div class="form-group">
+                <label for="addUpahLembur">Upah Lembur (Rp)</label>
+                <input type="number" class="form-control @error('upahLembur') is-invalid @enderror" id="addupahLembur" name="upahLembur" value="{{ old('upahLembur') }}" readOnly />
+                @error('upahLembur')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                @enderror
+            </div>
+
+            <div class="form-group">
+                <label for="addKeterangan">Keterangan</label>
+                <textarea class="form-control @error('keterangan') is-invalid @enderror" id="addKeterangan" name="keterangan">{{ old('keterangan') }}</textarea>
+                @error('keterangan')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                @enderror
+            </div>
+
+            <button type="submit" class="btn btn-primary">Simpan</button>
+        </form>
     </div>
+</div>
 
     <!-- Modal for Editing Lembur -->
     <div id="editLemburModal" class="modal">
@@ -591,7 +598,7 @@
           <strong>Hapus Data Lembur</strong>
         </h3>
         <p>Apakah Anda yakin ingin menghapus data lembur ini?</p>
-        <form id="deleteLemburForm">
+        <form id="deleteLemburForm" method="POST">
         @csrf
         @method('DELETE')
           <input type="hidden" id="deleteLemburID" name="deleteLemburID" />
@@ -821,21 +828,34 @@ function calculateAddTotalJamLembur() {
 }
 
 
- // Function to calculate addupahLembur
- function addcalculateUpahLembur() {
-        var gaji =
-          parseFloat(
-            document.getElementById("addgaji").value.replace(/[^0-9]/g, "")
-          ) || 0;
-        var totalJamLembur =
-          parseFloat(document.getElementById("addtotalJamLembur").value) || 0;
-        var hourlyWage = gaji / 173;
-        hourlyWage = Math.round(hourlyWage);
-        var upahLembur = hourlyWage * totalJamLembur;
-        document.getElementById("addupahLembur").value = upahLembur
-          .toFixed(0);
+function addcalculateUpahLembur() {
+    // Ambil nilai gaji dan total jam lembur
+    var gaji =
+        parseFloat(
+            document.getElementById("addgaji").value.replace(/[^0-9.]/g, "")
+        ) || 0;
+    var totalJamLembur =
+        parseFloat(document.getElementById("addtotalJamLembur").value) || 0;
 
-      }
+    // Pastikan gaji dan totalJamLembur bukan NaN
+    if (isNaN(gaji) || isNaN(totalJamLembur)) {
+        document.getElementById("addupahLembur").value = '';
+        return;
+    }
+    
+    // Hitung hourly wage
+    var hourlyWage = Math.round(gaji / 173);
+    
+    // Hitung upah lembur
+    var upahLembur = hourlyWage * totalJamLembur;
+    
+    // Set nilai ke input dan pastikan bulat
+    document.getElementById("addupahLembur").value = upahLembur;
+}
+
+
+
+
 
       // Function to calculate addupahLembur
  function editcalculateUpahLembur() {
@@ -1153,6 +1173,73 @@ document
         var deleteForm = document.getElementById("deleteLemburForm");
         deleteForm.action = `/delete-lembur/${employeeID}`;
     }
+
+    $(document).ready(function() {
+        // Autocomplete for ID Karyawan
+        $("#addIDKaryawan").autocomplete({
+            source: function(request, response) {
+                $.ajax({
+                    url: "{{ route('autocomplete.id_karyawan') }}",
+                    type: 'GET',
+                    dataType: 'json',
+                    data: {
+                        term: request.term
+                    },
+                    success: function(data) {
+                        response(data);
+                    }
+                });
+            },
+            minLength: 2 // Minimum number of characters to trigger the autocomplete
+        });
+
+        // Autocomplete for Nama Lengkap
+        $("#addnamaLengkap").autocomplete({
+            source: function(request, response) {
+                $.ajax({
+                    url: "{{ route('autocomplete.nama_lengkap') }}",
+                    type: 'GET',
+                    dataType: 'json',
+                    data: {
+                        term: request.term
+                    },
+                    success: function(data) {
+                        response(data);
+                    }
+                });
+            },
+            minLength: 2 // Minimum number of characters to trigger the autocomplete
+        });
+    });
+
+    document.addEventListener('DOMContentLoaded', function() {
+    const idKaryawanInput = document.getElementById('addIDKaryawan');
+    const namaLengkapInput = document.getElementById('addnamaLengkap');
+    const gajiInput = document.getElementById('addgaji');
+
+    function updateGaji() {
+        const idKaryawan = idKaryawanInput.value;
+        const namaLengkap = namaLengkapInput.value;
+
+        // Make an AJAX request to fetch the gaji
+        fetch(`/get-gaji?id_karyawan=${idKaryawan}&nama_lengkap=${namaLengkap}`)
+            .then(response => response.json())
+            .then(data => {
+                if (data && data.gaji) {
+                    gajiInput.value = data.gaji;
+                } else {
+                    gajiInput.value = ''; // Clear the gaji if no match
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching gaji:', error);
+                gajiInput.value = ''; // Clear the gaji if there is an error
+            });
+    }
+
+    idKaryawanInput.addEventListener('input', updateGaji);
+    namaLengkapInput.addEventListener('input', updateGaji);
+});
     </script>
   </body>
 </html>

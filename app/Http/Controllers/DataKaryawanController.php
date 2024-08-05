@@ -119,6 +119,44 @@ class DataKaryawanController extends Controller
     return redirect()->route('data-karyawan')->with('success', 'Karyawan updated successfully.');
 }
 
-    
+public function autocomplete(Request $request)
+    {
+        $query = $request->get('term');
+        $karyawan = Karyawan::where('id_karyawan', 'LIKE', "%{$query}%")
+                            ->get(['id_karyawan'])
+                            ->pluck('id_karyawan');
+        return response()->json($karyawan);
+    }
+
+    public function autocompleteNama(Request $request)
+    {
+        $query = $request->get('term');
+        $karyawan = Karyawan::where('nama_karyawan', 'LIKE', "%{$query}%")
+                            ->get(['nama_karyawan'])
+                            ->pluck('nama_karyawan');
+        return response()->json($karyawan);
+    }
+
+    public function getGaji(Request $request)
+    {
+        $idKaryawan = $request->query('id_karyawan');
+        $namaLengkap = $request->query('nama_lengkap');
+
+        $query = Karyawan::query();
+
+        if ($idKaryawan) {
+            $query->where('id_karyawan', $idKaryawan);
+        } elseif ($namaLengkap) {
+            $query->where('nama_lengkap', $namaLengkap);
+        }
+
+        $karyawan = $query->first();
+
+        if ($karyawan) {
+            return response()->json(['gaji' => $karyawan->gaji]);
+        }
+
+        return response()->json(['gaji' => null]);
+    }
     
 }

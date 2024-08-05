@@ -188,8 +188,8 @@
     <thead>
         <tr>
             <th>No</th>
-            <th>Nama Lengkap</th>
             <th>ID Karyawan</th>
+            <th>Nama Lengkap</th>
             <th>Tanggal Lembur</th>
             <th>Jam Masuk</th>
             <th>Jam Keluar</th>
@@ -209,8 +209,8 @@
         @foreach($lemburRecords as $index => $lembur)
             <tr>
                 <td>{{ $loop->iteration }}</td>
-                <td>{{ $lembur->nama_lengkap }}</td>
                 <td>{{ $lembur->id_karyawan }}</td>
+                <td>{{ $lembur->nama_lengkap }}</td>
                 <td>{{ $lembur->tanggal_lembur->format('Y-m-d') }}</td>
                 <td>{{ $lembur->jam_masuk->format('H:i') }}</td>
                 <td>{{ $lembur->jam_keluar->format('H:i') }}</td>
@@ -242,6 +242,18 @@
         @endforeach
     </tbody>
 </table>
+
+@if (session('success'))
+    <div class="alert alert-success">
+        {{ session('success') }}
+    </div>
+@endif
+
+@if (session('error'))
+    <div class="alert alert-danger">
+        {{ session('error') }}
+    </div>
+@endif
 
 <!-- Pagination Links -->
 <div class="pagination">
@@ -276,112 +288,170 @@
         <span class="close" id="closeAddLemburModal">&times;</span>
         <h3 style="margin-bottom: 30px"><strong>Tambah Data Lembur</strong></h3>
         <form id="addlemburForm" method="POST" action="{{ route('store-lembur') }}">
-          @csrf
-        
-          <div class="form-group">
-            <label for="namaLengkap">Nama Lengkap</label>
-            <input type="text" class="form-control" id="addnamaLengkap" name="namaLengkap" required />
-          </div>
-
-          <div class="form-group">
-            <label for="addIDKaryawan">ID Karyawan</label>
-            <input type="text" class="form-control" id="addIDKaryawan" name="IDKaryawan" pattern="\d*" title="Please enter numbers only" required />
-            <div id="addIDKaryawanError" style="display: none; color: red">
-              ID Karyawan should contain numbers only.
+    @csrf
+    <div class="form-group">
+        <label for="addIDKaryawan">ID Karyawan</label>
+        <input type="text" class="form-control @error('IDKaryawan') is-invalid @enderror" id="addIDKaryawan" name="IDKaryawan" pattern="\d*" title="Please enter numbers only" value="{{ old('IDKaryawan') }}" required />
+        @error('IDKaryawan')
+            <div class="invalid-feedback">
+                {{ $message }}
             </div>
-          </div>
+        @enderror
+    </div>
+    <div class="form-group">
+        <label for="namaLengkap">Nama Lengkap</label>
+        <input type="text" class="form-control @error('namaLengkap') is-invalid @enderror" id="addnamaLengkap" name="namaLengkap" value="{{ old('namaLengkap') }}" required />
+        @error('namaLengkap')
+            <div class="invalid-feedback">
+                {{ $message }}
+            </div>
+        @enderror
+    </div>
+    <div class="form-group">
+        <label for="addTanggalLembur">Tanggal Lembur</label>
+        <input
+          type="date"
+          class="form-control @error('tanggalLembur') is-invalid @enderror"
+          id="addtanggalLembur"
+          name="tanggalLembur"
+          onchange="checkDate('add')"
+          value="{{ old('tanggalLembur') }}"
+          required
+        />
+        @error('tanggalLembur')
+            <div class="invalid-feedback">
+                {{ $message }}
+            </div>
+        @enderror
+    </div>
 
-          <div class="form-group">
-            <label for="addTanggalLembur">Tanggal Lembur</label>
-            <input
-              type="date"
-              class="form-control"
-              id="addtanggalLembur"
-              name="tanggalLembur"
-              onchange="checkDate('add')"
-              required
-            />
-          </div>
+    <div class="form-group">
+        <label for="addJamMasuk">Jam Masuk</label>
+        <input type="time" class="form-control @error('jamMasuk') is-invalid @enderror" id="addjamMasuk" name="jamMasuk" value="{{ old('jamMasuk') }}" required />
+        @error('jamMasuk')
+            <div class="invalid-feedback">
+                {{ $message }}
+            </div>
+        @enderror
+    </div>
 
-          <div class="form-group">
-            <label for="addJamMasuk">Jam Masuk</label>
-            <input type="time" class="form-control" id="addjamMasuk" name="jamMasuk" required />
-          </div>
+    <div class="form-group">
+        <label for="addJamKeluar">Jam Keluar</label>
+        <input type="time" class="form-control @error('jamKeluar') is-invalid @enderror" id="addjamKeluar" name="jamKeluar" value="{{ old('jamKeluar') }}" required />
+        @error('jamKeluar')
+            <div class="invalid-feedback">
+                {{ $message }}
+            </div>
+        @enderror
+    </div>
 
-          <div class="form-group">
-            <label for="addJamKeluar">Jam Keluar</label>
-            <input type="time" class="form-control" id="addjamKeluar" name="jamKeluar" required />
-          </div>
+    <div class="form-group">
+        <label for="addJenisLembur">Jenis Lembur</label>
+        <select class="form-control @error('jenisLembur') is-invalid @enderror" id="addjenisLembur" name="jenisLembur" required>
+          <option value="" selected readOnly>Hari Biasa</option>
+          <option value="Hari Biasa" {{ old('jenisLembur') == 'Hari Biasa' ? 'selected' : '' }}>Hari Biasa</option>
+          <option value="Weekend" {{ old('jenisLembur') == 'Weekend' ? 'selected' : '' }}>Weekend</option>
+          <option value="Libur" {{ old('jenisLembur') == 'Libur' ? 'selected' : '' }}>Libur</option>
+        </select>
+        @error('jenisLembur')
+            <div class="invalid-feedback">
+                {{ $message }}
+            </div>
+        @enderror
+    </div>
 
-          <div class="form-group">
-            <label for="addJenisLembur">Jenis Lembur</label>
-            <select class="form-control" id="addjenisLembur" name="jenisLembur" required>
-              <option value="" selected readOnly>Hari Biasa</option>
-              <option value="Hari Biasa">Hari Biasa</option>
-              <option value="Weekend">Weekend</option>
-              <option value="Libur">Libur</option>
-            </select>
-          </div>
+    <div class="form-group">
+        <label for="addGaji">Gaji (Rp)</label>
+        <input type="text" class="form-control @error('gaji') is-invalid @enderror" id="addgaji" name="gaji" value="{{ old('gaji') }}" required />
+        @error('gaji')
+            <div class="invalid-feedback">
+                {{ $message }}
+            </div>
+        @enderror
+    </div>
 
-          <div class="form-group">
-            <label for="addGaji">Gaji (Rp)</label>
-            <input type="text" class="form-control" id="addgaji" name="gaji" required />
-          </div>
+    <div class="form-group">
+        <label for="addJamKerjaLembur">Total Waktu Kerja</label>
+        <input type="number" class="form-control @error('jamKerjaLembur') is-invalid @enderror" id="addjamKerjaLembur" name="jamKerjaLembur" value="{{ old('jamKerjaLembur') }}" readOnly />
+        @error('jamKerjaLembur')
+            <div class="invalid-feedback">
+                {{ $message }}
+            </div>
+        @enderror
+    </div>
 
-          <div class="form-group">
-            <label for="addJamKerjaLembur">Total Waktu Kerja</label>
-            <input type="number" class="form-control" id="addjamKerjaLembur" name="jamKerjaLembur" readOnly />
-          </div>
+    <div class="form-group">
+        <label for="addJamI">Jam I</label>
+        <input type="number" class="form-control @error('jamI') is-invalid @enderror" id="addjamI" name="jamI" value="{{ old('jamI') }}" readOnly />
+        @error('jamI')
+            <div class="invalid-feedback">
+                {{ $message }}
+            </div>
+        @enderror
+    </div>
 
-          <div class="form-group">
-            <label for="addJamI">Jam I</label>
-            <input type="number" class="form-control" id="addjamI" name="jamI" readOnly />
-          </div>
+    <div class="form-group">
+        <label for="addJamII">Jam II</label>
+        <input type="number" class="form-control @error('jamII') is-invalid @enderror" id="addjamII" name="jamII" value="{{ old('jamII') }}" readOnly />
+        @error('jamII')
+            <div class="invalid-feedback">
+                {{ $message }}
+            </div>
+        @enderror
+    </div>
 
-          <div class="form-group">
-            <label for="addJamII">Jam II</label>
-            <input type="number" class="form-control" id="addjamII" name="jamII" readOnly />
-          </div>
+    <div class="form-group">
+        <label for="addJamIII">Jam III</label>
+        <input type="number" class="form-control @error('jamIII') is-invalid @enderror" id="addjamIII" name="jamIII" value="{{ old('jamIII') }}" readOnly />
+        @error('jamIII')
+            <div class="invalid-feedback">
+                {{ $message }}
+            </div>
+        @enderror
+    </div>
 
-          <div class="form-group">
-            <label for="addJamIII">Jam III</label>
-            <input type="number" class="form-control" id="addjamIII" name="jamIII" readOnly />
-          </div>
+    <div class="form-group">
+        <label for="addJamIV">Jam IV</label>
+        <input type="number" class="form-control @error('jamIV') is-invalid @enderror" id="addjamIV" name="jamIV" value="{{ old('jamIV') }}" readOnly />
+        @error('jamIV')
+            <div class="invalid-feedback">
+                {{ $message }}
+            </div>
+        @enderror
+    </div>
 
-          <div class="form-group">
-            <label for="addJamIV">Jam IV</label>
-            <input type="number" class="form-control" id="addjamIV" name="jamIV" readOnly />
-          </div>
+    <div class="form-group">
+        <label for="addTotalJamLembur">Total Jam Lembur</label>
+        <input type="number" class="form-control @error('totalJamLembur') is-invalid @enderror" id="addtotalJamLembur" name="totalJamLembur" value="{{ old('totalJamLembur') }}" readOnly />
+        @error('totalJamLembur')
+            <div class="invalid-feedback">
+                {{ $message }}
+            </div>
+        @enderror
+    </div>
 
-          <div class="form-group">
-            <label for="addTotal Jam Lembur">Total Jam Lembur</label>
-            <input
-              type="number"
-              class="form-control"
-              id="addtotalJamLembur"
-              name="totalJamLembur"
-              readOnly
-            />
-          </div>
+    <div class="form-group">
+        <label for="addUpahLembur">Upah Lembur (Rp)</label>
+        <input type="number" class="form-control @error('upahLembur') is-invalid @enderror" id="addupahLembur" name="upahLembur" value="{{ old('upahLembur') }}" readOnly />
+        @error('upahLembur')
+            <div class="invalid-feedback">
+                {{ $message }}
+            </div>
+        @enderror
+    </div>
 
-          <div class="form-group">
-            <label for="addUpahLembur">Upah Lembur (Rp)</label>
-            <input
-              type="number"
-              class="form-control"
-              id="addupahLembur"
-              name="upahLembur"
-              readOnly
-            />
-          </div>
+    <div class="form-group">
+        <label for="addKeterangan">Keterangan</label>
+        <textarea class="form-control @error('keterangan') is-invalid @enderror" id="addKeterangan" name="keterangan">{{ old('keterangan') }}</textarea>
+        @error('keterangan')
+            <div class="invalid-feedback">
+                {{ $message }}
+            </div>
+        @enderror
+    </div>
 
-          <div class="form-group">
-            <label for="addKeterangan">Keterangan</label>
-            <textarea class="form-control" id="addKeterangan" name="keterangan"></textarea>
-          </div>
-
-          <button type="submit" class="btn btn-primary">Simpan</button>
-        </form>
+    <button type="submit" class="btn btn-primary">Simpan</button>
+</form>
       </div>
     </div>
 
@@ -391,16 +461,7 @@
         <span class="close" id="closeEditLemburModal">&times;</span>
         <h3 style="margin-bottom: 30px"><strong>Edit Data Lembur</strong></h3>
         <form id="editlemburForm">
-          <div class="form-group">
-            <label for="namaLengkap">Nama Lengkap</label>
-            <input
-              type="text"
-              class="form-control"
-              id="editnamaLengkap"
-              required
-            />
-          </div>
-          <div class="form-group">
+        <div class="form-group">
             <label for="editIDKaryawan">ID Karyawan</label>
             <input
               type="text"
@@ -413,6 +474,15 @@
             <div id="editIDKaryawanError" style="display: none; color: red">
               ID Karyawan should contain numbers only.
             </div>
+          </div>
+          <div class="form-group">
+            <label for="namaLengkap">Nama Lengkap</label>
+            <input
+              type="text"
+              class="form-control"
+              id="editnamaLengkap"
+              required
+            />
           </div>
           <div class="form-group">
             <label for="editTanggalLembur">Tanggal Lembur</label>
@@ -623,18 +693,6 @@
     window.addEventListener("click", outsideClick);
      // Add Lembur Modal
 
-// Handle input for addIDKaryawan field
-document
-  .getElementById("addIDKaryawan")
-  .addEventListener("input", function (e) {
-    var value = e.target.value;
-    var isValid = /^\d*$/.test(value);
-    document.getElementById("addIDKaryawanError").style.display = isValid
-      ? "none"
-      : "block";
-    e.target.value = value.replace(/\D/g, "");
-  });
-
 // Determine if a date is a weekend
 function isAddWeekend(date) {
   var day = new Date(date).getDay();
@@ -794,6 +852,12 @@ function calculateAddTotalJamLembur() {
 
 
 // Event listeners for Add Lembur Modal
+document
+  .getElementById("addjamKeluar")
+  .addEventListener("change", addcalculateUpahLembur);
+  document
+  .getElementById("editjamKeluar")
+  .addEventListener("change", editcalculateUpahLembur);
 document
   .getElementById("addgaji")
   .addEventListener("change", addcalculateUpahLembur);

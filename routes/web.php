@@ -77,3 +77,5 @@ Route::get('/lembur', [PerhitunganLemburController::class, 'index'])->name('lemb
 // Add this to your web.php
 Route::post('/store-lembur', [PerhitunganLemburController::class, 'store'])->name('store-lembur');
 
+// Route to delete an employee record by ID
+Route::delete('delete-lembur/{id}', [PerhitunganLemburController::class, 'destroy'])->name('delete-lembur');

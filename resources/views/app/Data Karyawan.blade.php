@@ -416,7 +416,7 @@
     <form id="deleteForm" method="POST" action="">
       @csrf
       @method('DELETE')
-      <input type="hidden" id="deleteID" name="id_karyawan" />
+      <input type="hidden" id="deleteID" name="id" />
       <button type="submit" class="btn btn-danger">Hapus</button>
       <button type="button" class="btn btn-secondary" id="cancelDelete">
         Batal

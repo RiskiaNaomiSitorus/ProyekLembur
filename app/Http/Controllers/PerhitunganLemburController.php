@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Lembur;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\DB;
 
 
 class PerhitunganLemburController extends Controller
@@ -61,31 +60,44 @@ class PerhitunganLemburController extends Controller
                 ->with('error', 'Gagal menambahkan data lembur.'); // Custom error message
         }
     
-      // Insert data using Query Builder
-    DB::table('lembur')->insert([
-        'nama_lengkap' => $request->input('namaLengkap'),
-        'id_karyawan' => $request->input('IDKaryawan'),
-        'tanggal_lembur' => $request->input('tanggalLembur'),
-        'jam_masuk' => $request->input('jamMasuk'),
-        'jam_keluar' => $request->input('jamKeluar'),
-        'jenis_lembur' => $request->input('jenisLembur'),
-        'gaji' => $request->input('gaji'),
-        'jam_kerja_lembur' => $request->input('jamKerjaLembur'),
-        'jam_i' => $request->input('jamI'),
-        'jam_ii' => $request->input('jamII'),
-        'jam_iii' => $request->input('jamIII'),
-        'jam_iv' => $request->input('jamIV'),
-        'total_jam_lembur' => $request->input('totalJamLembur'),
-        'upah_lembur' => $request->input('upahLembur'),
-        'keterangan' => $request->input('keterangan'),
-        'created_at' => now(),
-        'updated_at' => now(),
-    ]);
+
+        $lembur = new Lembur();
+        $lembur->nama_lengkap = $request->input('namaLengkap');
+        $lembur->id_karyawan = $request->input('IDKaryawan');
+        $lembur->tanggal_lembur = $request->input('tanggalLembur');
+        $lembur->jam_masuk = $request->input('jamMasuk');
+        $lembur->jam_keluar = $request->input('jamKeluar');
+        $lembur->jenis_lembur = $request->input('jenisLembur');
+        $lembur->gaji = $request->input('gaji');
+        $lembur->jam_kerja_lembur = $request->input('jamKerjaLembur');
+        $lembur->jam_i = $request->input('jamI');
+        $lembur->jam_ii = $request->input('jamII');
+        $lembur->jam_iii = $request->input('jamIII');
+        $lembur->jam_iv = $request->input('jamIV');
+        $lembur->total_jam_lembur = $request->input('totalJamLembur');
+        $lembur->upah_lembur = $request->input('upahLembur');
+        $lembur->keterangan = $request->input('keterangan');
+        $lembur->save();
 
     // Redirect back with success message
     return redirect()->route('perhitungan-lembur')->with('success', 'Data Lembur berhasil ditambahkan.');
     }
     
 
+public function destroy($id)
+    {
+        // Find and delete the Karyawan record
+        $lembur = Lembur::where('id', $id)->first();
 
+        if ($lembur) {
+            // Delete the Karyawan record
+            $lembur->delete();
+
+            // Redirect back with success message
+            return redirect()->route('perhitungan-lembur')->with('success', 'Karyawan deleted successfully.');
+        } else {
+            // Redirect back with error message
+            return redirect()->route('perhitungan-lembur')->with('error', 'No Karyawan found with ID: ' . $id);
+        }
+    }
 }

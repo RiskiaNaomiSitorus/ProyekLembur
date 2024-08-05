@@ -191,9 +191,9 @@
             <th>ID Karyawan</th>
             <th>Nama Lengkap</th>
             <th>Tanggal Lembur</th>
+            <th>Jenis Lembur</th>
             <th>Jam Masuk</th>
             <th>Jam Keluar</th>
-            <th>Jenis Lembur</th>
             <th>Gaji</th>
             <th>Jam Kerja Lembur</th>
             <th>Jam I</th>
@@ -209,12 +209,13 @@
         @foreach($lemburRecords as $index => $lembur)
             <tr>
                 <td>{{ $loop->iteration }}</td>
+                <td class="hidden">{{ $lembur->id }}</td>
                 <td>{{ $lembur->id_karyawan }}</td>
                 <td>{{ $lembur->nama_lengkap }}</td>
                 <td>{{ $lembur->tanggal_lembur->format('Y-m-d') }}</td>
+                <td>{{ $lembur->jenis_lembur }}</td>
                 <td>{{ $lembur->jam_masuk->format('H:i') }}</td>
                 <td>{{ $lembur->jam_keluar->format('H:i') }}</td>
-                <td>{{ $lembur->jenis_lembur }}</td>
                 <td>{{'Rp. ' . number_format($lembur->gaji, 0, ',', '.') }}</td>
                 <td>{{ number_format($lembur->jam_kerja_lembur, 1, ',', '.') }}</td>
                 <td>{{ number_format($lembur->jam_i, 1, ',', '.') }}</td>
@@ -233,7 +234,6 @@
                     </button>
                     <button
                         class="btn btn-danger btn-sm delete-buttonLembur"
-                        data-id="{{ $lembur->id }}"
                     >
                         Hapus
                     </button>
@@ -326,6 +326,21 @@
     </div>
 
     <div class="form-group">
+        <label for="addJenisLembur">Jenis Lembur</label>
+        <select class="form-control @error('jenisLembur') is-invalid @enderror" id="addjenisLembur" name="jenisLembur" required>
+          <option value="" selected readOnly>Hari Biasa</option>
+          <option value="Hari Biasa" {{ old('jenisLembur') == 'Hari Biasa' ? 'selected' : '' }}>Hari Biasa</option>
+          <option value="Weekend" {{ old('jenisLembur') == 'Weekend' ? 'selected' : '' }}>Weekend</option>
+          <option value="Libur" {{ old('jenisLembur') == 'Libur' ? 'selected' : '' }}>Libur</option>
+        </select>
+        @error('jenisLembur')
+            <div class="invalid-feedback">
+                {{ $message }}
+            </div>
+        @enderror
+    </div>
+
+    <div class="form-group">
         <label for="addJamMasuk">Jam Masuk</label>
         <input type="time" class="form-control @error('jamMasuk') is-invalid @enderror" id="addjamMasuk" name="jamMasuk" value="{{ old('jamMasuk') }}" required />
         @error('jamMasuk')
@@ -345,20 +360,6 @@
         @enderror
     </div>
 
-    <div class="form-group">
-        <label for="addJenisLembur">Jenis Lembur</label>
-        <select class="form-control @error('jenisLembur') is-invalid @enderror" id="addjenisLembur" name="jenisLembur" required>
-          <option value="" selected readOnly>Hari Biasa</option>
-          <option value="Hari Biasa" {{ old('jenisLembur') == 'Hari Biasa' ? 'selected' : '' }}>Hari Biasa</option>
-          <option value="Weekend" {{ old('jenisLembur') == 'Weekend' ? 'selected' : '' }}>Weekend</option>
-          <option value="Libur" {{ old('jenisLembur') == 'Libur' ? 'selected' : '' }}>Libur</option>
-        </select>
-        @error('jenisLembur')
-            <div class="invalid-feedback">
-                {{ $message }}
-            </div>
-        @enderror
-    </div>
 
     <div class="form-group">
         <label for="addGaji">Gaji (Rp)</label>
@@ -495,6 +496,15 @@
             />
           </div>
           <div class="form-group">
+            <label for="editJenisLembur">Jenis Lembur</label>
+            <select class="form-control" id="editjenisLembur" required>
+              <option value="" selected readOnly></option>
+              <option value="Hari Biasa">Hari Biasa</option>
+              <option value="Weekend">Weekend</option>
+              <option value="Libur">Libur</option>
+            </select>
+          </div>
+          <div class="form-group">
             <label for="editJamMasuk">Jam Masuk</label>
             <input
               type="time"
@@ -511,15 +521,6 @@
               id="editjamKeluar"
               required
             />
-          </div>
-          <div class="form-group">
-            <label for="editJenisLembur">Jenis Lembur</label>
-            <select class="form-control" id="editjenisLembur" required>
-              <option value="" selected readOnly></option>
-              <option value="Hari Biasa">Hari Biasa</option>
-              <option value="Weekend">Weekend</option>
-              <option value="Libur">Libur</option>
-            </select>
           </div>
           <div class="form-group">
             <label for="editGaji">Gaji (Rp)</label>
@@ -591,6 +592,8 @@
         </h3>
         <p>Apakah Anda yakin ingin menghapus data lembur ini?</p>
         <form id="deleteLemburForm">
+        @csrf
+        @method('DELETE')
           <input type="hidden" id="deleteLemburID" name="deleteLemburID" />
           <button type="submit" class="btn btn-danger">Hapus</button>
           <button
@@ -1123,20 +1126,33 @@ document
 
         if (dayOfWeek === 0 || dayOfWeek === 6) {
           // Weekend
-          weekendOption.readOnly = false;
-          hariBiasaOption.readOnly = true;
-          liburOption.readOnly = false;
+          weekendOption.disabled = false;
+          hariBiasaOption.disabled = true;
+          liburOption.disabled = false;
         } else {
           // Weekday
-          weekendOption.readOnly = true;
-          hariBiasaOption.readOnly = false;
-          liburOption.readOnly = false;
+          weekendOption.disabled = true;
+          hariBiasaOption.disabled = false;
+          liburOption.disabled = false;
           // If currently selected value is 'Weekend', change it to 'Hari Biasa'
           if (jenisLemburField.value === "Weekend") {
             jenisLemburField.value = "Hari Biasa";
           }
         }
       }
+
+
+      // Function to open delete modal
+    function openDeleteModal() {
+        var employeeID =
+            this.closest("tr").querySelector("td:nth-child(2)").innerText;
+        document.getElementById("deleteLemburID").value = employeeID;
+        deleteModal.style.display = "block";
+        
+        // Set the delete form action URL dynamically
+        var deleteForm = document.getElementById("deleteLemburForm");
+        deleteForm.action = `/delete-lembur/${employeeID}`;
+    }
     </script>
   </body>
 </html>

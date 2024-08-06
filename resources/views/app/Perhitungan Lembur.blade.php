@@ -211,41 +211,55 @@
         </tr>
     </thead>
     <tbody>
-        @foreach($lemburRecords as $index => $lembur)
-            <tr>
-                <td>{{ $loop->iteration }}</td>
-                <td class="hidden">{{ $lembur->id }}</td>
-                <td>{{ $lembur->id_karyawan }}</td>
-                <td>{{ $lembur->nama_lengkap }}</td>
-                <td>{{ $lembur->tanggal_lembur->format('Y-m-d') }}</td>
-                <td>{{ $lembur->jenis_lembur }}</td>
-                <td>{{ $lembur->jam_masuk->format('H:i') }}</td>
-                <td>{{ $lembur->jam_keluar->format('H:i') }}</td>
-                <td>{{'Rp. ' . number_format($lembur->gaji, 0, ',', '.') }}</td>
-                <td>{{ number_format($lembur->jam_kerja_lembur, 1, ',', '.') }}</td>
-                <td>{{ number_format($lembur->jam_i, 1, ',', '.') }}</td>
-                <td>{{ number_format($lembur->jam_ii, 1, ',', '.') }}</td>
-                <td>{{ number_format($lembur->jam_iii, 1, ',', '.') }}</td>
-                <td>{{ number_format($lembur->jam_iv, 1, ',', '.') }}</td>
-                <td>{{ 'Rp. ' . number_format($lembur->upah_lembur, 0, ',', '.') }}
-                </td>
-                <td>{{ $lembur->keterangan }}</td>
-                <td>
-                    <button
-                        class="btn btn-warning btn-sm edit-button"
-                        data-id="{{ $lembur->id }}"
-                    >
-                        Edit
-                    </button>
-                    <button
-                        class="btn btn-danger btn-sm delete-buttonLembur"
-                    >
-                        Hapus
-                    </button>
-                </td>
-            </tr>
-        @endforeach
-    </tbody>
+    @foreach ($lemburRecords as $lembur)
+    <tr>
+        <td>{{ $loop->iteration }}</td>
+        <td class="hidden">{{ $lembur->id }}</td>
+        <td>{{ $lembur->id_karyawan }}</td>
+        <td>{{ $lembur->nama_lengkap }}</td>
+        <td>{{ $lembur->tanggal_lembur->format('d-m-Y') }}</td>
+        <td>{{ $lembur->jenis_lembur }}</td>
+        <td>{{ $lembur->jam_masuk->format('H:i') }}</td>
+        <td>{{ $lembur->jam_keluar->format('H:i') }}</td>
+        <td>{{ 'Rp. ' . number_format($lembur->gaji, 0, ',', '.') }}</td>
+        <td>{{ number_format($lembur->jam_kerja_lembur, 1, ',', '.') }}</td>
+        <td>{{ number_format($lembur->jam_i, 1, ',', '.') }}</td>
+        <td>{{ number_format($lembur->jam_ii, 1, ',', '.') }}</td>
+        <td>{{ number_format($lembur->jam_iii, 1, ',', '.') }}</td>
+        <td>{{ number_format($lembur->jam_iv, 1, ',', '.') }}</td>
+        <td>{{ 'Rp. ' . number_format($lembur->upah_lembur, 0, ',', '.') }}</td>
+        <td>{{ $lembur->keterangan }}</td>
+        <td>
+            <button 
+                class="btn btn-warning btn-sm edit-buttonLembur" 
+                data-id="{{ $lembur->id }}"
+                data-idkaryawan="{{ $lembur->id_karyawan }}"
+                data-nama="{{ $lembur->nama_lengkap }}"
+                data-tanggal="{{ $lembur->tanggal_lembur->format('Y-m-d') }}"
+                data-jenis="{{ $lembur->jenis_lembur }}"
+                data-jammasuk="{{ $lembur->jam_masuk->format('H:i') }}"
+                data-jamkeluar="{{ $lembur->jam_keluar->format('H:i') }}"
+                data-gaji="{{ $lembur->gaji }}"
+                data-jamkerjalembur="{{ $lembur->jam_kerja_lembur }}"
+                data-jami="{{ $lembur->jam_i }}"
+                data-jamii="{{ $lembur->jam_ii }}"
+                data-jamiii="{{ $lembur->jam_iii }}"
+                data-jamiv="{{ $lembur->jam_iv }}"
+                data-totaljamlembur="{{ $lembur->total_jam_lembur }}"
+                data-upahlembur="{{ $lembur->upah_lembur }}"
+                data-keterangan="{{ $lembur->keterangan }}"
+            >
+                Edit
+            </button>
+            <button class="btn btn-danger btn-sm delete-buttonLembur"
+            data-id="{{ $lembur->id }}">
+                Hapus
+            </button>
+        </td>
+    </tr>
+    @endforeach
+</tbody>
+
 </table>
 
 @if (session('success'))
@@ -466,137 +480,275 @@
 </div>
 
     <!-- Modal for Editing Lembur -->
-    <div id="editLemburModal" class="modal">
-      <div class="modal-content">
+<div id="editLemburModal" class="modal">
+    <div class="modal-content">
         <span class="close" id="closeEditLemburModal">&times;</span>
         <h3 style="margin-bottom: 30px"><strong>Edit Data Lembur</strong></h3>
-        <form id="editlemburForm" method="POST" action="{{ route('update-lembur', ['id' => 'data-id']) }}">
+        <form id="editLemburForm" method="POST" action="{{ route('perhitungan-lembur.update') }}">
     @csrf
     @method('PUT')
-        <div class="form-group">
-            <label for="editIDKaryawan">ID Karyawan</label>
-            <input
-              type="text"
-              class="form-control"
-              id="editIDKaryawan"
-              pattern="\d*"
-              title="Please enter numbers only"
-              required
-            />
-            <div id="editIDKaryawanError" style="display: none; color: red">
-              ID Karyawan should contain numbers only.
+    <input type="hidden" id="editID" name="editID">
+            <div class="form-group">
+                <label for="editIDKaryawan">ID Karyawan</label>
+                <input
+                    type="text"
+                    class="form-control"
+                    id="editIDKaryawan"
+                    name="editIDKaryawan"
+                    pattern="\d*"
+                    title="Please enter numbers only"
+                    value="{{ old('editIDKaryawan') }}"
+                    required
+                />
+                @error('editIDKaryawan')
+                    <div id="editIDKaryawanError" style="color: red">
+                        {{ $message }}
+                    </div>
+                @enderror
             </div>
-          </div>
-          <div class="form-group">
-            <label for="namaLengkap">Nama Lengkap</label>
-            <input
-              type="text"
-              class="form-control"
-              id="editnamaLengkap"
-              required
-            />
-          </div>
-          <div class="form-group">
-            <label for="editTanggalLembur">Tanggal Lembur</label>
-            <input
-              type="date"
-              class="form-control"
-              id="edittanggalLembur"
-              onchange="checkDate('edit')"
-              required
-            />
-          </div>
-          <div class="form-group">
-            <label for="editJenisLembur">Jenis Lembur</label>
-            <select class="form-control" id="editjenisLembur" required>
-              <option value="" selected readOnly></option>
-              <option value="Hari Biasa">Hari Biasa</option>
-              <option value="Weekend">Weekend</option>
-              <option value="Libur">Libur</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label for="editJamMasuk">Jam Masuk</label>
-            <input
-              type="time"
-              class="form-control"
-              id="editjamMasuk"
-              required
-            />
-          </div>
-          <div class="form-group">
-            <label for="editJamKeluar">Jam Keluar</label>
-            <input
-              type="time"
-              class="form-control"
-              id="editjamKeluar"
-              required
-            />
-            <button type="button" class="btn btn-secondary" onclick="updateEditJamKerjaLembur()">Recalculate Total Jam Lembur</button>
 
-          </div>
-          <div class="form-group">
-            <label for="editGaji">Gaji (Rp)</label>
-            <input type="text" class="form-control" id="editgaji" required />
-            <button type="button" class="btn btn-secondary" onclick="editcalculateUpahLembur()">Recalculate Upah Lembur</button>
+            <div class="form-group">
+                <label for="editnamaLengkap">Nama Lengkap</label>
+                <input
+                    type="text"
+                    class="form-control"
+                    id="editnamaLengkap"
+                    name="editnamaLengkap"
+                    value="{{ old('editnamaLengkap') }}"
+                    required
+                />
+                @error('editnamaLengkap')
+                    <div style="color: red">
+                        {{ $message }}
+                    </div>
+                @enderror
+            </div>
 
-          </div>
-          <div class="form-group">
-            <label for="editJamKerjaLembur">Total Waktu Kerja</label>
-            <input
-              type="number"
-              class="form-control"
-              id="editjamKerjaLembur"
-              readOnly
-            />
-          </div>
-          <div class="form-group">
-            <label for="editJamI">Jam I</label>
-            <input type="number" class="form-control" id="editjamI" readOnly />
-          </div>
-          <div class="form-group">
-            <label for="editJamII">Jam II</label>
-            <input type="number" class="form-control" id="editjamII" readOnly />
-          </div>
-          <div class="form-group">
-            <label for="editJamIII">Jam III</label>
-            <input
-              type="number"
-              class="form-control"
-              id="editjamIII"
-              readOnly
-            />
-          </div>
-          <div class="form-group">
-            <label for="editJamIV">Jam IV</label>
-            <input type="number" class="form-control" id="editjamIV" readOnly />
-          </div>
-          <div class="form-group">
-            <label for="editTotal Jam Lembur">Total Jam Lembur</label>
-            <input
-              type="number"
-              class="form-control"
-              id="edittotalJamLembur"
-              readOnly
-            />
-          </div>
-          <div class="form-group">
-            <label for="editUpahLembur">Upah Lembur (Rp)</label>
-            <input
-              type="number"
-              class="form-control"
-              id="editupahLembur"
-              readOnly
-            />
-          </div>
-          <div class="form-group">
-            <label for="editKeterangan">Keterangan</label>
-            <textarea class="form-control" id="editKeterangan"></textarea>
-          </div>
-          <button type="submit" class="btn btn-primary">Simpan</button>
+            <div class="form-group">
+                <label for="edittanggalLembur">Tanggal Lembur</label>
+                <input
+                    type="date"
+                    class="form-control"
+                    id="edittanggalLembur"
+                    name="edittanggalLembur"
+                    value="{{ old('edittanggalLembur') }}"
+                    onchange="checkDate('edit')"
+                    required
+                />
+                @error('edittanggalLembur')
+                    <div style="color: red">
+                        {{ $message }}
+                    </div>
+                @enderror
+            </div>
+
+            <div class="form-group">
+                <label for="editjenisLembur">Jenis Lembur</label>
+                <select class="form-control" id="editjenisLembur" name="editjenisLembur" required>
+                    <option value="" selected disabled></option>
+                    <option value="Hari Biasa" {{ old('editjenisLembur') == 'Hari Biasa' ? 'selected' : '' }}>Hari Biasa</option>
+                    <option value="Weekend" {{ old('editjenisLembur') == 'Weekend' ? 'selected' : '' }}>Weekend</option>
+                    <option value="Libur" {{ old('editjenisLembur') == 'Libur' ? 'selected' : '' }}>Libur</option>
+                </select>
+                @error('editjenisLembur')
+                    <div style="color: red">
+                        {{ $message }}
+                    </div>
+                @enderror
+            </div>
+
+            <div class="form-group">
+                <label for="editjamMasuk">Jam Masuk</label>
+                <input
+                    type="time"
+                    class="form-control"
+                    id="editjamMasuk"
+                    name="editjamMasuk"
+                    value="{{ old('editjamMasuk') }}"
+                    required
+                />
+                @error('editjamMasuk')
+                    <div style="color: red">
+                        {{ $message }}
+                    </div>
+                @enderror
+            </div>
+
+            <div class="form-group">
+                <label for="editjamKeluar">Jam Keluar</label>
+                <input
+                    type="time"
+                    class="form-control"
+                    id="editjamKeluar"
+                    name="editjamKeluar"
+                    value="{{ old('editjamKeluar') }}"
+                    required
+                />
+                <button type="button" class="btn btn-secondary" onclick="updateEditJamKerjaLembur()">Recalculate Total Jam Lembur</button>
+                @error('editjamKeluar')
+                    <div style="color: red">
+                        {{ $message }}
+                    </div>
+                @enderror
+            </div>
+
+            <div class="form-group">
+                <label for="editgaji">Gaji (Rp)</label>
+                <input
+                    type="text"
+                    class="form-control"
+                    id="editgaji"
+                    name="editgaji"
+                    value="{{ old('editgaji') }}"
+                    required
+                    readOnly
+                />
+                <button type="button" class="btn btn-secondary" onclick="editcalculateUpahLembur()">Recalculate Upah Lembur</button>
+                @error('editgaji')
+                    <div style="color: red">
+                        {{ $message }}
+                    </div>
+                @enderror
+            </div>
+
+            <div class="form-group">
+                <label for="editjamKerjaLembur">Total Waktu Kerja</label>
+                <input
+                    type="number"
+                    class="form-control"
+                    id="editjamKerjaLembur"
+                    name="editjamKerjaLembur"
+                    value="{{ old('editjamKerjaLembur') }}"
+                    readOnly
+                />
+                @error('editjamKerjaLembur')
+                    <div style="color: red">
+                        {{ $message }}
+                    </div>
+                @enderror
+            </div>
+
+            <div class="form-group">
+                <label for="editjamI">Jam I</label>
+                <input
+                    type="number"
+                    class="form-control"
+                    id="editjamI"
+                    name="editjamI"
+                    value="{{ old('editjamI') }}"
+                    readOnly
+                />
+                @error('editjamI')
+                    <div style="color: red">
+                        {{ $message }}
+                    </div>
+                @enderror
+            </div>
+
+            <div class="form-group">
+                <label for="editjamII">Jam II</label>
+                <input
+                    type="number"
+                    class="form-control"
+                    id="editjamII"
+                    name="editjamII"
+                    value="{{ old('editjamII') }}"
+                    readOnly
+                />
+                @error('editjamII')
+                    <div style="color: red">
+                        {{ $message }}
+                    </div>
+                @enderror
+            </div>
+
+            <div class="form-group">
+                <label for="editjamIII">Jam III</label>
+                <input
+                    type="number"
+                    class="form-control"
+                    id="editjamIII"
+                    name="editjamIII"
+                    value="{{ old('editjamIII') }}"
+                    readOnly
+                />
+                @error('editjamIII')
+                    <div style="color: red">
+                        {{ $message }}
+                    </div>
+                @enderror
+            </div>
+
+            <div class="form-group">
+                <label for="editjamIV">Jam IV</label>
+                <input
+                    type="number"
+                    class="form-control"
+                    id="editjamIV"
+                    name="editjamIV"
+                    value="{{ old('editjamIV') }}"
+                    readOnly
+                />
+                @error('editjamIV')
+                    <div style="color: red">
+                        {{ $message }}
+                    </div>
+                @enderror
+            </div>
+
+            <div class="form-group">
+                <label for="edittotalJamLembur">Total Jam Lembur</label>
+                <input
+                    type="number"
+                    class="form-control"
+                    id="edittotalJamLembur"
+                    name="edittotalJamLembur"
+                    value="{{ old('edittotalJamLembur') }}"
+                    readOnly
+                />
+                @error('edittotalJamLembur')
+                    <div style="color: red">
+                        {{ $message }}
+                    </div>
+                @enderror
+            </div>
+
+            <div class="form-group">
+                <label for="editupahLembur">Upah Lembur (Rp)</label>
+                <input
+                    type="number"
+                    class="form-control"
+                    id="editupahLembur"
+                    name="editupahLembur"
+                    value="{{ old('editupahLembur') }}"
+                    readOnly
+                />
+                @error('editupahLembur')
+                    <div style="color: red">
+                        {{ $message }}
+                    </div>
+                @enderror
+            </div>
+
+            <div class="form-group">
+                <label for="editKeterangan">Keterangan</label>
+                <textarea
+                    class="form-control"
+                    id="editKeterangan"
+                    name="editKeterangan"
+                >{{ old('editKeterangan') }}</textarea>
+                @error('editKeterangan')
+                    <div style="color: red">
+                        {{ $message }}
+                    </div>
+                @enderror
+            </div>
+
+            <button type="submit" class="btn btn-primary">Simpan</button>
         </form>
-      </div>
     </div>
+</div>
+
 
     <!-- Modal for Deleting Data -->
     <div id="deleteLemburModal" class="modal">
@@ -622,14 +774,14 @@
       </div>
     </div>
     <script>
- // Get modal elements
- var addModal = document.getElementById("addLemburModal");
+    // Get modal elements
+    var addModal = document.getElementById("addLemburModal");
     var editModal = document.getElementById("editLemburModal");
     var deleteModal = document.getElementById("deleteLemburModal");
 
     // Get open modal buttons
     var addBtn = document.getElementById("tambahDataLembur");
-    var editButtons = document.getElementsByClassName("edit-button");
+    var editButtons = document.getElementsByClassName("edit-buttonLembur");
     var deleteButtons = document.getElementsByClassName("delete-buttonLembur");
 
     // Get close buttons
@@ -648,10 +800,59 @@
         addModal.style.display = "none";
     }
 
-    // Function to open Edit Lembur Modal
-    function openEditModal() {
-        editModal.style.display = "block";
-    }
+// Function to open Edit Lembur Modal
+function openEditModal() {
+    var button = this; // The clicked button
+    var id = button.getAttribute("data-id");
+    var idKaryawan = button.getAttribute("data-idkaryawan");
+    var nama = button.getAttribute("data-nama");
+    var tanggal = button.getAttribute("data-tanggal");
+    var jenis = button.getAttribute("data-jenis");
+    var jamMasuk = button.getAttribute("data-jammasuk");
+    var jamKeluar = button.getAttribute("data-jamkeluar");
+    var gaji = button.getAttribute("data-gaji");
+    var jamKerjaLembur = button.getAttribute("data-jamkerjalembur");
+    var jamI = button.getAttribute("data-jami");
+    var jamII = button.getAttribute("data-jamii");
+    var jamIII = button.getAttribute("data-jamiii");
+    var jamIV = button.getAttribute("data-jamiv");
+    var totalJamLembur = button.getAttribute("data-totaljamlembur");
+    var upahLembur = button.getAttribute("data-upahlembur");
+    var keterangan = button.getAttribute("data-keterangan");
+
+    // Populate the edit modal with data
+    document.getElementById("editID").value = id;
+    document.getElementById("editIDKaryawan").value = idKaryawan;
+    document.getElementById("editnamaLengkap").value = nama;
+    document.getElementById("edittanggalLembur").value = tanggal;
+    document.getElementById("editjenisLembur").value = jenis;
+    document.getElementById("editjamMasuk").value = jamMasuk;
+    document.getElementById("editjamKeluar").value = jamKeluar;
+    document.getElementById("editgaji").value = gaji;
+    document.getElementById("editjamKerjaLembur").value = jamKerjaLembur;
+    document.getElementById("editjamI").value = jamI;
+    document.getElementById("editjamII").value = jamII;
+    document.getElementById("editjamIII").value = jamIII;
+    document.getElementById("editjamIV").value = jamIV;
+    document.getElementById("edittotalJamLembur").value = totalJamLembur;
+    document.getElementById("editupahLembur").value = upahLembur;
+    document.getElementById("editKeterangan").value = keterangan;
+
+      // Display the edit modal
+      editModal.style.display = "block";
+}
+
+
+// Ensure editModal is defined and properly selected
+var editModal = document.getElementById("editLemburModal");
+
+// Select all edit buttons and add click event listeners
+var editButtons = document.querySelectorAll('.edit-buttonLembur');
+editButtons.forEach(function (button) {
+    button.addEventListener("click", openEditModal);
+});
+
+
 
     // Function to close Edit Lembur Modal
     function closeEditModalFunc() {
@@ -672,11 +873,6 @@
 
     // Listen for open click for Add Lembur Modal
     addBtn.addEventListener("click", openAddModal);
-
-    // Listen for open click for Edit Lembur Modal
-    Array.from(editButtons).forEach(function (button) {
-        button.addEventListener("click", openEditModal);
-    });
 
     // Listen for open click for Delete Lembur Modal
     Array.from(deleteButtons).forEach(function (button) {
@@ -1321,88 +1517,6 @@ function formatDateForInput(dateString) {
 
     return `${year}-${month}-${day}`;
 }
-
-
-
-document.addEventListener('DOMContentLoaded', () => {
-    const editButtons = document.querySelectorAll('.edit-button');
-    const editModal = document.getElementById('editLemburModal');
-    const closeModal = document.getElementById('closeEditLemburModal');
-    const editForm = document.getElementById('editlemburForm');
-
-    // Function to show modal and populate form
-    function showModal(data) {
-        document.getElementById('editlemburForm').action = `/update-lembur/${data.id}`;
-        document.getElementById('editIDKaryawan').value = data.id_karyawan;
-        document.getElementById('editnamaLengkap').value = data.nama_lengkap;
-        document.getElementById('edittanggalLembur').value = formatDateForInput(data.tanggal_lembur);
-        document.getElementById('editjenisLembur').value = data.jenis_lembur;
-        document.getElementById('editjamMasuk').value = data.jam_masuk;
-        document.getElementById('editjamKeluar').value = data.jam_keluar;
-        document.getElementById('editgaji').value = data.gaji;
-        document.getElementById('editjamKerjaLembur').value = data.jam_kerja_lembur;
-        document.getElementById('editjamI').value = data.jam_i;
-        document.getElementById('editjamII').value = data.jam_ii;
-        document.getElementById('editjamIII').value = data.jam_iii;
-        document.getElementById('editjamIV').value = data.jam_iv;
-        document.getElementById('edittotalJamLembur').value = data.total_jam_lembur;
-        document.getElementById('editupahLembur').value = data.upah_lembur;
-        document.getElementById('editKeterangan').value = data.keterangan;
-        editModal.style.display = 'block'; // Show the modal
-    }
-
-    // Handle click on edit button
-    editButtons.forEach(button => {
-        button.addEventListener('click', () => {
-            const id = button.getAttribute('data-id');
-            fetch(`/get-lembur-data/${id}`)
-                .then(response => response.json())
-                .then(data => {
-                    showModal(data);
-                })
-                .catch(error => console.error('Error fetching data:', error));
-        });
-    });
-
-    // Handle modal close
-    closeModal.addEventListener('click', () => {
-        editModal.style.display = 'none'; // Hide the modal
-    });
-
-    // Handle form submission
-    editForm.addEventListener('submit', (event) => {
-        event.preventDefault();
-        const formData = new FormData(editForm);
-
-        fetch(editForm.action, {
-            method: 'PUT',
-            body: formData
-        })
-        .then(response => response.json())
-        .then(updatedData => {
-            // Update the row in the table
-            const row = document.querySelector(`tr[data-id="${updatedData.id}"]`);
-            if (row) {
-                row.children[2].textContent = updatedData.id_karyawan;
-                row.children[3].textContent = updatedData.nama_lengkap;
-                row.children[4].textContent = updatedData.tanggal_lembur;
-                row.children[5].textContent = updatedData.jenis_lembur;
-                row.children[6].textContent = updatedData.jam_masuk;
-                row.children[7].textContent = updatedData.jam_keluar;
-                row.children[8].textContent = 'Rp. ' + new Intl.NumberFormat('id-ID').format(updatedData.gaji);
-                row.children[9].textContent = new Intl.NumberFormat('id-ID').format(updatedData.jam_kerja_lembur);
-                row.children[10].textContent = new Intl.NumberFormat('id-ID').format(updatedData.jam_i);
-                row.children[11].textContent = new Intl.NumberFormat('id-ID').format(updatedData.jam_ii);
-                row.children[12].textContent = new Intl.NumberFormat('id-ID').format(updatedData.jam_iii);
-                row.children[13].textContent = new Intl.NumberFormat('id-ID').format(updatedData.jam_iv);
-                row.children[14].textContent = 'Rp. ' + new Intl.NumberFormat('id-ID').format(updatedData.upah_lembur);
-                row.children[15].textContent = updatedData.keterangan;
-            }
-            editModal.style.display = 'none'; // Hide the modal
-        })
-        .catch(error => console.error('Error updating data:', error));
-    });
-});
 
     </script>
   </body>

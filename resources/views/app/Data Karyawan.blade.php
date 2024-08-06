@@ -295,9 +295,7 @@
         <form id="editForm" method="POST" action="{{ route('update-karyawan') }}">
     @csrf
     @method('PUT')
-
     <input type="hidden" id="editID" name="editID" value="{{ old('editID') }}" />
-
     <div class="form-group">
         <label for="editIDKaryawan">ID Karyawan</label>
         <input

@@ -66,7 +66,7 @@ class PerhitunganLemburController extends Controller
 
     if (!$karyawan) {
         return redirect()->route('perhitungan-lembur')
-            ->with('error', 'ID Karyawan dan Nama Lengkap tidak terdaftar di Data Karyawan.')
+            ->with('error', 'ID Karyawan dan Nama Lengkap tidak terdaftar atau tidak cocok di Data Karyawan.')
             ->withInput();
     }
 
@@ -110,4 +110,48 @@ public function destroy($id)
             return redirect()->route('perhitungan-lembur')->with('error', 'Failed Deleting Data Lembur.');
         }
     }
+
+      // Fetch lembur data by ID
+      public function getLemburData($id)
+      {
+          $lembur = Lembur::find($id);
+  
+          if ($lembur) {
+              return response()->json($lembur);
+          }
+  
+          return response()->json(['message' => 'Data not found'], 404);
+      }
+
+    public function updateLemburData(Request $request, $id)
+{
+    $request->validate([
+        'id_karyawan' => 'required|numeric',
+        'nama_lengkap' => 'required|string|max:255',
+        'tanggal_lembur' => 'required|date',
+        'jenis_lembur' => 'required|string',
+        'jam_masuk' => 'required|date_format:H:i',
+        'jam_keluar' => 'required|date_format:H:i',
+        'gaji' => 'required|numeric',
+        'jam_kerja_lembur' => 'nullable|numeric',
+        'jam_i' => 'nullable|numeric',
+        'jam_ii' => 'nullable|numeric',
+        'jam_iii' => 'nullable|numeric',
+        'jam_iv' => 'nullable|numeric',
+        'total_jam_lembur' => 'nullable|numeric',
+        'upah_lembur' => 'nullable|numeric',
+        'keterangan' => 'nullable|string',
+    ]);
+
+    $lembur = Lembur::find($id);
+
+    if (!$lembur) {
+        return response()->json(['message' => 'Data not found'], 404);
+    }
+
+    $lembur->update($request->all());
+
+    return response()->json($lembur);
+}
+
 }

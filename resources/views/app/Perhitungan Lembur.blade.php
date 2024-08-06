@@ -360,6 +360,8 @@
             <div class="form-group">
                 <label for="addJamKeluar">Jam Keluar</label>
                 <input type="time" class="form-control @error('jamKeluar') is-invalid @enderror" id="addjamKeluar" name="jamKeluar" value="{{ old('jamKeluar') }}" required />
+                <button type="button" class="btn btn-secondary" onclick="updateAddJamKerjaLembur()">Calculate Total Jam Lembur</button>
+
                 @error('jamKeluar')
                     <div class="invalid-feedback">
                         {{ $message }}
@@ -468,7 +470,9 @@
       <div class="modal-content">
         <span class="close" id="closeEditLemburModal">&times;</span>
         <h3 style="margin-bottom: 30px"><strong>Edit Data Lembur</strong></h3>
-        <form id="editlemburForm">
+        <form id="editlemburForm" method="POST" action="{{ route('update-lembur', ['id' => 'data-id']) }}">
+    @csrf
+    @method('PUT')
         <div class="form-group">
             <label for="editIDKaryawan">ID Karyawan</label>
             <input
@@ -528,10 +532,14 @@
               id="editjamKeluar"
               required
             />
+            <button type="button" class="btn btn-secondary" onclick="updateEditJamKerjaLembur()">Recalculate Total Jam Lembur</button>
+
           </div>
           <div class="form-group">
             <label for="editGaji">Gaji (Rp)</label>
             <input type="text" class="form-control" id="editgaji" required />
+            <button type="button" class="btn btn-secondary" onclick="editcalculateUpahLembur()">Recalculate Upah Lembur</button>
+
           </div>
           <div class="form-group">
             <label for="editJamKerjaLembur">Total Waktu Kerja</label>
@@ -962,15 +970,11 @@ function setEditDefaultTimes(date) {
   var jenisLembur = document.getElementById("editjenisLembur").value;
 
   if (jenisLembur === "Weekend" || jenisLembur === "Libur") {
-    jamMasuk.value = "";
-    jamKeluar.value = "";
     jamMasuk.readOnly = false;
     jamKeluar.readOnly = false;
   } else if (jenisLembur === "Hari Biasa") {
     jamMasuk.value = "07:30";
-    jamMasuk.readOnly = true;
-    jamKeluar.value = "";
-    jamKeluar.readOnly = false;
+    jamMasuk.readOnly = true;    jamKeluar.readOnly = false;
   }
 }
 
@@ -1217,6 +1221,73 @@ document
     const namaLengkapInput = document.getElementById('addnamaLengkap');
     const gajiInput = document.getElementById('addgaji');
 
+    function editupdateGaji() {
+        const idKaryawan = idKaryawanInput.value;
+        const namaLengkap = namaLengkapInput.value;
+
+        // Make an AJAX request to fetch the gaji
+        fetch(`/get-gaji?id_karyawan=${idKaryawan}&nama_lengkap=${namaLengkap}`)
+            .then(response => response.json())
+            .then(data => {
+                if (data && data.gaji) {
+                    gajiInput.value = data.gaji;
+                } else {
+                    gajiInput.value = ''; // Clear the gaji if no match
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching gaji:', error);
+                gajiInput.value = ''; // Clear the gaji if there is an error
+            });
+    }
+
+    idKaryawanInput.addEventListener('input', editupdateGaji);
+    namaLengkapInput.addEventListener('input', editupdateGaji);
+});
+
+$(document).ready(function() {
+        // Autocomplete for ID Karyawan
+        $("#editIDKaryawan").autocomplete({
+            source: function(request, response) {
+                $.ajax({
+                    url: "{{ route('autocomplete.id_karyawan') }}",
+                    type: 'GET',
+                    dataType: 'json',
+                    data: {
+                        term: request.term
+                    },
+                    success: function(data) {
+                        response(data);
+                    }
+                });
+            },
+            minLength: 2 // Minimum number of characters to trigger the autocomplete
+        });
+
+        // Autocomplete for Nama Lengkap
+        $("#editnamaLengkap").autocomplete({
+            source: function(request, response) {
+                $.ajax({
+                    url: "{{ route('autocomplete.nama_lengkap') }}",
+                    type: 'GET',
+                    dataType: 'json',
+                    data: {
+                        term: request.term
+                    },
+                    success: function(data) {
+                        response(data);
+                    }
+                });
+            },
+            minLength: 2 // Minimum number of characters to trigger the autocomplete
+        });
+    });
+
+    document.addEventListener('DOMContentLoaded', function() {
+    const idKaryawanInput = document.getElementById('editIDKaryawan');
+    const namaLengkapInput = document.getElementById('editnamaLengkap');
+    const gajiInput = document.getElementById('editgaji');
+
     function updateGaji() {
         const idKaryawan = idKaryawanInput.value;
         const namaLengkap = namaLengkapInput.value;
@@ -1240,6 +1311,99 @@ document
     idKaryawanInput.addEventListener('input', updateGaji);
     namaLengkapInput.addEventListener('input', updateGaji);
 });
+
+// Function to format a date string to yyyy-mm-dd
+function formatDateForInput(dateString) {
+    const date = new Date(dateString);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are zero-based
+    const day = String(date.getDate()).padStart(2, '0');
+
+    return `${year}-${month}-${day}`;
+}
+
+
+
+document.addEventListener('DOMContentLoaded', () => {
+    const editButtons = document.querySelectorAll('.edit-button');
+    const editModal = document.getElementById('editLemburModal');
+    const closeModal = document.getElementById('closeEditLemburModal');
+    const editForm = document.getElementById('editlemburForm');
+
+    // Function to show modal and populate form
+    function showModal(data) {
+        document.getElementById('editlemburForm').action = `/update-lembur/${data.id}`;
+        document.getElementById('editIDKaryawan').value = data.id_karyawan;
+        document.getElementById('editnamaLengkap').value = data.nama_lengkap;
+        document.getElementById('edittanggalLembur').value = formatDateForInput(data.tanggal_lembur);
+        document.getElementById('editjenisLembur').value = data.jenis_lembur;
+        document.getElementById('editjamMasuk').value = data.jam_masuk;
+        document.getElementById('editjamKeluar').value = data.jam_keluar;
+        document.getElementById('editgaji').value = data.gaji;
+        document.getElementById('editjamKerjaLembur').value = data.jam_kerja_lembur;
+        document.getElementById('editjamI').value = data.jam_i;
+        document.getElementById('editjamII').value = data.jam_ii;
+        document.getElementById('editjamIII').value = data.jam_iii;
+        document.getElementById('editjamIV').value = data.jam_iv;
+        document.getElementById('edittotalJamLembur').value = data.total_jam_lembur;
+        document.getElementById('editupahLembur').value = data.upah_lembur;
+        document.getElementById('editKeterangan').value = data.keterangan;
+        editModal.style.display = 'block'; // Show the modal
+    }
+
+    // Handle click on edit button
+    editButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            const id = button.getAttribute('data-id');
+            fetch(`/get-lembur-data/${id}`)
+                .then(response => response.json())
+                .then(data => {
+                    showModal(data);
+                })
+                .catch(error => console.error('Error fetching data:', error));
+        });
+    });
+
+    // Handle modal close
+    closeModal.addEventListener('click', () => {
+        editModal.style.display = 'none'; // Hide the modal
+    });
+
+    // Handle form submission
+    editForm.addEventListener('submit', (event) => {
+        event.preventDefault();
+        const formData = new FormData(editForm);
+
+        fetch(editForm.action, {
+            method: 'PUT',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(updatedData => {
+            // Update the row in the table
+            const row = document.querySelector(`tr[data-id="${updatedData.id}"]`);
+            if (row) {
+                row.children[2].textContent = updatedData.id_karyawan;
+                row.children[3].textContent = updatedData.nama_lengkap;
+                row.children[4].textContent = updatedData.tanggal_lembur;
+                row.children[5].textContent = updatedData.jenis_lembur;
+                row.children[6].textContent = updatedData.jam_masuk;
+                row.children[7].textContent = updatedData.jam_keluar;
+                row.children[8].textContent = 'Rp. ' + new Intl.NumberFormat('id-ID').format(updatedData.gaji);
+                row.children[9].textContent = new Intl.NumberFormat('id-ID').format(updatedData.jam_kerja_lembur);
+                row.children[10].textContent = new Intl.NumberFormat('id-ID').format(updatedData.jam_i);
+                row.children[11].textContent = new Intl.NumberFormat('id-ID').format(updatedData.jam_ii);
+                row.children[12].textContent = new Intl.NumberFormat('id-ID').format(updatedData.jam_iii);
+                row.children[13].textContent = new Intl.NumberFormat('id-ID').format(updatedData.jam_iv);
+                row.children[14].textContent = 'Rp. ' + new Intl.NumberFormat('id-ID').format(updatedData.upah_lembur);
+                row.children[15].textContent = updatedData.keterangan;
+            }
+            editModal.style.display = 'none'; // Hide the modal
+        })
+        .catch(error => console.error('Error updating data:', error));
+    });
+});
+
     </script>
   </body>
 </html>

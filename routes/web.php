@@ -88,4 +88,10 @@ Route::get('autocomplete/nama-lengkap', [DataKaryawanController::class, 'autocom
 
 Route::get('/get-gaji', [DataKaryawanController::class, 'getGaji']);
 
+// Route to get lembur data by ID
+Route::get('/get-lembur-data/{id}', [PerhitunganLemburController::class, 'getLemburData']);
+
+// Route to update lembur data by ID
+Route::put('/update-lembur/{id}', [PerhitunganLemburController::class, 'updateLemburData'])->name('update-lembur');
+
 

@@ -385,7 +385,7 @@
 
             <div class="form-group">
                 <label for="addGaji">Gaji (Rp)</label>
-                <input type="text" class="form-control @error('gaji') is-invalid @enderror" id="addgaji" name="gaji" value="{{ old('gaji') }}" readOnly/>
+                <input type="number" class="form-control @error('gaji') is-invalid @enderror" id="addgaji" name="gaji" value="{{ old('gaji') }}" readOnly/>
                 <button type="button" class="btn btn-secondary" onclick="addcalculateUpahLembur()">Calculate Upah Lembur</button>
                 @error('gaji')
                     <div class="invalid-feedback">
@@ -595,7 +595,7 @@
             <div class="form-group">
                 <label for="editgaji">Gaji (Rp)</label>
                 <input
-                    type="text"
+                    type="number"
                     class="form-control"
                     id="editgaji"
                     name="editgaji"
@@ -926,7 +926,6 @@ function setAddDefaultTimes(date) {
     jamKeluar.readOnly = false;
   } else if (jenisLembur === "Hari Biasa") {
     jamMasuk.value = "07:30";
-    jamMasuk.readOnly = true;
     jamKeluar.value = "";
     jamKeluar.readOnly = false;
   }
@@ -1061,21 +1060,30 @@ function addcalculateUpahLembur() {
 
 
 
-      // Function to calculate addupahLembur
- function editcalculateUpahLembur() {
-        var gaji =
-          parseFloat(
-            document.getElementById("editgaji").value.replace(/[^0-9]/g, "")
-          ) || 0;
-        var totalJamLembur =
-          parseFloat(document.getElementById("edittotalJamLembur").value) || 0;
-        var hourlyWage = gaji / 173;
-        hourlyWage = Math.round(hourlyWage);
-        var upahLembur = hourlyWage * totalJamLembur;
-        document.getElementById("editupahLembur").value = upahLembur
-          .toFixed(0);
+// Function to calculate upah lembur in edit mode
+function editcalculateUpahLembur() {
+    // Retrieve and parse the gaji value, ensuring no decimals
+    var gaji = parseFloat(
+        document.getElementById("editgaji").value.replace(/[^0-9.]/g, "")
+    ).toFixed(0) || 0; // Convert to integer-like value
 
-      }
+    var totalJamLembur = parseFloat(
+        document.getElementById("edittotalJamLembur").value
+    ) || 0;
+
+    // Calculate hourly wage and round to nearest whole number
+    var hourlyWage = parseFloat(gaji) / 173;
+    hourlyWage = Math.round(hourlyWage);
+
+    // Calculate upah lembur
+    var upahLembur = hourlyWage * totalJamLembur;
+
+    // Set the values directly, with no decimals
+    document.getElementById("editgaji").value = parseFloat(gaji).toFixed(0);
+    document.getElementById("editupahLembur").value = upahLembur.toFixed(0);
+}
+
+
 
 
 // Event listeners for Add Lembur Modal
@@ -1170,7 +1178,7 @@ function setEditDefaultTimes(date) {
     jamKeluar.readOnly = false;
   } else if (jenisLembur === "Hari Biasa") {
     jamMasuk.value = "07:30";
-    jamMasuk.readOnly = true;    jamKeluar.readOnly = false;
+ jamKeluar.readOnly = false;
   }
 }
 
@@ -1283,7 +1291,7 @@ document
   .addEventListener("input", updateEditJamCategories);
 document
   .getElementById("editjamKeluar")
-  .addEventListener("change", updateEditJamKerjaLembur);
+  .addEventListener("change", updateEditJamKerjaLembur.resetUpahLembur);
 document
   .getElementById("editjamI")
   .addEventListener("input", calculateEditTotalJamLembur);
@@ -1306,7 +1314,7 @@ document
       ? "Weekend" || "Libur"
       : "Hari Biasa";
     setEditDefaultTimes(date);
-  });
+  }.resetUpahLembur);
 document
   .getElementById("editjenisLembur")
   .addEventListener("change", function () {
@@ -1517,7 +1525,6 @@ function formatDateForInput(dateString) {
 
     return `${year}-${month}-${day}`;
 }
-
     </script>
   </body>
 </html>

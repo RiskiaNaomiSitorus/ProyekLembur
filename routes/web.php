@@ -7,6 +7,8 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\DataKaryawanController;
 use App\Http\Controllers\PerhitunganLemburController;
 use App\Http\Controllers\RekapitulasiJamLemburController;
+use App\Exports\KaryawanExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 /*
 |--------------------------------------------------------------------------
@@ -95,4 +97,5 @@ Route::put('/perhitungan-lembur/update', [PerhitunganLemburController::class, 'u
 Route::get('/export-excel', [PerhitunganLemburController::class, 'exportExcel'])->name('export.excel');
 
 
-
+// Route for exporting data
+Route::get('export-karyawan', [DataKaryawanController::class, 'export'])->name('karyawan.export');

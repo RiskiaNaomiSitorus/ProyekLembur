@@ -236,9 +236,10 @@
             <h4>Tambah Data Karyawan</h4>
           </div>
           <div class="action-buttons">
-            <button class="btn btn-primary btn-sm">
-              <i class="fas fa-file-excel"></i> Excel
-            </button>
+          <a href="{{ route('karyawan.export') }}" class="btn btn-primary btn-sm">
+    <i class="fas fa-file-excel"></i> Excel
+</a>
+
             <button class="btn btn-secondary btn-sm">
               <i class="fas fa-print"></i> Print
             </button>

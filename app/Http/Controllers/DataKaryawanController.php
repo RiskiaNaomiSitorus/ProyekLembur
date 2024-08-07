@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule; // Import Rule class
 use App\Models\Karyawan;
+use Maatwebsite\Excel\Facades\Excel; // Make sure this import is correct
+use App\Exports\KaryawanExport;
 
 class DataKaryawanController extends Controller
 {
@@ -157,6 +159,11 @@ public function autocomplete(Request $request)
         }
 
         return response()->json(['gaji' => null]);
+    }
+
+    public function export()
+    {
+        return Excel::download(new KaryawanExport, 'karyawan.xlsx');
     }
     
 }

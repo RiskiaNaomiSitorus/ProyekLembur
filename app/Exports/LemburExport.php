@@ -6,21 +6,42 @@ use App\Models\Lembur;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithMapping;
+use Maatwebsite\Excel\Concerns\WithStyles;
+use Maatwebsite\Excel\Concerns\WithEvents;
+use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
+use PhpOffice\PhpSpreadsheet\Style\Border;
+use PhpOffice\PhpSpreadsheet\Style\Alignment;
+use PhpOffice\PhpSpreadsheet\Style\Font;
+use Maatwebsite\Excel\Events\AfterSheet;
 
-class LemburExport implements FromCollection, WithHeadings, WithMapping
+class LemburExport implements FromCollection, WithHeadings, WithMapping, WithStyles, WithEvents
 {
     protected $startDate;
     protected $endDate;
+    protected $namaLengkap;
+    protected $idKaryawan;
 
-    public function __construct($startDate, $endDate)
+    public function __construct($startDate, $endDate, $namaLengkap = null, $idKaryawan = null)
     {
         $this->startDate = $startDate;
         $this->endDate = $endDate;
+        $this->namaLengkap = $namaLengkap;
+        $this->idKaryawan = $idKaryawan;
     }
 
     public function collection()
     {
-        return Lembur::whereBetween('tanggal_lembur', [$this->startDate, $this->endDate])->get();
+        $query = Lembur::whereBetween('tanggal_lembur', [$this->startDate, $this->endDate]);
+
+        if ($this->namaLengkap) {
+            $query->where('nama_lengkap', $this->namaLengkap);
+        }
+
+        if ($this->idKaryawan) {
+            $query->where('id_karyawan', $this->idKaryawan);
+        }
+
+        return $query->get();
     }
 
     public function headings(): array
@@ -33,7 +54,7 @@ class LemburExport implements FromCollection, WithHeadings, WithMapping
             'Jenis Lembur',
             'Jam Masuk',
             'Jam Keluar',
-            'Gaji',
+            'Gaji (Rp.)',
             'Jam Kerja Lembur',
             'Jam I',
             'x 1.5',
@@ -43,7 +64,7 @@ class LemburExport implements FromCollection, WithHeadings, WithMapping
             'x 3',
             'Jam IV',
             'x 4',
-            'Upah Lembur',
+            'Upah Lembur (Rp.)',
             'Keterangan'
         ];
     }
@@ -58,18 +79,70 @@ class LemburExport implements FromCollection, WithHeadings, WithMapping
             $lembur->jenis_lembur,
             $lembur->jam_masuk->format('H:i'),
             $lembur->jam_keluar->format('H:i'),
-            'Rp. ' . number_format($lembur->gaji, 0, ',', '.'),
-            number_format($lembur->jam_kerja_lembur, 1, ',', '.'),
-            number_format($lembur->jam_i, 1, ',', '.'),
-            number_format($lembur->jam_i * 1.5, 1, ',', '.'),
-            number_format($lembur->jam_ii, 1, ',', '.'),
-            number_format($lembur->jam_ii * 2, 1, ',', '.'),
-            number_format($lembur->jam_iii, 1, ',', '.'),
-            number_format($lembur->jam_iii * 3, 1, ',', '.'),
-            number_format($lembur->jam_iv, 1, ',', '.'),
-            number_format($lembur->jam_iv * 4, 1, ',', '.'),
-            'Rp. ' . number_format($lembur->upah_lembur, 0, ',', '.'),
+            $lembur->gaji ?? 0, // Numeric, default to 0 if null
+            $lembur->jam_kerja_lembur ?? 0, // Numeric, default to 0 if null
+            $lembur->jam_i ?? 0, // Numeric, default to 0 if null
+            ($lembur->jam_i ?? 0) * 1.5, // Numeric, default to 0 if null
+            $lembur->jam_ii ?? 0, // Numeric, default to 0 if null
+            ($lembur->jam_ii ?? 0) * 2, // Numeric, default to 0 if null
+            $lembur->jam_iii ?? 0, // Numeric, default to 0 if null
+            ($lembur->jam_iii ?? 0) * 3, // Numeric, default to 0 if null
+            $lembur->jam_iv ?? 0, // Numeric, default to 0 if null
+            ($lembur->jam_iv ?? 0) * 4, // Numeric, default to 0 if null
+            $lembur->upah_lembur ?? 0, // Numeric, default to 0 if null
             $lembur->keterangan
+        ];
+    }
+
+    public function styles(Worksheet $sheet)
+    {
+        $highestRow = $sheet->getHighestRow();
+        $highestColumn = $sheet->getHighestColumn();
+        $cellRange = 'A1:' . $highestColumn . $highestRow;
+
+        // Apply font style
+        $sheet->getStyle($cellRange)
+              ->getFont()
+              ->setName('Book Antiqua')
+              ->setSize(9);
+        
+        // Center align all cells
+        $sheet->getStyle($cellRange)
+              ->getAlignment()
+              ->setHorizontal(Alignment::HORIZONTAL_CENTER)
+              ->setVertical(Alignment::VERTICAL_CENTER);
+        
+        // Apply borders to all cells
+        $sheet->getStyle($cellRange)
+              ->getBorders()
+              ->getAllBorders()
+              ->setBorderStyle(Border::BORDER_THIN);
+
+        $numberColumns = ['H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R']; // Columns for numbers
+        foreach ($numberColumns as $column) {
+            $sheet->getStyle($column . '2:' . $column . $highestRow)
+                  ->getNumberFormat()
+                  ->setFormatCode('#,##0.0');
+        }
+    }
+
+    public function registerEvents(): array
+    {
+        return [
+            AfterSheet::class => function(AfterSheet $event) {
+                $sheet = $event->sheet->getDelegate();
+                $highestRow = $sheet->getHighestRow();
+                $numberColumns = ['H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R']; // Columns for numbers
+                
+                foreach ($numberColumns as $column) {
+                    for ($row = 2; $row <= $highestRow; $row++) {
+                        $cellValue = $sheet->getCell($column . $row)->getValue();
+                        if ($cellValue === null || $cellValue === '') {
+                            $sheet->setCellValue($column . $row, 0);
+                        }
+                    }
+                }
+            },
         ];
     }
 }

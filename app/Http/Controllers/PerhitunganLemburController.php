@@ -203,8 +203,10 @@ class PerhitunganLemburController extends Controller
     {
         $startDate = $request->input('start_date');
         $endDate = $request->input('end_date');
+        $namaLengkap = $request->input('nama_lengkap');
+        $idKaryawan = $request->input('id_karyawan');
 
-        return Excel::download(new LemburExport($startDate, $endDate), 'lembur_records.xlsx');
+        return Excel::download(new LemburExport($startDate, $endDate, $namaLengkap, $idKaryawan), 'lembur_records.xlsx');
     }
 }
 

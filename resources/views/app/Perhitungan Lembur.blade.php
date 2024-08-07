@@ -769,12 +769,20 @@
       </div>
     </div>
 
-   <!-- Modal for Date Range Selection -->
+ <!-- Modal for Date Range Selection -->
 <div id="dateRangeModal" class="modal">
     <div class="modal-content">
-        <span class="close" id= "closedataRangeModal">&times;</span>
+        <span class="close" id="closedataRangeModal">&times;</span>
         <h2>Select Date Range</h2>
         <form id="dateRangeForm" action="{{ route('export.excel') }}" method="GET">
+        <div class="form-group">
+                <label for="id_karyawan">ID Karyawan:</label>
+                <input type="text" id="id_karyawan" name="id_karyawan">
+            </div>
+        <div class="form-group">
+                <label for="nama_lengkap">Nama Lengkap:</label>
+                <input type="text" id="nama_lengkap" name="nama_lengkap">
+            </div>
             <div class="form-group">
                 <label for="start_date">Start Date:</label>
                 <input type="date" id="start_date" name="start_date" required>
@@ -787,6 +795,7 @@
         </form>
     </div>
 </div>
+
     <script>
     // Get modal elements
     var addModal = document.getElementById("addLemburModal");

@@ -91,4 +91,8 @@ Route::get('/get-gaji', [DataKaryawanController::class, 'getGaji']);
 // Route for updating lembur records
 Route::put('/perhitungan-lembur/update', [PerhitunganLemburController::class, 'update'])->name('perhitungan-lembur.update');
 
+// routes/web.php
+Route::get('/export-excel', [PerhitunganLemburController::class, 'exportExcel'])->name('export.excel');
+
+
 

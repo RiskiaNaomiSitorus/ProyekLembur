@@ -171,17 +171,12 @@
             <h4>Tambah Data Lembur</h4>
           </div>
           <div class="action-buttons">
-            <button class="btn btn-primary btn-sm">
-              <i class="fas fa-file-excel"></i> Excel
-            </button>
+           <!-- Button to Open Modal -->
+<button class="btn btn-primary btn-sm" id="exportButton">
+    <i class="fas fa-file-excel"></i> Excel
+</button>
             <button class="btn btn-secondary btn-sm">
               <i class="fas fa-print"></i> Print
-            </button>
-            <button class="btn btn-success btn-sm">
-              <i class="fas fa-file-csv"></i> CSV
-            </button>
-            <button class="btn btn-info btn-sm">
-              <i class="fas fa-copy"></i> Copy
             </button>
             <button class="btn btn-warning btn-sm">
               <i class="fas fa-eye"></i> Column Visibility
@@ -773,6 +768,25 @@
         </form>
       </div>
     </div>
+
+   <!-- Modal for Date Range Selection -->
+<div id="dateRangeModal" class="modal">
+    <div class="modal-content">
+        <span class="close" id= "closedataRangeModal">&times;</span>
+        <h2>Select Date Range</h2>
+        <form id="dateRangeForm" action="{{ route('export.excel') }}" method="GET">
+            <div class="form-group">
+                <label for="start_date">Start Date:</label>
+                <input type="date" id="start_date" name="start_date" required>
+            </div>
+            <div class="form-group">
+                <label for="end_date">End Date:</label>
+                <input type="date" id="end_date" name="end_date" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Export</button>
+        </form>
+    </div>
+</div>
     <script>
     // Get modal elements
     var addModal = document.getElementById("addLemburModal");
@@ -1525,6 +1539,23 @@ function formatDateForInput(dateString) {
 
     return `${year}-${month}-${day}`;
 }
+
+// Open Modal
+document.getElementById('exportButton').onclick = function() {
+    document.getElementById('dateRangeModal').style.display = 'block';
+};
+
+// Close Modal when clicking on the close button
+document.getElementById('closedataRangeModal').onclick = function() {
+    document.getElementById('dateRangeModal').style.display = 'none';
+};
+
+// Close Modal when clicking outside of it
+window.onclick = function(event) {
+    if (event.target === document.getElementById('dateRangeModal')) {
+        document.getElementById('dateRangeModal').style.display = 'none';
+    }
+};
     </script>
   </body>
 </html>

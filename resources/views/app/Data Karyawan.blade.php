@@ -126,7 +126,61 @@
       .logout-button:hover {
         background-color: #c82333;
       }
-     
+      .dropdown-menu {
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        .dropdown-check-list {
+  display: inline-block;
+}
+
+.dropdown-check-list .anchor {
+  position: relative;
+  cursor: pointer;
+  display: inline-block;
+  padding: 5px 50px 5px 10px;
+  border: 1px solid #ccc;
+}
+
+.dropdown-check-list .anchor:after {
+  position: absolute;
+  content: "";
+  border-left: 2px solid black;
+  border-top: 2px solid black;
+  padding: 5px;
+  right: 10px;
+  top: 20%;
+  -moz-transform: rotate(-135deg);
+  -ms-transform: rotate(-135deg);
+  -o-transform: rotate(-135deg);
+  -webkit-transform: rotate(-135deg);
+  transform: rotate(-135deg);
+}
+
+.dropdown-check-list .anchor:active:after {
+  right: 8px;
+  top: 21%;
+}
+
+.dropdown-check-list ul.items {
+  padding: 2px;
+  display: none;
+  margin: 0;
+  border: 1px solid #ccc;
+  border-top: none;
+}
+
+.dropdown-check-list ul.items li {
+  list-style: none;
+}
+
+.dropdown-check-list.visible .anchor {
+  color: #0094ff;
+}
+
+.dropdown-check-list.visible .items {
+  display: block;
+}
     </style>
   </head>
   <body>
@@ -188,15 +242,9 @@
             <button class="btn btn-secondary btn-sm">
               <i class="fas fa-print"></i> Print
             </button>
-            <button class="btn btn-success btn-sm">
-              <i class="fas fa-file-csv"></i> CSV
-            </button>
-            <button class="btn btn-info btn-sm">
-              <i class="fas fa-copy"></i> Copy
-            </button>
-            <button class="btn btn-warning btn-sm">
-              <i class="fas fa-eye"></i> Column Visibility
-            </button>
+            <button class="btn btn-warning btn-sm" id="columnVisibilityButton">
+        <i class="fas fa-eye"></i> Column Visibility
+    </button>
           </div>
         </div>
         <div class="container table-container">

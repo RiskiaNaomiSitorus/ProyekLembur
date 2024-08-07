@@ -5,6 +5,8 @@ use Illuminate\Http\Request;
 use App\Models\Lembur;
 use App\Models\Karyawan;
 use Illuminate\Support\Facades\Validator;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\LemburExport;
 
 class PerhitunganLemburController extends Controller
 {
@@ -195,6 +197,14 @@ class PerhitunganLemburController extends Controller
             // Redirect back with error message
             return redirect()->route('perhitungan-lembur')->with('error', 'Gagal menghapus data lembur.');
         }
+    }
+
+    public function exportExcel(Request $request)
+    {
+        $startDate = $request->input('start_date');
+        $endDate = $request->input('end_date');
+
+        return Excel::download(new LemburExport($startDate, $endDate), 'lembur_records.xlsx');
     }
 }
 

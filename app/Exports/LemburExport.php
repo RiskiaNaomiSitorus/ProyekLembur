@@ -36,9 +36,13 @@ class LemburExport implements FromCollection, WithHeadings, WithMapping
             'Gaji',
             'Jam Kerja Lembur',
             'Jam I',
+            'x 1.5',
             'Jam II',
+            'x 2',
             'Jam III',
+            'x 3',
             'Jam IV',
+            'x 4',
             'Upah Lembur',
             'Keterangan'
         ];
@@ -57,9 +61,13 @@ class LemburExport implements FromCollection, WithHeadings, WithMapping
             'Rp. ' . number_format($lembur->gaji, 0, ',', '.'),
             number_format($lembur->jam_kerja_lembur, 1, ',', '.'),
             number_format($lembur->jam_i, 1, ',', '.'),
+            number_format($lembur->jam_i * 1.5, 1, ',', '.'),
             number_format($lembur->jam_ii, 1, ',', '.'),
+            number_format($lembur->jam_ii * 2, 1, ',', '.'),
             number_format($lembur->jam_iii, 1, ',', '.'),
+            number_format($lembur->jam_iii * 3, 1, ',', '.'),
             number_format($lembur->jam_iv, 1, ',', '.'),
+            number_format($lembur->jam_iv * 4, 1, ',', '.'),
             'Rp. ' . number_format($lembur->upah_lembur, 0, ',', '.'),
             $lembur->keterangan
         ];

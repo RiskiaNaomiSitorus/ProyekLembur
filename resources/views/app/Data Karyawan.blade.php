@@ -22,6 +22,19 @@
         flex-direction: column;
         flex: 1;
       }
+      table,
+      th,
+      td {
+        border: 1px solid black;
+      }
+      th,
+      td {
+        padding: 8px;
+        text-align: center;
+      }
+      th {
+        background-color: #f2f2f2;
+      }
       .main_content {
         flex: 1;
         display: flex;
@@ -250,7 +263,7 @@
           </div>
         </div>
         <div class="container table-container">
-        <table class="table table-striped table-bordered" id="dataTable">
+        <table class="table table-striped table-bordered " id="dataTable">
     <thead>
         <tr>
             <th class="col-no">No</th>

@@ -1652,15 +1652,6 @@ document.getElementById('closedataRangeModal').onclick = function() {
     document.getElementById('dateRangeModal').style.display = 'none';
 };
 
-// Close Modal when clicking outside of it
-window.onclick = function(event) {
-    if (event.target === document.getElementById('dateRangeModal')) {
-        document.getElementById('dateRangeModal').style.display = 'none';
-    } else if (event.target === document.getElementById('dateFilterModal')) {
-        document.getElementById('dateFilterModal').style.display = 'none';
-    }
-};
-
 // Open Modal
 document.getElementById('filterButton').onclick = function() {
     document.getElementById('dateFilterModal').style.display = 'block';

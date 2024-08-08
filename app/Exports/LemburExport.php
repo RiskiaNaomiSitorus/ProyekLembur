@@ -69,14 +69,14 @@ class LemburExport implements FromCollection, WithHeadings, WithMapping, WithSty
             'Keterangan'
         ];
     }
-
+    
     public function map($lembur): array
     {
         return [
-            $this->counter++, // Increment and use counter for row numbers ,
+            $this->counter++, // Increment and use counter for row numbers
             $lembur->id_karyawan,
             $lembur->nama_lengkap,
-            $lembur->tanggal_lembur->format('d-m-Y'),
+            $this->formatDateInIndonesian($lembur->tanggal_lembur), // Format the date
             $lembur->jenis_lembur,
             $lembur->jam_masuk->format('H:i'),
             $lembur->jam_keluar->format('H:i'),
@@ -145,5 +145,45 @@ class LemburExport implements FromCollection, WithHeadings, WithMapping, WithSty
                 }
             },
         ];
+    }
+
+    // Helper function for formatting date
+    private function formatDateInIndonesian($date)
+    {
+        $months = [
+            'January' => 'Januari',
+            'February' => 'Februari',
+            'March' => 'Maret',
+            'April' => 'April',
+            'May' => 'Mei',
+            'June' => 'Juni',
+            'July' => 'Juli',
+            'August' => 'Agustus',
+            'September' => 'September',
+            'October' => 'Oktober',
+            'November' => 'November',
+            'December' => 'Desember'
+        ];
+
+        $weekdays = [
+            'Monday' => 'Senin',
+            'Tuesday' => 'Selasa',
+            'Wednesday' => 'Rabu',
+            'Thursday' => 'Kamis',
+            'Friday' => 'Jumat',
+            'Saturday' => 'Sabtu',
+            'Sunday' => 'Minggu'
+        ];
+
+        $dateObj = new \DateTime($date);
+        $dayName = $dateObj->format('l'); // Day of the week
+        $monthName = $dateObj->format('F'); // Full month name
+        $day = $dateObj->format('d'); // Day of the month
+        $year = $dateObj->format('Y'); // Year
+
+        $dayNameIndonesian = $weekdays[$dayName];
+        $monthNameIndonesian = $months[$monthName];
+
+        return "{$dayNameIndonesian}, {$day} {$monthNameIndonesian} {$year}";
     }
 }

@@ -9,7 +9,8 @@
       rel="stylesheet"
       href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
     />
-    <!-- Include jQuery and jQuery UI -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <!-- Include jQuery and jQuery UI -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
 <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
@@ -174,9 +175,9 @@
 <button class="btn btn-primary btn-sm" id="exportButton">
     <i class="fas fa-file-excel"></i> Excel
 </button>
-            <button class="btn btn-secondary btn-sm">
-              <i class="fas fa-print"></i> Print
-            </button>
+<button class="btn btn-secondary btn-sm" id="openPrintModal">
+    <i class="fas fa-print"></i> Print
+</button>
             <button class="btn btn-warning btn-sm">
               <i class="fas fa-eye"></i> Column Visibility
             </button>
@@ -771,36 +772,36 @@
       </div>
     </div>
 
- <!-- Modal for Date Range Selection -->
+<!-- Modal for Date Range Selection -->
 <div id="dateRangeModal" class="modal">
     <div class="modal-content">
         <span class="close" id="closedataRangeModal">&times;</span>
         <h2>Select Date Range</h2>
         <form id="dateRangeForm" action="{{ route('export.excel') }}" method="GET">
-        <div class="form-group">
+            <div class="form-group">
                 <label for="id_karyawan">ID Karyawan:</label>
-                <input type="text" id="id_karyawan" name="id_karyawan">
+                <input type="text" id="id_karyawan" name="id_karyawan" class="form-control">
             </div>
-        <div class="form-group">
+            <div class="form-group">
                 <label for="nama_lengkap">Nama Lengkap:</label>
-                <input type="text" id="nama_lengkap" name="nama_lengkap">
+                <input type="text" id="nama_lengkap" name="nama_lengkap" class="form-control">
             </div>
             <div class="form-group">
                 <label for="start_date">Start Date:</label>
-                <input type="date" id="start_date" name="start_date" required>
+                <input type="date" id="start_date" name="start_date" required class="form-control">
             </div>
             <div class="form-group">
                 <label for="end_date">End Date:</label>
-                <input type="date" id="end_date" name="end_date" required>
+                <input type="date" id="end_date" name="end_date" required class="form-control">
             </div>
             <button type="submit" class="btn btn-primary">Export</button>
         </form>
     </div>
 </div>
 
+
 <!-- Modal -->
 <div class="modal" id="dateFilterModal">
-
     <div class="modal-content">
         <span class="close" id="closedataFilterModal">&times;</span>
         <h2 class="modal-title" id="dateFilterModalLabel">Filter Lembur Records</h2>
@@ -809,11 +810,11 @@
                 @csrf
                 <div class="form-group">
                     <label for="id_karyawan">ID Karyawan</label>
-                    <input type="text" class="form-control" id="id_karyawan" name="id_karyawan">
+                    <input type="text" class="form-control" id="id_karyawan2" name="id_karyawan2">
                 </div>
                 <div class="form-group">
                     <label for="nama_lengkap">Nama Lengkap</label>
-                    <input type="text" class="form-control" id="nama_lengkap" name="nama_lengkap">
+                    <input type="text" class="form-control" id="nama_lengkap2" name="nama_lengkap2">
                 </div>
                 <div class="form-group">
                     <label for="start_date">Start Date</label>
@@ -886,7 +887,85 @@
         </form>
     </div>
 </div>
+<!-- Print Filter Modal -->
+<div id="printModal" class="modal">
+    <div class="modal-content">
+        <span class="close" id="closePrintModal">&times;</span>
+        <h2 class="modal-title">Print Filters</h2>
+        <div class="modal-body">
+            <form id="printForm" method="GET" action="{{ route('print') }}">
+                @csrf
+                <div class="form-group">
+                    <label for="printid_karyawan">ID Karyawan</label>
+                    <input type="text" class="form-control" id="printid_karyawan2" name="printid_karyawan2">
+                </div>
+                <div class="form-group">
+                    <label for="printnama_lengkap">Nama Lengkap</label>
+                    <input type="text" class="form-control" id="printnama_lengkap2" name="printnama_lengkap2">
+                </div>
+                <div class="form-group">
+                    <label for="printstart_date">Start Date</label>
+                    <input type="date" class="form-control" id="printstart_date" name="printstart_date">
+                </div>
+                <div class="form-group">
+                    <label for="printend_date">End Date</label>
+                    <input type="date" class="form-control" id="printend_date" name="printend_date">
+                </div>       
+                <div class="form-group d-flex justify-content-between">
+                    <button type="submit" class="btn btn-primary">Apply Filters</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 
+
+<!-- Printable View for Printing -->
+<div id="printableView" style="display: none;">
+    <h2>Lembur Records</h2>
+    <table class="table table-striped table-bordered">
+        <thead>
+            <tr>
+                <th class="col-no">No</th>
+                <th class="col-idkaryawan">ID Karyawan</th>
+                <th class="col-namalengkap">Nama Lengkap</th>
+                <th class="col-tanggallembur">Tanggal Lembur</th>
+                <th class="col-jenislembur">Jenis Lembur</th>
+                <th class="col-jammasuk">Jam Masuk</th>
+                <th class="col-jamkeluar">Jam Keluar</th>
+                <th class="col-gaji">Gaji</th>
+                <th class="col-jamkerjalembur">Jam Kerja Lembur</th>
+                <th class="col-jami">Jam I</th>
+                <th class="col-jamii">Jam II</th>
+                <th class="col-jamiii">Jam III</th>
+                <th class="col-jamiv">Jam IV</th>
+                <th class="col-upahlembur">Upah Lembur</th>
+                <th class="col-keterangan">Keterangan</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach ($lemburRecords as $lembur)
+            <tr>
+                <td class="col-no">{{ $loop->iteration }}</td>
+                <td class="col-idkaryawan">{{ $lembur->id_karyawan }}</td>
+                <td class="col-namalengkap">{{ $lembur->nama_lengkap }}</td>
+                <td class="col-tanggallembur">{{ $lembur->formatted_tanggal_lembur }}</td>
+                <td class="col-jenislembur">{{ $lembur->jenis_lembur }}</td>
+                <td class="col-jammasuk">{{ $lembur->jam_masuk->format('H:i') }}</td>
+                <td class="col-jamkeluar">{{ $lembur->jam_keluar->format('H:i') }}</td>
+                <td class="col-gaji">{{ 'Rp. ' . number_format($lembur->gaji, 0, ',', '.') }}</td>
+                <td class="col-jamkerjalembur">{{ number_format($lembur->jam_kerja_lembur, 1, ',', '.') }}</td>
+                <td class="col-jami">{{ number_format($lembur->jam_i, 1, ',', '.') }}</td>
+                <td class="col-jamii">{{ number_format($lembur->jam_ii, 1, ',', '.') }}</td>
+                <td class="col-jamiii">{{ number_format($lembur->jam_iii, 1, ',', '.') }}</td>
+                <td class="col-jamiv">{{ number_format($lembur->jam_iv, 1, ',', '.') }}</td>
+                <td class="col-upahlembur">{{ 'Rp. ' . number_format($lembur->upah_lembur, 0, ',', '.') }}</td>
+                <td class="col-keterangan">{{ $lembur->keterangan }}</td>
+            </tr>
+            @endforeach
+        </tbody>
+    </table>
+</div>
     <script>
     // Get modal elements
     var addModal = document.getElementById("addLemburModal");
@@ -1581,7 +1660,7 @@ $(document).ready(function() {
                     }
                 });
             },
-            minLength: 2 // Minimum number of characters to trigger the autocomplete
+            minLength: 1 // Minimum number of characters to trigger the autocomplete
         });
 
         // Autocomplete for Nama Lengkap
@@ -1599,7 +1678,7 @@ $(document).ready(function() {
                     }
                 });
             },
-            minLength: 2 // Minimum number of characters to trigger the autocomplete
+            minLength: 1 // Minimum number of characters to trigger the autocomplete
         });
     });
 
@@ -1697,6 +1776,177 @@ document.getElementById('columnVisibilityForm').addEventListener('change', funct
     }
 });
 
+
+$(document).ready(function() {
+        // Autocomplete for ID Karyawan
+        $("#id_karyawan").autocomplete({
+            source: function(request, response) {
+                $.ajax({
+                    url: "{{ route('autocomplete.id_karyawan') }}",
+                    type: 'GET',
+                    dataType: 'json',
+                    data: {
+                        term: request.term
+                    },
+                    success: function(data) {
+                        response(data);
+                    }
+                });
+            },
+            minLength: 1 // Minimum number of characters to trigger the autocomplete
+        });
+
+        // Autocomplete for Nama Lengkap
+        $("#nama_lengkap").autocomplete({
+            source: function(request, response) {
+                $.ajax({
+                    url: "{{ route('autocomplete.nama_lengkap') }}",
+                    type: 'GET',
+                    dataType: 'json',
+                    data: {
+                        term: request.term
+                    },
+                    success: function(data) {
+                        response(data);
+                    }
+                });
+            },
+            minLength: 1 // Minimum number of characters to trigger the autocomplete
+        });
+    });
+
+    $(document).ready(function() {
+        // Autocomplete for ID Karyawan
+        $("#id_karyawan2").autocomplete({
+            source: function(request, response) {
+                $.ajax({
+                    url: "{{ route('autocomplete.id_karyawan') }}",
+                    type: 'GET',
+                    dataType: 'json',
+                    data: {
+                        term: request.term
+                    },
+                    success: function(data) {
+                        response(data);
+                    }
+                });
+            },
+            minLength: 1 // Minimum number of characters to trigger the autocomplete
+        });
+
+        // Autocomplete for Nama Lengkap
+        $("#nama_lengkap2").autocomplete({
+            source: function(request, response) {
+                $.ajax({
+                    url: "{{ route('autocomplete.nama_lengkap') }}",
+                    type: 'GET',
+                    dataType: 'json',
+                    data: {
+                        term: request.term
+                    },
+                    success: function(data) {
+                        response(data);
+                    }
+                });
+            },
+            minLength: 1 // Minimum number of characters to trigger the autocomplete
+        });
+    });
+
+    document.getElementById('openPrintModal').addEventListener('click', function() {
+        document.getElementById('printModal').style.display = 'block';
+    });
+
+    document.getElementById('closePrintModal').addEventListener('click', function() {
+        document.getElementById('printModal').style.display = 'none';
+    });
+
+    window.onclick = function(event) {
+        if (event.target == document.getElementById('printModal')) {
+            document.getElementById('printModal').style.display = 'none';
+        }
+    };
+
+    document.getElementById('applyPrintFilters').addEventListener('click', function() {
+    var idKaryawan = document.getElementById('printid_karyawan2').value;
+    var namaLengkap = document.getElementById('printnama_lengkap2').value;
+    var startDate = document.getElementById('printstart_date').value;
+    var endDate = document.getElementById('printend_date').value;
+
+    // Construct the URL with query parameters
+    var url = '{{ route('print') }}' + '?id_karyawan=' + encodeURIComponent(idKaryawan) +
+              '&nama_lengkap=' + encodeURIComponent(namaLengkap) +
+              '&start_date=' + encodeURIComponent(startDate) +
+              '&end_date=' + encodeURIComponent(endDate);
+
+    // Fetch filtered data and update the printable view
+    fetch(url)
+        .then(response => response.json())
+        .then(data => {
+            var printableContent = '<h2>Lembur Records</h2>' +
+                '<table class="table table-striped table-bordered">' +
+                '<thead>' +
+                '<tr>' +
+                    '<th class="col-no">No</th>' +
+                    '<th class="col-idkaryawan">ID Karyawan</th>' +
+                    '<th class="col-namalengkap">Nama Lengkap</th>' +
+                    '<th class="col-tanggallembur">Tanggal Lembur</th>' +
+                    '<th class="col-jenislembur">Jenis Lembur</th>' +
+                    '<th class="col-jammasuk">Jam Masuk</th>' +
+                    '<th class="col-jamkeluar">Jam Keluar</th>' +
+                    '<th class="col-gaji">Gaji</th>' +
+                    '<th class="col-jamkerjalembur">Jam Kerja Lembur</th>' +
+                    '<th class="col-jami">Jam I</th>' +
+                    '<th class="col-jamii">Jam II</th>' +
+                    '<th class="col-jamiii">Jam III</th>' +
+                    '<th class="col-jamiv">Jam IV</th>' +
+                    '<th class="col-upahlembur">Upah Lembur</th>' +
+                    '<th class="col-keterangan">Keterangan</th>' +
+                '</tr>' +
+                '</thead>' +
+                '<tbody>' +
+                data.map((item, index) => 
+                    '<tr>' +
+                        '<td class="col-no">' + (index + 1) + '</td>' +
+                        '<td class="col-idkaryawan">' + item.id_karyawan + '</td>' +
+                        '<td class="col-namalengkap">' + item.nama_lengkap + '</td>' +
+                        '<td class="col-tanggallembur">' + item.formatted_tanggal_lembur + '</td>' +
+                        '<td class="col-jenislembur">' + item.jenis_lembur + '</td>' +
+                        '<td class="col-jammasuk">' + item.jam_masuk + '</td>' +
+                        '<td class="col-jamkeluar">' + item.jam_keluar + '</td>' +
+                        '<td class="col-gaji">' + 'Rp. ' + new Intl.NumberFormat('id-ID').format(item.gaji) + '</td>' +
+                        '<td class="col-jamkerjalembur">' + new Intl.NumberFormat('id-ID').format(item.jam_kerja_lembur) + '</td>' +
+                        '<td class="col-jami">' + new Intl.NumberFormat('id-ID').format(item.jam_i) + '</td>' +
+                        '<td class="col-jamii">' + new Intl.NumberFormat('id-ID').format(item.jam_ii) + '</td>' +
+                        '<td class="col-jamiii">' + new Intl.NumberFormat('id-ID').format(item.jam_iii) + '</td>' +
+                        '<td class="col-jamiv">' + new Intl.NumberFormat('id-ID').format(item.jam_iv) + '</td>' +
+                        '<td class="col-upahlembur">' + 'Rp. ' + new Intl.NumberFormat('id-ID').format(item.upah_lembur) + '</td>' +
+                        '<td class="col-keterangan">' + item.keterangan + '</td>' +
+                    '</tr>'
+                ).join('') +
+                '</tbody>' +
+                '</table>';
+
+            // Create a new window
+            var printWindow = window.open('', '', 'height=600,width=800');
+
+            // Write content to the new window
+            printWindow.document.write('<html><head><title>Print Lembur Records</title>');
+            printWindow.document.write('<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">');
+            printWindow.document.write('</head><body >');
+            printWindow.document.write(printableContent);
+            printWindow.document.write('</body></html>');
+
+            // Close the document and trigger print dialog
+            printWindow.document.close();
+            printWindow.focus();
+            printWindow.print();
+            
+            // Close the print modal
+            document.getElementById('printModal').style.display = 'none';
+        })
+        .catch(error => console.error('Error:', error));
+});
     </script>
   </body>
 </html>

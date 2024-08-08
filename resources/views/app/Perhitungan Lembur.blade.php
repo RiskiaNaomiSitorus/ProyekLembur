@@ -214,7 +214,7 @@
         <td class="col-no">{{ $loop->iteration }}</td>
         <td class="col-idkaryawan">{{ $lembur->id_karyawan }}</td>
         <td class="col-namalengkap">{{ $lembur->nama_lengkap }}</td>
-        <td class="col-tanggallembur">{{ $lembur->tanggal_lembur->format('d-m-Y') }}</td>
+        <td class="col-tanggallembur">{{ $lembur->formatted_tanggal_lembur }}</td>
         <td class="col-jenislembur">{{ $lembur->jenis_lembur }}</td>
         <td class="col-jammasuk">{{ $lembur->jam_masuk->format('H:i') }}</td>
         <td class="col-jamkeluar">{{ $lembur->jam_keluar->format('H:i') }}</td>
@@ -346,7 +346,7 @@
             <div class="form-group">
                 <label for="addJenisLembur">Jenis Lembur</label>
                 <select class="form-control @error('jenisLembur') is-invalid @enderror" id="addjenisLembur" name="jenisLembur" required>
-                    <option value="" selected readOnly>Hari Biasa</option>
+                    <option value="" selected readOnly></option>
                     <option value="Hari Biasa" {{ old('jenisLembur') == 'Hari Biasa' ? 'selected' : '' }}>Hari Biasa</option>
                     <option value="Weekend" {{ old('jenisLembur') == 'Weekend' ? 'selected' : '' }}>Weekend</option>
                     <option value="Libur" {{ old('jenisLembur') == 'Libur' ? 'selected' : '' }}>Libur</option>
@@ -1041,6 +1041,7 @@ function setAddDefaultTimes(date) {
   } else if (jenisLembur === "Hari Biasa") {
     jamMasuk.value = "07:30";
     jamKeluar.value = "";
+    jamMasuk.readOnly = false;
     jamKeluar.readOnly = false;
   }
 }
@@ -1167,7 +1168,7 @@ function addcalculateUpahLembur() {
     var upahLembur = hourlyWage * totalJamLembur;
     
     // Set nilai ke input dan pastikan bulat
-    document.getElementById("addupahLembur").value = upahLembur;
+    document.getElementById("addupahLembur").value = Math.round(upahLembur);
 }
 
 
@@ -1292,6 +1293,7 @@ function setEditDefaultTimes(date) {
     jamKeluar.readOnly = false;
   } else if (jenisLembur === "Hari Biasa") {
     jamMasuk.value = "07:30";
+    jamMasuk.readOnly = false;
  jamKeluar.readOnly = false;
   }
 }
@@ -1443,7 +1445,7 @@ document
       document.getElementById("editjamMasuk").readOnly = false;
     } else {
       document.getElementById("editjamMasuk").value = "07:30";
-      document.getElementById("editjamMasuk").readOnly = true;
+      document.getElementById("editjamMasuk").readOnly = false;
     }
   });    
 

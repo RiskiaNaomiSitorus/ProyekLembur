@@ -31,6 +31,8 @@ return new class extends Migration
      */
     public function down()
     {
+        // If you are dropping the table, you don't need to reverse column changes
+        // separately in the down method, but you can if needed
         Schema::dropIfExists('users');
     }
 };

@@ -7,11 +7,13 @@ use App\Models\Karyawan;
 use Illuminate\Support\Facades\Validator;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\LemburExport;
-
+use Carbon\Carbon;
 class PerhitunganLemburController extends Controller
 {
     public function index(Request $request)
     {
+        Carbon::setLocale('id'); // Set the locale to Indonesian
+    
         $query = Lembur::query();
     
         if ($request->filled('start_date') && $request->filled('end_date')) {
@@ -28,9 +30,14 @@ class PerhitunganLemburController extends Controller
     
         $lemburRecords = $query->orderBy('tanggal_lembur', 'asc')->paginate(10);
     
+        // Format dates for each record
+        $lemburRecords->transform(function ($item) {
+            $item->formatted_tanggal_lembur = $item->tanggal_lembur->locale('id')->translatedFormat('l, d F Y');
+            return $item;
+        });
+    
         return view('app.Perhitungan Lembur', compact('lemburRecords'));
     }
-    
     public function store(Request $request)
     {
         // Define validation rules and custom messages

@@ -253,9 +253,10 @@
     <i class="fas fa-file-excel"></i> Excel
 </a>
 
-            <button class="btn btn-secondary btn-sm">
-              <i class="fas fa-print"></i> Print
-            </button>
+          <!-- Print Button -->
+<button id="printButton" class="btn btn-secondary btn-sm">
+    <i class="fas fa-print"></i> Print
+</button>
 <!-- Button to open the column visibility modal -->
 <button class="btn btn-warning btn-sm" id="columnVisibilityButton">
     <i class="fas fa-eye"></i> Column Visibility
@@ -561,6 +562,37 @@
       </div>
     </div>
 
+    <!-- Printable View for Printing -->
+<div id="printableView" style="display: none;">
+    <h2>Data Karyawan</h2>
+    <table class="table table-striped table-bordered">
+        <thead>
+            <tr>
+                <th>No</th>
+                <th>ID Karyawan</th>
+                <th>Nama Karyawan</th>
+                <th>Jenis Kelamin</th>
+                <th>Jabatan</th>
+                <th>Status</th>
+                <th>Gaji</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach ($karyawan as $item)
+            <tr>
+                <td>{{ $loop->iteration }}</td>
+                <td>{{ $item->id_karyawan }}</td>
+                <td>{{ $item->nama_karyawan }}</td>
+                <td>{{ $item->jenis_kelamin }}</td>
+                <td>{{ $item->jabatan }}</td>
+                <td>{{ $item->status }}</td>
+                <td>{{ 'Rp. ' . number_format($item->gaji, 0, ',', '.') }}</td>
+            </tr>
+            @endforeach
+        </tbody>
+    </table>
+</div>
+
     <!-- Column Visibility Modal -->
 <div id="columnVisibilityModal" class="modal" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
@@ -771,6 +803,14 @@
             });
         }
     });
+});
+
+document.getElementById('printButton').addEventListener('click', function() {
+    var printContent = document.getElementById('printableView').innerHTML;
+    var originalContent = document.body.innerHTML;
+    document.body.innerHTML = printContent;
+    window.print();
+    document.body.innerHTML = originalContent;
 });
 
 </script>

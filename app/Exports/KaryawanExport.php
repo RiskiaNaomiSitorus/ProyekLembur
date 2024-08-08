@@ -14,6 +14,8 @@ use PhpOffice\PhpSpreadsheet\Style\Font;
 
 class KaryawanExport implements FromCollection, WithHeadings, WithMapping, WithStyles
 {
+    protected $counter = 1; // Initialize counter
+
     public function collection()
     {
         return Karyawan::all();
@@ -35,7 +37,7 @@ class KaryawanExport implements FromCollection, WithHeadings, WithMapping, WithS
     public function map($karyawan): array
     {
         return [
-            $karyawan->id,
+            $this->counter++, // Increment and use counter for row numbers ,
             $karyawan->id_karyawan,
             $karyawan->nama_karyawan,
             $karyawan->jenis_kelamin,

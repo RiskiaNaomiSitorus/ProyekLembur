@@ -16,6 +16,7 @@ use Maatwebsite\Excel\Events\AfterSheet;
 
 class LemburExport implements FromCollection, WithHeadings, WithMapping, WithStyles, WithEvents
 {
+    protected $counter = 1; // Initialize counter
     protected $startDate;
     protected $endDate;
     protected $namaLengkap;
@@ -72,7 +73,7 @@ class LemburExport implements FromCollection, WithHeadings, WithMapping, WithSty
     public function map($lembur): array
     {
         return [
-            $lembur->id,
+            $this->counter++, // Increment and use counter for row numbers ,
             $lembur->id_karyawan,
             $lembur->nama_lengkap,
             $lembur->tanggal_lembur->format('d-m-Y'),

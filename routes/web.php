@@ -66,7 +66,7 @@ Route::get('/api/nama-karyawan', [DataKaryawanController::class, 'getNamaKaryawa
 
 // Overtime Calculation Routes
 // Route to view overtime calculation
-Route::get('perhitungan-lembur', [PerhitunganLemburController::class, 'index'])->name('perhitungan-lembur')->middleware('auth');
+// Route::get('perhitungan-lembur', [PerhitunganLemburController::class, 'index'])->name('perhitungan-lembur')->middleware('auth');
 
 // Overtime Summary Routes
 // Route to view overtime summary
@@ -99,3 +99,6 @@ Route::get('/export-excel', [PerhitunganLemburController::class, 'exportExcel'])
 
 // Route for exporting data
 Route::get('export-karyawan', [DataKaryawanController::class, 'export'])->name('karyawan.export');
+
+// Add route for filtering lembur records
+Route::get('perhitungan-lembur', [PerhitunganLemburController::class, 'index'])->name('perhitungan-lembur')->middleware('auth');

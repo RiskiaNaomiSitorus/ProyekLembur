@@ -243,58 +243,56 @@
             <button class="btn btn-secondary btn-sm">
               <i class="fas fa-print"></i> Print
             </button>
-            <button class="btn btn-warning btn-sm" id="columnVisibilityButton">
-        <i class="fas fa-eye"></i> Column Visibility
-    </button>
+<!-- Button to open the column visibility modal -->
+<button class="btn btn-warning btn-sm" id="columnVisibilityButton">
+    <i class="fas fa-eye"></i> Column Visibility
+</button>
           </div>
         </div>
         <div class="container table-container">
-        <table class="table table-striped table-bordered">
+        <table class="table table-striped table-bordered" id="dataTable">
     <thead>
         <tr>
-            <th>No</th>
-            <th>ID Karyawan</th>
-            <th>Nama Karyawan</th>
-            <th>Jenis Kelamin</th>
-            <th>Jabatan</th>
-            <th>Status</th>
-            <th>Gaji</th>
-            <th>Action</th>
+            <th class="col-no">No</th>
+            <th class="col-idkaryawan">ID Karyawan</th>
+            <th class="col-namakaryawan">Nama Karyawan</th>
+            <th class="col-jeniskelamin">Jenis Kelamin</th>
+            <th class="col-jabatan">Jabatan</th>
+            <th class="col-status">Status</th>
+            <th class="col-gaji">Gaji</th>
+            <th class="col-action">Action</th>
         </tr>
     </thead>
     <tbody>
-    @foreach ($karyawan as $item)
-    <tr>
-        <td>{{ $loop->iteration }}</td>
-        <td class="hidden">{{ $item->id }}</td>
-        <td>{{ $item->id_karyawan }}</td>
-        <td>{{ $item->nama_karyawan }}</td>
-        <td>{{ $item->jenis_kelamin }}</td>
-        <td>{{ $item->jabatan }}</td>
-        <td>{{ $item->status }}</td>
-        <td>{{ 'Rp. ' . number_format($item->gaji, 0, ',', '.') }}</td>
-        <td>
-            <button 
-                class="btn btn-warning btn-sm edit-button" 
-                data-id="{{ $item->id }}"
-                data-idkaryawan="{{ $item->id_karyawan }}"
-                data-nama="{{ $item->nama_karyawan }}"
-                data-gender="{{ $item->jenis_kelamin }}"
-                data-position="{{ $item->jabatan }}"
-                data-status="{{ $item->status }}"
-                data-salary="{{ $item->gaji }}"
-            >
-                Edit
-            </button>
-            <button class="btn btn-danger btn-sm delete-button">
-                Hapus
-            </button>
-        </td>
-    </tr>
-    @endforeach
-</tbody>
-
-
+        @foreach ($karyawan as $item)
+        <tr>
+            <td class="col-no">{{ $loop->iteration }}</td>
+            <td class="col-idkaryawan">{{ $item->id_karyawan }}</td>
+            <td class="col-namakaryawan">{{ $item->nama_karyawan }}</td>
+            <td class="col-jeniskelamin">{{ $item->jenis_kelamin }}</td>
+            <td class="col-jabatan">{{ $item->jabatan }}</td>
+            <td class="col-status">{{ $item->status }}</td>
+            <td class="col-gaji">{{ 'Rp. ' . number_format($item->gaji, 0, ',', '.') }}</td>
+            <td class="col-action">
+                <button 
+                    class="btn btn-warning btn-sm edit-button" 
+                    data-id="{{ $item->id }}"
+                    data-idkaryawan="{{ $item->id_karyawan }}"
+                    data-nama="{{ $item->nama_karyawan }}"
+                    data-gender="{{ $item->jenis_kelamin }}"
+                    data-position="{{ $item->jabatan }}"
+                    data-status="{{ $item->status }}"
+                    data-salary="{{ $item->gaji }}"
+                >
+                    Edit
+                </button>
+                <button class="btn btn-danger btn-sm delete-button">
+                    Hapus
+                </button>
+            </td>
+        </tr>
+        @endforeach
+    </tbody>
 </table>
 @if (session('success'))
     <div class="alert alert-success">
@@ -549,6 +547,57 @@
         </form>
       </div>
     </div>
+
+    <!-- Column Visibility Modal -->
+<div id="columnVisibilityModal" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+            <button type="button" class="close" id="closeColumnVisibilityModal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h2 class="modal-title">Column Visibility</h2>
+            </div>
+            <div class="modal-body">
+                <form id="columnVisibilityForm">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="colNo" checked>
+                        <label class="form-check-label" for="colNo">No</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="colIdKaryawan" checked>
+                        <label class="form-check-label" for="colIdKaryawan">ID Karyawan</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="colNamaKaryawan" checked>
+                        <label class="form-check-label" for="colNamaKaryawan">Nama Karyawan</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="colJenisKelamin" checked>
+                        <label class="form-check-label" for="colJenisKelamin">Jenis Kelamin</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="colJabatan" checked>
+                        <label class="form-check-label" for="colJabatan">Jabatan</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="colStatus" checked>
+                        <label class="form-check-label" for="colStatus">Status</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="colGaji" checked>
+                        <label class="form-check-label" for="colGaji">Gaji</label>
+                    </div>
+                    <!-- <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="colAction" checked>
+                        <label class="form-check-label" for="colAction">Action</label>
+                    </div> -->
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
     <script>
     // Get modal elements
     var editModal = document.getElementById("editModal");
@@ -654,6 +703,9 @@
         if (e.target == deleteModal) {
             deleteModal.style.display = "none";
         }
+        if (e.target == columnVisibilityModal) {
+          columnVisibilityModal.style.display = "none";
+        }
     }
 
     // Input validation for ID fields
@@ -678,6 +730,36 @@
                 : "block";
             e.target.value = value.replace(/\D/g, "");
         });
+
+        document.addEventListener('DOMContentLoaded', function() {
+    const columnVisibilityButton = document.getElementById('columnVisibilityButton');
+    const columnVisibilityModal = document.getElementById('columnVisibilityModal');
+    const closeColumnVisibilityModal = document.getElementById('closeColumnVisibilityModal');
+    const columnVisibilityForm = document.getElementById('columnVisibilityForm');
+
+    // Open Modal
+    columnVisibilityButton.onclick = function() {
+        columnVisibilityModal.style.display = 'block';
+    };
+
+    // Close Modal when clicking on the close button
+    closeColumnVisibilityModal.onclick = function() {
+        columnVisibilityModal.style.display = 'none';
+    };
+
+    // Update column visibility based on checkbox status
+    columnVisibilityForm.addEventListener('change', function(event) {
+        const checkbox = event.target;
+        if (checkbox.type === 'checkbox') {
+            const columnClass = 'col-' + checkbox.id.replace('col', '').toLowerCase();
+            const columns = document.querySelectorAll('.' + columnClass);
+            columns.forEach(column => {
+                column.style.display = checkbox.checked ? '' : 'none';
+            });
+        }
+    });
+});
+
 </script>
     <!-- Modal HTML -->
     <div id="detailModal" class="modal">

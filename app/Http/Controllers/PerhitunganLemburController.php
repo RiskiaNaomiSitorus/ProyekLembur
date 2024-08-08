@@ -10,12 +10,27 @@ use App\Exports\LemburExport;
 
 class PerhitunganLemburController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $lemburRecords = Lembur::orderBy('tanggal_lembur', 'asc')->paginate(10);
+        $query = Lembur::query();
+    
+        if ($request->filled('start_date') && $request->filled('end_date')) {
+            $query->whereBetween('tanggal_lembur', [$request->input('start_date'), $request->input('end_date')]);
+        }
+    
+        if ($request->filled('nama_lengkap')) {
+            $query->where('nama_lengkap', 'like', '%' . $request->input('nama_lengkap') . '%');
+        }
+    
+        if ($request->filled('id_karyawan')) {
+            $query->where('id_karyawan', $request->input('id_karyawan'));
+        }
+    
+        $lemburRecords = $query->orderBy('tanggal_lembur', 'asc')->paginate(10);
+    
         return view('app.Perhitungan Lembur', compact('lemburRecords'));
     }
-
+    
     public function store(Request $request)
     {
         // Define validation rules and custom messages

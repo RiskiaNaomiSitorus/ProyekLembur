@@ -13,7 +13,6 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
 <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
-
     <style>
       /* Add your styles here */
       html,
@@ -181,49 +180,52 @@
             <button class="btn btn-warning btn-sm">
               <i class="fas fa-eye"></i> Column Visibility
             </button>
+           <!-- Button to open the modal -->
+<button class="btn btn-info" id="filterButton">
+<i class="fa fa-filter" aria-hidden="true"></i> Filter Records
+</button>
           </div>
         </div>
         <div class="container table-container">
         <table class="table table-striped table-bordered">
     <thead>
         <tr>
-            <th>No</th>
-            <th>ID Karyawan</th>
-            <th>Nama Lengkap</th>
-            <th>Tanggal Lembur</th>
-            <th>Jenis Lembur</th>
-            <th>Jam Masuk</th>
-            <th>Jam Keluar</th>
-            <th>Gaji</th>
-            <th>Jam Kerja Lembur</th>
-            <th>Jam I</th>
-            <th>Jam II</th>
-            <th>Jam III</th>
-            <th>Jam IV</th>
-            <th>Upah Lembur</th>
-            <th>Keterangan</th>
+            <th class="col-no">No</th>
+            <th class="col-idkaryawan">ID Karyawan</th>
+            <th class="col-namalengkap">Nama Lengkap</th>
+            <th class="col-tanggallembur">Tanggal Lembur</th>
+            <th class="col-jenislembur">Jenis Lembur</th>
+            <th class="col-jammasuk">Jam Masuk</th>
+            <th class="col-jamkeluar">Jam Keluar</th>
+            <th class="col-gaji">Gaji</th>
+            <th class="col-jamkerjalembur">Jam Kerja Lembur</th>
+            <th class="col-jami">Jam I</th>
+            <th class="col-jamii">Jam II</th>
+            <th class="col-jamiii">Jam III</th>
+            <th class="col-jamiv">Jam IV</th>
+            <th class="col-upahlembur">Upah Lembur</th>
+            <th class="col-keterangan">Keterangan</th>
             <th>Actions</th>
         </tr>
     </thead>
     <tbody>
     @foreach ($lemburRecords as $lembur)
     <tr>
-        <td>{{ $loop->iteration }}</td>
-        <td class="hidden">{{ $lembur->id }}</td>
-        <td>{{ $lembur->id_karyawan }}</td>
-        <td>{{ $lembur->nama_lengkap }}</td>
-        <td>{{ $lembur->tanggal_lembur->format('d-m-Y') }}</td>
-        <td>{{ $lembur->jenis_lembur }}</td>
-        <td>{{ $lembur->jam_masuk->format('H:i') }}</td>
-        <td>{{ $lembur->jam_keluar->format('H:i') }}</td>
-        <td>{{ 'Rp. ' . number_format($lembur->gaji, 0, ',', '.') }}</td>
-        <td>{{ number_format($lembur->jam_kerja_lembur, 1, ',', '.') }}</td>
-        <td>{{ number_format($lembur->jam_i, 1, ',', '.') }}</td>
-        <td>{{ number_format($lembur->jam_ii, 1, ',', '.') }}</td>
-        <td>{{ number_format($lembur->jam_iii, 1, ',', '.') }}</td>
-        <td>{{ number_format($lembur->jam_iv, 1, ',', '.') }}</td>
-        <td>{{ 'Rp. ' . number_format($lembur->upah_lembur, 0, ',', '.') }}</td>
-        <td>{{ $lembur->keterangan }}</td>
+        <td class="col-no">{{ $loop->iteration }}</td>
+        <td class="col-idkaryawan">{{ $lembur->id_karyawan }}</td>
+        <td class="col-namalengkap">{{ $lembur->nama_lengkap }}</td>
+        <td class="col-tanggallembur">{{ $lembur->tanggal_lembur->format('d-m-Y') }}</td>
+        <td class="col-jenislembur">{{ $lembur->jenis_lembur }}</td>
+        <td class="col-jammasuk">{{ $lembur->jam_masuk->format('H:i') }}</td>
+        <td class="col-jamkeluar">{{ $lembur->jam_keluar->format('H:i') }}</td>
+        <td class="col-gaji">{{ 'Rp. ' . number_format($lembur->gaji, 0, ',', '.') }}</td>
+        <td class="col-jamkerjalembur">{{ number_format($lembur->jam_kerja_lembur, 1, ',', '.') }}</td>
+        <td class="col-jami">{{ number_format($lembur->jam_i, 1, ',', '.') }}</td>
+        <td class="col-jamii">{{ number_format($lembur->jam_ii, 1, ',', '.') }}</td>
+        <td class="col-jamiii">{{ number_format($lembur->jam_iii, 1, ',', '.') }}</td>
+        <td class="col-jamiv">{{ number_format($lembur->jam_iv, 1, ',', '.') }}</td>
+        <td class="col-upahlembur">{{ 'Rp. ' . number_format($lembur->upah_lembur, 0, ',', '.') }}</td>
+        <td class="col-keterangan">{{ $lembur->keterangan }}</td>
         <td>
             <button 
                 class="btn btn-warning btn-sm edit-buttonLembur" 
@@ -253,9 +255,9 @@
         </td>
     </tr>
     @endforeach
-</tbody>
-
+    </tbody>
 </table>
+
 
 @if (session('success'))
     <div class="alert alert-success">
@@ -792,6 +794,95 @@
                 <input type="date" id="end_date" name="end_date" required>
             </div>
             <button type="submit" class="btn btn-primary">Export</button>
+        </form>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal" id="dateFilterModal">
+
+    <div class="modal-content">
+        <span class="close" id="closedataFilterModal">&times;</span>
+        <h2 class="modal-title" id="dateFilterModalLabel">Filter Lembur Records</h2>
+        <div class="modal-body">
+            <form id="filterForm" method="GET" action="{{ route('perhitungan-lembur') }}">
+                @csrf
+                <div class="form-group">
+                    <label for="id_karyawan">ID Karyawan</label>
+                    <input type="text" class="form-control" id="id_karyawan" name="id_karyawan">
+                </div>
+                <div class="form-group">
+                    <label for="nama_lengkap">Nama Lengkap</label>
+                    <input type="text" class="form-control" id="nama_lengkap" name="nama_lengkap">
+                </div>
+                <div class="form-group">
+                    <label for="start_date">Start Date</label>
+                    <input type="date" class="form-control" id="start_date" name="start_date">
+                </div>
+                <div class="form-group">
+                    <label for="end_date">End Date</label>
+                    <input type="date" class="form-control" id="end_date" name="end_date">
+                </div>       
+                <div class="form-group d-flex justify-content-between">
+                    <button type="submit" class="btn btn-primary">Apply Filter</button>
+                    <button type="button" id="resetFilterButton" class="btn btn-secondary">Reset Filter</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Column Visibility Modal -->
+<div id="columnVisibilityModal" class="modal">
+    <div class="modal-content">
+        <span class="close" id="closeColumnVisibilityModal">&times;</span>
+        <h2 class="modal-title">Column Visibility</h2>
+        <form id="columnVisibilityForm">
+            <div class="form-group">
+                <label><input type="checkbox" id="colNo" checked> No</label>
+            </div>
+            <div class="form-group">
+                <label><input type="checkbox" id="colIdKaryawan" checked> ID Karyawan</label>
+            </div>
+            <div class="form-group">
+                <label><input type="checkbox" id="colNamaLengkap" checked> Nama Lengkap</label>
+            </div>
+            <div class="form-group">
+                <label><input type="checkbox" id="colTanggalLembur" checked> Tanggal Lembur</label>
+            </div>
+            <div class="form-group">
+                <label><input type="checkbox" id="colJenisLembur" checked> Jenis Lembur</label>
+            </div>
+            <div class="form-group">
+                <label><input type="checkbox" id="colJamMasuk" checked> Jam Masuk</label>
+            </div>
+            <div class="form-group">
+                <label><input type="checkbox" id="colJamKeluar" checked> Jam Keluar</label>
+            </div>
+            <div class="form-group">
+                <label><input type="checkbox" id="colGaji" checked> Gaji</label>
+            </div>
+            <div class="form-group">
+                <label><input type="checkbox" id="colJamKerjaLembur" checked> Jam Kerja Lembur</label>
+            </div>
+            <div class="form-group">
+                <label><input type="checkbox" id="colJamI" checked> Jam I</label>
+            </div>
+            <div class="form-group">
+                <label><input type="checkbox" id="colJamII" checked> Jam II</label>
+            </div>
+            <div class="form-group">
+                <label><input type="checkbox" id="colJamIII" checked> Jam III</label>
+            </div>
+            <div class="form-group">
+                <label><input type="checkbox" id="colJamIV" checked> Jam IV</label>
+            </div>
+            <div class="form-group">
+                <label><input type="checkbox" id="colUpahLembur" checked> Upah Lembur</label>
+            </div>
+            <div class="form-group">
+                <label><input type="checkbox" id="colKeterangan" checked> Keterangan</label>
+            </div>
         </form>
     </div>
 </div>
@@ -1563,8 +1654,56 @@ document.getElementById('closedataRangeModal').onclick = function() {
 window.onclick = function(event) {
     if (event.target === document.getElementById('dateRangeModal')) {
         document.getElementById('dateRangeModal').style.display = 'none';
+    } else if (event.target === document.getElementById('dateFilterModal')) {
+        document.getElementById('dateFilterModal').style.display = 'none';
     }
 };
+
+// Open Modal
+document.getElementById('filterButton').onclick = function() {
+    document.getElementById('dateFilterModal').style.display = 'block';
+};
+
+// Close Modal when clicking on the close button
+document.getElementById('closedataFilterModal').onclick = function() {
+    document.getElementById('dateFilterModal').style.display = 'none';
+};
+// Reset button functionality
+document.getElementById('resetFilterButton').onclick = function() {
+    document.getElementById('filterForm').reset();
+    // Trigger form submission with empty filters to show all data
+    document.getElementById('filterForm').submit();
+};
+
+// Open Modal
+document.querySelector('.btn-warning').addEventListener('click', function() {
+    document.getElementById('columnVisibilityModal').style.display = 'block';
+});
+
+// Close Modal when clicking on the close button
+document.getElementById('closeColumnVisibilityModal').onclick = function() {
+    document.getElementById('columnVisibilityModal').style.display = 'none';
+};
+
+// Close Modal when clicking outside of it
+window.onclick = function(event) {
+    if (event.target === document.getElementById('columnVisibilityModal')) {
+        document.getElementById('columnVisibilityModal').style.display = 'none';
+    }
+};
+
+// Update column visibility based on checkbox status
+document.getElementById('columnVisibilityForm').addEventListener('change', function(event) {
+    const checkbox = event.target;
+    if (checkbox.type === 'checkbox') {
+        const columnClass = 'col-' + checkbox.id.replace('col', '').toLowerCase();
+        const columns = document.querySelectorAll('.' + columnClass);
+        columns.forEach(column => {
+            column.style.display = checkbox.checked ? '' : 'none';
+        });
+    }
+});
+
     </script>
   </body>
 </html>

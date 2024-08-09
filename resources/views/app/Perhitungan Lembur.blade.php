@@ -1892,7 +1892,43 @@ document.getElementById('printForm').addEventListener('submit', function(event) 
     document.getElementById('printModal').style.display = 'none';
 });
 
+$(document).ready(function() {
+        // Autocomplete for ID Karyawan
+        $("#printid_karyawan2").autocomplete({
+            source: function(request, response) {
+                $.ajax({
+                    url: "{{ route('autocomplete.id_karyawan') }}",
+                    type: 'GET',
+                    dataType: 'json',
+                    data: {
+                        term: request.term
+                    },
+                    success: function(data) {
+                        response(data);
+                    }
+                });
+            },
+            minLength: 1 // Minimum number of characters to trigger the autocomplete
+        });
 
+        // Autocomplete for Nama Lengkap
+        $("#printnama_lengkap2").autocomplete({
+            source: function(request, response) {
+                $.ajax({
+                    url: "{{ route('autocomplete.nama_lengkap') }}",
+                    type: 'GET',
+                    dataType: 'json',
+                    data: {
+                        term: request.term
+                    },
+                    success: function(data) {
+                        response(data);
+                    }
+                });
+            },
+            minLength: 1 // Minimum number of characters to trigger the autocomplete
+        });
+    });
 
     </script>
   </body>

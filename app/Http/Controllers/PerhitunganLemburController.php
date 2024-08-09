@@ -255,10 +255,11 @@ class PerhitunganLemburController extends Controller
         }
     
         $lemburRecords = $query->get()->map(function($item) {
+            $formattedDate = $item->tanggal_lembur->locale('id')->translatedFormat('l, d F Y');
             return [
                 'id_karyawan' => $item->id_karyawan,
                 'nama_lengkap' => $item->nama_lengkap,
-                'formatted_tanggal_lembur' => $item->tanggal_lembur->format('d-m-Y'),
+                'formatted_tanggal_lembur' => $formattedDate,
                 'jenis_lembur' => $item->jenis_lembur,
                 'jam_masuk' => $item->jam_masuk->format('H:i'),
                 'jam_keluar' => $item->jam_keluar->format('H:i'),

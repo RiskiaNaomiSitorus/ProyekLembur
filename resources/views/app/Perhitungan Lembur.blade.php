@@ -1868,13 +1868,6 @@ $(document).ready(function() {
         }
     };
 
-    document.getElementById('openPrintModal').addEventListener('click', function() {
-    document.getElementById('printModal').style.display = 'block';
-});
-
-document.getElementById('closePrintModal').addEventListener('click', function() {
-    document.getElementById('printModal').style.display = 'none';
-});
 
 document.getElementById('printForm').addEventListener('submit', function(event) {
     event.preventDefault(); // Prevent the default form submission
@@ -1929,6 +1922,40 @@ $(document).ready(function() {
             minLength: 1 // Minimum number of characters to trigger the autocomplete
         });
     });
+
+    // Function to close any open modal if clicking outside
+function closeModalOnOutsideClick(e) {
+    // List of all modals
+    const modals = document.querySelectorAll('.modal');
+
+    // Check if click was outside of any modal
+    modals.forEach(modal => {
+        if (e.target === modal) {
+            // Close the modal
+            modal.style.display = 'none';
+        }
+    });
+}
+
+// Event listener for outside click
+window.addEventListener("click", closeModalOnOutsideClick);
+
+// Function to open modal (example)
+function openModal(modalId) {
+    const modal = document.getElementById(modalId);
+    if (modal) {
+        modal.style.display = 'block';
+    }
+}
+
+// Function to close modal (example)
+function closeModal(modalId) {
+    const modal = document.getElementById(modalId);
+    if (modal) {
+        modal.style.display = 'none';
+    }
+}
+
 
     </script>
   </body>

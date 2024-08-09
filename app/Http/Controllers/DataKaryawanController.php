@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule; // Import Rule class
 use App\Models\Karyawan;
-use Maatwebsite\Excel\Facades\Excel; // Make sure this import is correct
+use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\KaryawanExport;
 
 class DataKaryawanController extends Controller

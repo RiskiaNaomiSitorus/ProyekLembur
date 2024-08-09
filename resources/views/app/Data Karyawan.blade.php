@@ -813,6 +813,40 @@ document.getElementById('printButton').addEventListener('click', function() {
     document.body.innerHTML = originalContent;
 });
 
+// Function to close any open modal if clicking outside
+function closeModalOnOutsideClick(e) {
+    // List of all modals
+    const modals = document.querySelectorAll('.modal');
+
+    // Check if click was outside of any modal
+    modals.forEach(modal => {
+        if (e.target === modal) {
+            // Close the modal
+            modal.style.display = 'none';
+        }
+    });
+}
+
+// Event listener for outside click
+window.addEventListener("click", closeModalOnOutsideClick);
+
+// Function to open modal (example)
+function openModal(modalId) {
+    const modal = document.getElementById(modalId);
+    if (modal) {
+        modal.style.display = 'block';
+    }
+}
+
+// Function to close modal (example)
+function closeModal(modalId) {
+    const modal = document.getElementById(modalId);
+    if (modal) {
+        modal.style.display = 'none';
+    }
+}
+
+
 </script>
     <!-- Modal HTML -->
     <div id="detailModal" class="modal">

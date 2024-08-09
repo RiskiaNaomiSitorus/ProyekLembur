@@ -679,9 +679,6 @@
     closeDeleteModal.addEventListener("click", closeDeleteModalFunc);
     cancelDelete.addEventListener("click", closeDeleteModalFunc);
 
-    // Outside click
-    window.addEventListener("click", outsideClick);
-
     // Function to open edit modal and populate data
     function openEditModal() {
         var button = this;
@@ -735,22 +732,6 @@
     // Function to close delete modal
     function closeDeleteModalFunc() {
         deleteModal.style.display = "none";
-    }
-
-    // Function to close modal if outside click
-    function outsideClick(e) {
-        if (e.target == editModal) {
-            editModal.style.display = "none";
-        }
-        if (e.target == addModal) {
-            addModal.style.display = "none";
-        }
-        if (e.target == deleteModal) {
-            deleteModal.style.display = "none";
-        }
-        if (e.target == columnVisibilityModal) {
-          columnVisibilityModal.style.display = "none";
-        }
     }
 
     // Input validation for ID fields

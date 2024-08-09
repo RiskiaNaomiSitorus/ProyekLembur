@@ -1084,21 +1084,7 @@ editButtons.forEach(function (button) {
     cancelDelete.addEventListener("click", closeDeleteModalFunc);
 
 
-  // Function to close modal if outside click
-  function outsideClick(e) {
-    if (e.target === addModal) {
-        closeAddModalFunc();
-    } else if (e.target === editModal) {
-        closeEditModalFunc();
-    } else if (e.target === deleteModal) {
-        closeDeleteModalFunc();
-    }
-}
 
-
-
-    // Event listener for outside click
-    window.addEventListener("click", outsideClick);
      // Add Lembur Modal
 
 // Determine if a date is a weekend
@@ -1756,13 +1742,6 @@ document.querySelector('.btn-warning').addEventListener('click', function() {
 // Close Modal when clicking on the close button
 document.getElementById('closeColumnVisibilityModal').onclick = function() {
     document.getElementById('columnVisibilityModal').style.display = 'none';
-};
-
-// Close Modal when clicking outside of it
-window.onclick = function(event) {
-    if (event.target === document.getElementById('columnVisibilityModal')) {
-        document.getElementById('columnVisibilityModal').style.display = 'none';
-    }
 };
 
 // Update column visibility based on checkbox status

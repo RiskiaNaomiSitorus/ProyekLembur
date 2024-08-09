@@ -100,7 +100,6 @@
     {{ Auth::user()->name }} <i class="fa fa-caret-down"></i>
 </div>
               <div class="dropdown-content">
-              <a href="settings.html">Settings</a>
               <a href="{{ url('logout') }}" class="logout-link" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
 <form id="logout-form" action="{{ url('logout') }}" method="POST" style="display: none;">
     @csrf

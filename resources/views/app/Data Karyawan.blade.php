@@ -225,7 +225,6 @@
     {{ Auth::user()->name }} <i class="fa fa-caret-down"></i>
 </div>
               <div class="dropdown-content">
-              <a href="settings.html">Settings</a>
               <a href="{{ url('logout') }}" class="logout-link" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
 <form id="logout-form" action="{{ url('logout') }}" method="POST" style="display: none;">
     @csrf
@@ -235,9 +234,9 @@
           </div>
         </div>
         <div class="info">
-          <div class="date">
-            <h5>12 Juli 2024</h5>
-          </div>
+        <div class="date">
+        <h5 id="todayDate"></h5>
+    </div>
         </div>
         <div class="dashboard">
           <h2>Data Karyawan</h2>
@@ -827,7 +826,29 @@ function closeModal(modalId) {
     }
 }
 
+document.addEventListener('DOMContentLoaded', function() {
+            // Function to format date as "Jumat, 09 Agustus 2024"
+            function formatDate(date) {
+                const daysOfWeek = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];
+                const months = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
+                
+                const dayOfWeek = daysOfWeek[date.getDay()];
+                const day = date.getDate().toString().padStart(2, '0'); // Add leading zero if needed
+                const month = months[date.getMonth()];
+                const year = date.getFullYear();
+                
+                return `${dayOfWeek}, ${day} ${month} ${year}`;
+            }
 
+            // Get today's date
+            const today = new Date();
+
+            // Format the date
+            const formattedDate = formatDate(today);
+
+            // Set the date in the <h5> element
+            document.getElementById('todayDate').innerText = formattedDate;
+        });
 </script>
     <!-- Modal HTML -->
     <div id="detailModal" class="modal">

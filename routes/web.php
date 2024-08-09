@@ -104,3 +104,5 @@ Route::get('export-karyawan', [DataKaryawanController::class, 'export'])->name('
 Route::get('perhitungan-lembur', [PerhitunganLemburController::class, 'index'])->name('perhitungan-lembur')->middleware('auth');
 
 Route::get('/print', [PerhitunganLemburController::class, 'print'])->name('print');
+Route::get('/printable-view', [PerhitunganLemburController::class, 'printableView'])->name('printableView');
+

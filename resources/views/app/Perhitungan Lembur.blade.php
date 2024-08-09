@@ -893,14 +893,14 @@
         <span class="close" id="closePrintModal">&times;</span>
         <h2 class="modal-title">Print Filters</h2>
         <div class="modal-body">
-            <form id="printForm" method="GET" action="{{ route('print') }}">
+            <form id="printForm" method="GET" action="{{ route('printableView') }}">
                 @csrf
                 <div class="form-group">
-                    <label for="printid_karyawan">ID Karyawan</label>
+                    <label for="printid_karyawan2">ID Karyawan</label>
                     <input type="text" class="form-control" id="printid_karyawan2" name="printid_karyawan2">
                 </div>
                 <div class="form-group">
-                    <label for="printnama_lengkap">Nama Lengkap</label>
+                    <label for="printnama_lengkap2">Nama Lengkap</label>
                     <input type="text" class="form-control" id="printnama_lengkap2" name="printnama_lengkap2">
                 </div>
                 <div class="form-group">
@@ -912,12 +912,13 @@
                     <input type="date" class="form-control" id="printend_date" name="printend_date">
                 </div>       
                 <div class="form-group d-flex justify-content-between">
-                    <button type="submit" class="btn btn-primary">Apply Filters</button>
+                    <button type="submit" class="btn btn-primary">Print Filtered Data</button>
                 </div>
             </form>
         </div>
     </div>
 </div>
+
 
 
 <!-- Printable View for Printing -->
@@ -926,41 +927,41 @@
     <table class="table table-striped table-bordered">
         <thead>
             <tr>
-                <th class="col-no">No</th>
-                <th class="col-idkaryawan">ID Karyawan</th>
-                <th class="col-namalengkap">Nama Lengkap</th>
-                <th class="col-tanggallembur">Tanggal Lembur</th>
-                <th class="col-jenislembur">Jenis Lembur</th>
-                <th class="col-jammasuk">Jam Masuk</th>
-                <th class="col-jamkeluar">Jam Keluar</th>
-                <th class="col-gaji">Gaji</th>
-                <th class="col-jamkerjalembur">Jam Kerja Lembur</th>
-                <th class="col-jami">Jam I</th>
-                <th class="col-jamii">Jam II</th>
-                <th class="col-jamiii">Jam III</th>
-                <th class="col-jamiv">Jam IV</th>
-                <th class="col-upahlembur">Upah Lembur</th>
-                <th class="col-keterangan">Keterangan</th>
+                <th >No</th>
+                <th >ID Karyawan</th>
+                <th >Nama Lengkap</th>
+                <th >Tanggal Lembur</th>
+                <th >Jenis Lembur</th>
+                <th >Jam Masuk</th>
+                <th >Jam Keluar</th>
+                <th >Gaji</th>
+                <th >Jam Kerja Lembur</th>
+                <th >Jam I</th>
+                <th >Jam II</th>
+                <th >Jam III</th>
+                <th >Jam IV</th>
+                <th >Upah Lembur</th>
+                <th >Keterangan</th>
             </tr>
         </thead>
         <tbody>
             @foreach ($lemburRecords as $lembur)
             <tr>
-                <td class="col-no">{{ $loop->iteration }}</td>
-                <td class="col-idkaryawan">{{ $lembur->id_karyawan }}</td>
-                <td class="col-namalengkap">{{ $lembur->nama_lengkap }}</td>
-                <td class="col-tanggallembur">{{ $lembur->formatted_tanggal_lembur }}</td>
-                <td class="col-jenislembur">{{ $lembur->jenis_lembur }}</td>
-                <td class="col-jammasuk">{{ $lembur->jam_masuk->format('H:i') }}</td>
-                <td class="col-jamkeluar">{{ $lembur->jam_keluar->format('H:i') }}</td>
-                <td class="col-gaji">{{ 'Rp. ' . number_format($lembur->gaji, 0, ',', '.') }}</td>
-                <td class="col-jamkerjalembur">{{ number_format($lembur->jam_kerja_lembur, 1, ',', '.') }}</td>
-                <td class="col-jami">{{ number_format($lembur->jam_i, 1, ',', '.') }}</td>
-                <td class="col-jamii">{{ number_format($lembur->jam_ii, 1, ',', '.') }}</td>
-                <td class="col-jamiii">{{ number_format($lembur->jam_iii, 1, ',', '.') }}</td>
-                <td class="col-jamiv">{{ number_format($lembur->jam_iv, 1, ',', '.') }}</td>
-                <td class="col-upahlembur">{{ 'Rp. ' . number_format($lembur->upah_lembur, 0, ',', '.') }}</td>
-                <td class="col-keterangan">{{ $lembur->keterangan }}</td>
+                <td >{{ $loop->iteration }}</td>
+                <td >{{ $lembur->id_karyawan }}</td>
+                <td >{{ $lembur->nama_lengkap }}</td>
+                <td >{{ $lembur->formatted_tanggal_lembur }}</td>
+                <td >{{ $lembur->jenis_lembur }}</td>
+                <td >{{ $lembur->jam_masuk->format('H:i') }}</td>
+                <td >{{ $lembur->jam_keluar->format('H:i') }}</td>
+                <td >{{ 'Rp. ' . number_format($lembur->gaji, 0, ',', '.') }}</td>
+                <td >{{ number_format($lembur->jam_kerja_lembur, 1, ',', '.') }}</td>
+                <td >{{ number_format($lembur->jam_i, 1, ',', '.') }}</td>
+                <td >{{ number_format($lembur->jam_ii, 1, ',', '.') }}</td>
+                <td >{{ number_format($lembur->jam_iii, 1, ',', '.') }}</td>
+                <td >{{ number_format($lembur->jam_iv, 1, ',', '.') }}</td>
+                <td >{{ 'Rp. ' . number_format($lembur->upah_lembur, 0, ',', '.') }}</td>
+                <td >{{ $lembur->keterangan }}</td>
             </tr>
             @endforeach
         </tbody>
@@ -1867,86 +1868,32 @@ $(document).ready(function() {
         }
     };
 
-    document.getElementById('applyPrintFilters').addEventListener('click', function() {
-    var idKaryawan = document.getElementById('printid_karyawan2').value;
-    var namaLengkap = document.getElementById('printnama_lengkap2').value;
-    var startDate = document.getElementById('printstart_date').value;
-    var endDate = document.getElementById('printend_date').value;
-
-    // Construct the URL with query parameters
-    var url = '{{ route('print') }}' + '?id_karyawan=' + encodeURIComponent(idKaryawan) +
-              '&nama_lengkap=' + encodeURIComponent(namaLengkap) +
-              '&start_date=' + encodeURIComponent(startDate) +
-              '&end_date=' + encodeURIComponent(endDate);
-
-    // Fetch filtered data and update the printable view
-    fetch(url)
-        .then(response => response.json())
-        .then(data => {
-            var printableContent = '<h2>Lembur Records</h2>' +
-                '<table class="table table-striped table-bordered">' +
-                '<thead>' +
-                '<tr>' +
-                    '<th class="col-no">No</th>' +
-                    '<th class="col-idkaryawan">ID Karyawan</th>' +
-                    '<th class="col-namalengkap">Nama Lengkap</th>' +
-                    '<th class="col-tanggallembur">Tanggal Lembur</th>' +
-                    '<th class="col-jenislembur">Jenis Lembur</th>' +
-                    '<th class="col-jammasuk">Jam Masuk</th>' +
-                    '<th class="col-jamkeluar">Jam Keluar</th>' +
-                    '<th class="col-gaji">Gaji</th>' +
-                    '<th class="col-jamkerjalembur">Jam Kerja Lembur</th>' +
-                    '<th class="col-jami">Jam I</th>' +
-                    '<th class="col-jamii">Jam II</th>' +
-                    '<th class="col-jamiii">Jam III</th>' +
-                    '<th class="col-jamiv">Jam IV</th>' +
-                    '<th class="col-upahlembur">Upah Lembur</th>' +
-                    '<th class="col-keterangan">Keterangan</th>' +
-                '</tr>' +
-                '</thead>' +
-                '<tbody>' +
-                data.map((item, index) => 
-                    '<tr>' +
-                        '<td class="col-no">' + (index + 1) + '</td>' +
-                        '<td class="col-idkaryawan">' + item.id_karyawan + '</td>' +
-                        '<td class="col-namalengkap">' + item.nama_lengkap + '</td>' +
-                        '<td class="col-tanggallembur">' + item.formatted_tanggal_lembur + '</td>' +
-                        '<td class="col-jenislembur">' + item.jenis_lembur + '</td>' +
-                        '<td class="col-jammasuk">' + item.jam_masuk + '</td>' +
-                        '<td class="col-jamkeluar">' + item.jam_keluar + '</td>' +
-                        '<td class="col-gaji">' + 'Rp. ' + new Intl.NumberFormat('id-ID').format(item.gaji) + '</td>' +
-                        '<td class="col-jamkerjalembur">' + new Intl.NumberFormat('id-ID').format(item.jam_kerja_lembur) + '</td>' +
-                        '<td class="col-jami">' + new Intl.NumberFormat('id-ID').format(item.jam_i) + '</td>' +
-                        '<td class="col-jamii">' + new Intl.NumberFormat('id-ID').format(item.jam_ii) + '</td>' +
-                        '<td class="col-jamiii">' + new Intl.NumberFormat('id-ID').format(item.jam_iii) + '</td>' +
-                        '<td class="col-jamiv">' + new Intl.NumberFormat('id-ID').format(item.jam_iv) + '</td>' +
-                        '<td class="col-upahlembur">' + 'Rp. ' + new Intl.NumberFormat('id-ID').format(item.upah_lembur) + '</td>' +
-                        '<td class="col-keterangan">' + item.keterangan + '</td>' +
-                    '</tr>'
-                ).join('') +
-                '</tbody>' +
-                '</table>';
-
-            // Create a new window
-            var printWindow = window.open('', '', 'height=600,width=800');
-
-            // Write content to the new window
-            printWindow.document.write('<html><head><title>Print Lembur Records</title>');
-            printWindow.document.write('<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">');
-            printWindow.document.write('</head><body >');
-            printWindow.document.write(printableContent);
-            printWindow.document.write('</body></html>');
-
-            // Close the document and trigger print dialog
-            printWindow.document.close();
-            printWindow.focus();
-            printWindow.print();
-            
-            // Close the print modal
-            document.getElementById('printModal').style.display = 'none';
-        })
-        .catch(error => console.error('Error:', error));
+    document.getElementById('openPrintModal').addEventListener('click', function() {
+    document.getElementById('printModal').style.display = 'block';
 });
+
+document.getElementById('closePrintModal').addEventListener('click', function() {
+    document.getElementById('printModal').style.display = 'none';
+});
+
+document.getElementById('printForm').addEventListener('submit', function(event) {
+    event.preventDefault(); // Prevent the default form submission
+    
+    var form = this;
+    var action = form.action;
+    var formData = new FormData(form);
+
+    var url = new URL(action);
+    url.search = new URLSearchParams(formData).toString();
+
+    window.open(url, '_blank'); // Open the printable view in a new tab
+
+    // Optionally, you can close the modal after submitting
+    document.getElementById('printModal').style.display = 'none';
+});
+
+
+
     </script>
   </body>
 </html>

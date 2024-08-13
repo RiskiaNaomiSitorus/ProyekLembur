@@ -794,126 +794,116 @@ document.getElementById('printButton').addEventListener('click', function() {
     // Write the print content into the new window
     printWindow.document.open();
     printWindow.document.write(`
-        <html>
-            <head>
-                <title>Data Karyawan</title>
-               <link rel="stylesheet" href="{{ asset('css/app.css') }}">
-    <link rel="stylesheet" href="{{ asset ('assets/styles.css')}}" />
-    <link
-      rel="stylesheet"
-      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
-    />
-        <!-- Include jQuery and jQuery UI -->
-<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
+ <!DOCTYPE html>
+<html>
+<head>
+    <title>Data Karyawan</title>
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/styles.css') }}" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            display: flex;
+            flex-direction: column;
+        }
+        .wrapper {
+            display: flex;
+            flex: 1;
+        }
+        .sidebar {
+            width: 250px;
+            background: #333;
+            color: white;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .main_content {
+            flex: 1;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .card-header {
+            margin: 20px;
+            border: 1px solid #11a634;
+            border-radius: 0; /* Removed border-radius to make it square */
+            box-shadow: 0 2px 4px rgba(0, 255, 38, 0.1);
+            width: 225px; /* Set width for card */
+            height: 40px;
+            background-color: #1bbc53;
+            color: white;
+            display: flex;
+            align-items: center; /* Align items in header */
+        }
+        .card-header i {
+            margin-right: 10px;
+        }
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 40px;
+            margin-left: 20px;
+        }
+        .header-title {
+            display: flex;
+            align-items: center;
+        }
+        .table-container {
+            width: 100%;
+            margin-left: 5px;
+        }
+        .table-container table {
+            width: 100%;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 8px;
+            text-align: center;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            position: relative;
+        }
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        .close:hover, .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+    </style>
 </head>
-<style>
-     /* Add your styles here */
-     html,
-      body {
-        height: 100%;
-        margin: 0;
-        padding: 0;
-      }
-      body {
-        display: flex;
-        flex-direction: column;
-      }
-      .wrapper {
-        display: flex;
-        flex: 1;
-      }
-      .sidebar {
-        width: 250px;
-        background: #333;
-        color: white;
-        padding: 20px;
-        box-sizing: border-box;
-      }
-      .main_content {
-        flex: 1;
-        padding: 20px;
-        box-sizing: border-box;
-      }
-      .card-header {
-        margin: 20px;
-        border: 1px solid #11a634;
-        border-radius: 0; /* Menghapus border-radius untuk membuat persegi */
-        box-shadow: 0 2px 4px rgba(0, 255, 38, 0.1);
-        width: 225px; /* Menentukan lebar card */
-        height: 40px;
-        background-color: #1bbc53;
-        color: white;
-        display: flex;
-        align-items: center; /* Menambahkan padding untuk header */
-      }
-      .card-header i {
-        margin-right: 10px;
-      }
-      .action-buttons {
-        display: flex;
-        gap: 10px;
-        margin-bottom: 40px;
-        margin-left: 20px;
-      }
-      .header-title {
-        display: flex;
-        align-items: center;
-      }
-      .table-container {
-        width: 100%;
-        margin-left: 5px;
-      }
-      .table-container table {
-        width: 100%;
-      }
-      table,
-      th,
-      td {
-        border: 1px solid black;
-      }
-      th,
-      td {
-        padding: 8px;
-        text-align: center;
-      }
-      th {
-        background-color: #f2f2f2;
-      }
-      .modal {
-        display: none;
-        position: fixed;
-        z-index: 1;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        overflow: auto;
-        background-color: rgba(0, 0, 0, 0.4);
-      }
-      .modal-content {
-        background-color: #fefefe;
-        margin: 15% auto;
-        padding: 20px;
-        border: 1px solid #888;
-        width: 80%;
-        position: relative;
-      }
-      .close {
-        color: #aaa;
-        float: right;
-        font-size: 28px;
-        font-weight: bold;
-      }
-      .close:hover,
-      .close:focus {
-        color: black;
-        text-decoration: none;
-        cursor: pointer;
-      }
-  </style>
-            </head>
-            <body>
-                 <h2>Data Karyawan</h2>
+<body>
+    <h2>Data Karyawan</h2>
     <table class="table table-striped table-bordered">
         <thead>
             <tr>
@@ -940,8 +930,9 @@ document.getElementById('printButton').addEventListener('click', function() {
             @endforeach
         </tbody>
     </table>
-            </body>
-        </html>
+</body>
+</html>
+
     `);
     printWindow.document.close();
 

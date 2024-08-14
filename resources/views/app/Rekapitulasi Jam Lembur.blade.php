@@ -163,32 +163,33 @@
             </div>
         </div>
     </div>
-<!-- Filter Modal -->
-<div id="filterModal" class="modal">
+    <div class="modal" id="dateFilterModal">
     <div class="modal-content">
-        <span class="close">&times;</span>
-        <h2 class="modal-title">Filter Data</h2>
+        <span class="close" id="closedataFilterModal">&times;</span>
+        <h2 class="modal-title" id="dateFilterModalLabel">Filter Records</h2>
         <div class="modal-body">
-            <form id="filterForm">
+            <form id="filterForm" method="GET" action="">
                 @csrf
                 <div class="form-group">
-                    <label for="nama_lengkap5">Nama Lengkap</label>
+                    <label for="nama_lengkap">Nama Lengkap</label>
                     <input type="text" class="form-control" id="nama_lengkap5" name="nama_lengkap5">
                 </div>
                 <div class="form-group">
-                    <label for="start_date5">Start Date</label>
+                    <label for="start_date">Start Date</label>
                     <input type="date" class="form-control" id="start_date5" name="start_date5">
                 </div>
                 <div class="form-group">
-                    <label for="end_date5">End Date</label>
+                    <label for="end_date">End Date</label>
                     <input type="date" class="form-control" id="end_date5" name="end_date5">
-                </div>
+                </div>       
                 <div class="form-group d-flex justify-content-between">
                     <button type="submit" class="btn btn-primary">Apply Filter</button>
+                    <button type="button" id="resetFilterButton" class="btn btn-secondary">Reset Filter</button>
                 </div>
             </form>
         </div>
     </div>
+</div>
 </div>
 
 

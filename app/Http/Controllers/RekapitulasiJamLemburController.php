@@ -11,49 +11,51 @@ use App\Exports\FilteredLemburExport; // Import the new export class
 class RekapitulasiJamLemburController extends Controller
 {
     public function index(Request $request)
-{
-    $query = Lembur::query();
+    {
+        $query = Lembur::query();
     
-    if ($request->filled('nama_lengkap5')) {
-        $query->where('nama_lengkap', 'like', '%' . $request->nama_lengkap5 . '%');
-    }
-
-    if ($request->filled('start_date5') && $request->filled('end_date5')) {
-        $query->whereBetween('tanggal_lembur', [$request->start_date5, $request->end_date5]);
-    }
-
-    $lemburRecords = $query->get();
-
-    // Group records by nama_lengkap
-    $groupedRecords = $lemburRecords->groupBy('nama_lengkap')->map(function ($group) {
-        return [
-            'totalJamKerja' => $group->sum('jam_kerja_lembur'),
-            'totalUpahLembur' => $group->sum('upah_lembur'),
-        ];
-    });
-
-    // Calculate overall totals
-    $totalJamKerja = $lemburRecords->sum('jam_kerja_lembur');
-    $totalUpahLembur = $lemburRecords->sum('upah_lembur');
-
-    if ($request->ajax()) {
-        return response()->json([
-            'table' => view('app.Rekapitulasi Jam Lembur Table', [
-                'groupedRecords' => $groupedRecords,
-                'totalJamKerja' => $totalJamKerja,
-                'totalUpahLembur' => $totalUpahLembur,
-            ])->render(),
-            'totalJamKerja' => number_format($totalJamKerja, 2),
-            'totalUpahLembur' => number_format($totalUpahLembur, 2),
+        if ($request->filled('nama_lengkap5')) {
+            $query->where('nama_lengkap', 'like', '%' . $request->nama_lengkap5 . '%');
+        }
+    
+        if ($request->filled('start_date5') && $request->filled('end_date5')) {
+            $query->whereBetween('tanggal_lembur', [$request->start_date5, $request->end_date5]);
+        }
+    
+        $lemburRecords = $query->get();
+    
+        // Group records by nama_lengkap
+        $groupedRecords = $lemburRecords->groupBy('nama_lengkap')->map(function ($group) {
+            return [
+                'totalJamKerja' => $group->sum('jam_kerja_lembur'),
+                'totalUpahLembur' => $group->sum('upah_lembur'),
+            ];
+        });
+    
+        // Calculate overall totals
+        $totalJamKerja = $lemburRecords->sum('jam_kerja_lembur');
+        $totalUpahLembur = $lemburRecords->sum('upah_lembur');
+    
+        if ($request->ajax()) {
+            return response()->json([
+                'table' => view('app.Rekapitulasi Jam Lembur Table', [
+                    'groupedRecords' => $groupedRecords,
+                    'totalJamKerja' => $totalJamKerja,
+                    'totalUpahLembur' => $totalUpahLembur,
+                ])->render(),
+                'totalJamKerja' => number_format($totalJamKerja, 2),
+                'totalUpahLembur' => number_format($totalUpahLembur, 2),
+            ]);
+        }
+    
+        return view('app.Rekapitulasi Jam Lembur', [
+            'groupedRecords' => $groupedRecords,
+            'totalJamKerja' => $totalJamKerja,
+            'totalUpahLembur' => $totalUpahLembur,
         ]);
     }
+    
 
-    return view('app.Rekapitulasi Jam Lembur', [
-        'groupedRecords' => $groupedRecords,
-        'totalJamKerja' => $totalJamKerja,
-        'totalUpahLembur' => $totalUpahLembur,
-    ]);
-}
 
     
 

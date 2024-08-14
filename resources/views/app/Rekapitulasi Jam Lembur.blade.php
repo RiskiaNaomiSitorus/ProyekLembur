@@ -169,7 +169,7 @@
     <div class="modal-content">
         <span class="close">&times;</span>
         <h2 class="modal-title" id="dateFilterModalLabel">Filter Lembur Records</h2>
-        <form id="filterForm">
+        <form id="filterForm" method="GET" action="{{ route('rekapitulasi-jam-lembur') }}">
         @csrf
             <div class="form-group">
                 <label for="nama_lengkap">Nama Lengkap</label>
@@ -245,53 +245,43 @@
 </div>
 <script>
   //FILTER
-  document.addEventListener('DOMContentLoaded', function () {
-    const filterForm = document.getElementById('filterForm');
+
+document.addEventListener('DOMContentLoaded', function () {
     const filterModal = document.getElementById('filterModal');
+    const filterButton = document.getElementById('filterButton2');
     const closeModal = filterModal.querySelector('.close');
     const resetButton = document.getElementById('resetFilterButton');
     const tableContainer = document.getElementById('tableContainer'); // Ensure this ID matches your table container
 
-    // Open and close the modal
-    document.querySelector('#filterButton2').addEventListener('click', function () {
-        filterModal.style.display = 'block';
-    });
+    // Open the modal
+    if (filterButton) {
+        filterButton.addEventListener('click', function () {
+            filterModal.style.display = 'block';
+        });
+    }
 
-    closeModal.addEventListener('click', function () {
-        filterModal.style.display = 'none';
-    });
+    // Close the modal when clicking on the close button
+    if (closeModal) {
+        closeModal.addEventListener('click', function () {
+            filterModal.style.display = 'none';
+        });
+    }
 
-    window.onclick = function(event) {
-        if (event.target == filterModal) {
+    // Close the modal when clicking outside of it
+    window.addEventListener('click', function(event) {
+        if (event.target === filterModal) {
             filterModal.style.display = 'none';
         }
+    });
+
+    // Reset filter form
+    if (resetButton) {
+        resetButton.addEventListener('click', function () {
+            document.getElementById('filterForm').reset();
+            document.getElementById('filterForm').submit();
+        });
     }
 });
-
-document.getElementById('filterForm').addEventListener('submit', function(event) {
-    event.preventDefault(); // Prevent default form submission
-
-    let formData = new FormData(this);
-
-    fetch('{{ route('rekapitulasi-jam-lembur') }}', {
-        method: 'POST',
-        headers: {
-            'X-Requested-With': 'XMLHttpRequest',
-            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
-        },
-        body: formData
-    })
-    .then(response => response.json())
-    .then(data => {
-        // Update the table with filtered data
-        document.getElementById('table-container').innerHTML = data.table;
-        // Update totals
-        document.getElementById('totalJamKerja').innerText = data.totalJamKerja;
-        document.getElementById('totalUpahLembur').innerText = data.totalUpahLembur;
-    })
-    .catch(error => console.error('Error:', error));
-});
-
 
 //FILTER
 //PRINT
@@ -348,6 +338,63 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 //EXPORT
+//AUTOCOMPLETE
+ // Autocomplete for Nama Lengkap
+ $(document).ready(function() {
+ $("#nama_lengkap5").autocomplete({
+            source: function(request, response) {
+                $.ajax({
+                    url: "{{ route('autocomplete.nama_lengkap') }}",
+                    type: 'GET',
+                    dataType: 'json',
+                    data: {
+                        term: request.term
+                    },
+                    success: function(data) {
+                        response(data);
+                    }
+                });
+            },
+            minLength: 1 // Minimum number of characters to trigger the autocomplete
+        });
+    });
+    $(document).ready(function() {
+ $("#nama_lengkap_excel").autocomplete({
+            source: function(request, response) {
+                $.ajax({
+                    url: "{{ route('autocomplete.nama_lengkap') }}",
+                    type: 'GET',
+                    dataType: 'json',
+                    data: {
+                        term: request.term
+                    },
+                    success: function(data) {
+                        response(data);
+                    }
+                });
+            },
+            minLength: 1 // Minimum number of characters to trigger the autocomplete
+        });
+    });
+    $(document).ready(function() {
+ $("#printnama_lengkap2").autocomplete({
+            source: function(request, response) {
+                $.ajax({
+                    url: "{{ route('autocomplete.nama_lengkap') }}",
+                    type: 'GET',
+                    dataType: 'json',
+                    data: {
+                        term: request.term
+                    },
+                    success: function(data) {
+                        response(data);
+                    }
+                });
+            },
+            minLength: 1 // Minimum number of characters to trigger the autocomplete
+        });
+    });
+//AUTOCOMPLETE
     </script>
 </body>
 </html>

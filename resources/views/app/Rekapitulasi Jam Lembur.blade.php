@@ -155,7 +155,7 @@
                             <tr>
                                 <td colspan="2">Total</td>
                                 <td>{{ number_format($totalJamKerja, 1) }}</td>
-                                <td>{{ 'Rp. '.number_format($totalUpahLembur, 0) }}</td>
+                                <td>{{  'Rp. '. number_format($totalUpahLembur, 0) }}</td>
                             </tr>
                         </tfoot>
                     </table>
@@ -163,35 +163,33 @@
             </div>
         </div>
     </div>
-    <div class="modal" id="dateFilterModal">
+
+    <!-- Filter Modal -->
+<div class="modal" id="filterModal">
     <div class="modal-content">
-        <span class="close" id="closedataFilterModal">&times;</span>
-        <h2 class="modal-title" id="dateFilterModalLabel">Filter Records</h2>
-        <div class="modal-body">
-            <form id="filterForm" method="GET" action="">
-                @csrf
-                <div class="form-group">
-                    <label for="nama_lengkap">Nama Lengkap</label>
-                    <input type="text" class="form-control" id="nama_lengkap5" name="nama_lengkap5">
-                </div>
-                <div class="form-group">
-                    <label for="start_date">Start Date</label>
-                    <input type="date" class="form-control" id="start_date5" name="start_date5">
-                </div>
-                <div class="form-group">
-                    <label for="end_date">End Date</label>
-                    <input type="date" class="form-control" id="end_date5" name="end_date5">
-                </div>       
-                <div class="form-group d-flex justify-content-between">
-                    <button type="submit" class="btn btn-primary">Apply Filter</button>
-                    <button type="button" id="resetFilterButton" class="btn btn-secondary">Reset Filter</button>
-                </div>
-            </form>
-        </div>
+        <span class="close">&times;</span>
+        <h2 class="modal-title" id="dateFilterModalLabel">Filter Lembur Records</h2>
+        <form id="filterForm">
+        @csrf
+            <div class="form-group">
+                <label for="nama_lengkap">Nama Lengkap</label>
+                <input type="text" class="form-control" id="nama_lengkap5" name="nama_lengkap5">
+            </div>
+            <div class="form-group">
+                <label for="start_date">Start Date</label>
+                <input type="date" class="form-control" id="start_date5" name="start_date5">
+            </div>
+            <div class="form-group">
+                <label for="end_date">End Date</label>
+                <input type="date" class="form-control" id="end_date5" name="end_date5">
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">Apply Filter</button>
+                <button type="button" id="resetFilterButton" class="btn btn-secondary">Reset Filter</button>
+            </div>
+        </form>
     </div>
 </div>
-</div>
-
 
 <!-- Print Filter Modal -->
 <div id="printModal2" class="modal">
@@ -247,7 +245,30 @@
 </div>
 <script>
   //FILTER
-  document.getElementById('filterForm').addEventListener('submit', function(event) {
+  document.addEventListener('DOMContentLoaded', function () {
+    const filterForm = document.getElementById('filterForm');
+    const filterModal = document.getElementById('filterModal');
+    const closeModal = filterModal.querySelector('.close');
+    const resetButton = document.getElementById('resetFilterButton');
+    const tableContainer = document.getElementById('tableContainer'); // Ensure this ID matches your table container
+
+    // Open and close the modal
+    document.querySelector('#filterButton2').addEventListener('click', function () {
+        filterModal.style.display = 'block';
+    });
+
+    closeModal.addEventListener('click', function () {
+        filterModal.style.display = 'none';
+    });
+
+    window.onclick = function(event) {
+        if (event.target == filterModal) {
+            filterModal.style.display = 'none';
+        }
+    }
+});
+
+document.getElementById('filterForm').addEventListener('submit', function(event) {
     event.preventDefault(); // Prevent default form submission
 
     let formData = new FormData(this);
@@ -275,55 +296,28 @@
 //FILTER
 //PRINT
 document.addEventListener('DOMContentLoaded', function () {
-    const filterModal = document.getElementById('filterModal');
-    const filterButton = document.getElementById('filterButton2'); // Ensure this ID matches the button
-    const closeModal = filterModal.querySelector('.close');
-
-    // Open and close the modal
-    if (filterButton) {
-        filterButton.addEventListener('click', function () {
-            filterModal.style.display = 'block';
-        });
+    // Get modal elements
+    var printButton = document.getElementById('openPrintModal2');
+    var printModal = document.getElementById('printModal2');
+    var closePrintModal = document.getElementById('closePrintModal');
+    
+    // Show the modal
+    printButton.onclick = function() {
+        printModal.style.display = 'block';
     }
-
-    if (closeModal) {
-        closeModal.addEventListener('click', function () {
-            filterModal.style.display = 'none';
-        });
+    
+    // Close the modal
+    closePrintModal.onclick = function() {
+        printModal.style.display = 'none';
     }
-
-    window.addEventListener('click', function(event) {
-        if (event.target === filterModal) {
-            filterModal.style.display = 'none';
+    
+    // Close the modal if clicking outside of it
+    window.onclick = function(event) {
+        if (event.target == printModal) {
+            printModal.style.display = 'none';
         }
-    });
+    }
 });
-
-
-document.getElementById('filterForm').addEventListener('submit', function(event) {
-    event.preventDefault(); // Prevent default form submission
-
-    let formData = new FormData(this);
-
-    fetch('{{ route('rekapitulasi-jam-lembur') }}', {
-        method: 'POST',
-        headers: {
-            'X-Requested-With': 'XMLHttpRequest',
-            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
-        },
-        body: formData
-    })
-    .then(response => response.json())
-    .then(data => {
-        // Update the table with filtered data
-        document.getElementById('table-container').innerHTML = data.table;
-        // Update totals
-        document.getElementById('totalJamKerja').innerText = data.totalJamKerja;
-        document.getElementById('totalUpahLembur').innerText = data.totalUpahLembur;
-    })
-    .catch(error => console.error('Error:', error));
-});
-
 //PRINT
 
 //EXPORT

@@ -125,8 +125,9 @@
                         <i class="fas fa-print"></i> Print
                     </button>
                     <button class="btn btn-info" id="filterButton2">
-                        <i class="fa fa-filter" aria-hidden="true"></i> Filter Records
-                    </button>
+    <i class="fa fa-filter" aria-hidden="true"></i> Filter Records
+</button>
+
                 </div>
 
                 <div class="table-container">
@@ -136,7 +137,7 @@
                                 <th>No</th>
                                 <th>Nama</th>
                                 <th>Jumlah Jam</th>
-                                <th>Rp</th>
+                                <th>Jumlah Upah Lembur</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -146,7 +147,7 @@
                                     <td>{{ $no++ }}</td>
                                     <td>{{ $namaLengkap }}</td>
                                     <td>{{ $totals['totalJamKerja'] }}</td>
-                                    <td>{{ $totals['totalUpahLembur'] }}</td>
+                                    <td>{{'Rp. '. number_format($totals['totalUpahLembur'] )}}</td>
                                 </tr>
                             @endforeach
                         </tbody>
@@ -154,7 +155,7 @@
                             <tr>
                                 <td colspan="2">Total</td>
                                 <td>{{ number_format($totalJamKerja, 1) }}</td>
-                                <td>{{ number_format($totalUpahLembur, 0) }}</td>
+                                <td>{{ 'Rp. '.number_format($totalUpahLembur, 0) }}</td>
                             </tr>
                         </tfoot>
                     </table>
@@ -162,32 +163,34 @@
             </div>
         </div>
     </div>
-
-    <!-- Filter Modal -->
-<div class="modal" id="filterModal">
+<!-- Filter Modal -->
+<div id="filterModal" class="modal">
     <div class="modal-content">
         <span class="close">&times;</span>
-        <h2 class="modal-title" id="dateFilterModalLabel">Filter Lembur Records</h2>
-        <form id="filterForm">
-            <div class="form-group">
-                <label for="nama_lengkap">Nama Lengkap</label>
-                <input type="text" class="form-control" id="nama_lengkap" name="nama_lengkap">
-            </div>
-            <div class="form-group">
-                <label for="start_date">Start Date</label>
-                <input type="date" class="form-control" id="start_date" name="start_date">
-            </div>
-            <div class="form-group">
-                <label for="end_date">End Date</label>
-                <input type="date" class="form-control" id="end_date" name="end_date">
-            </div>
-            <div class="form-group">
-                <button type="submit" class="btn btn-primary">Apply Filter</button>
-                <button type="button" id="resetFilterButton" class="btn btn-secondary">Reset Filter</button>
-            </div>
-        </form>
+        <h2 class="modal-title">Filter Data</h2>
+        <div class="modal-body">
+            <form id="filterForm">
+                @csrf
+                <div class="form-group">
+                    <label for="nama_lengkap5">Nama Lengkap</label>
+                    <input type="text" class="form-control" id="nama_lengkap5" name="nama_lengkap5">
+                </div>
+                <div class="form-group">
+                    <label for="start_date5">Start Date</label>
+                    <input type="date" class="form-control" id="start_date5" name="start_date5">
+                </div>
+                <div class="form-group">
+                    <label for="end_date5">End Date</label>
+                    <input type="date" class="form-control" id="end_date5" name="end_date5">
+                </div>
+                <div class="form-group d-flex justify-content-between">
+                    <button type="submit" class="btn btn-primary">Apply Filter</button>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
+
 
 <!-- Print Filter Modal -->
 <div id="printModal2" class="modal">
@@ -243,89 +246,83 @@
 </div>
 <script>
   //FILTER
-  $(document).ready(function() {
-    // Show the modal
-    $('#filterButton2').click(function() {
-        $('#filterModal').show();
-    });
+  document.getElementById('filterForm').addEventListener('submit', function(event) {
+    event.preventDefault(); // Prevent default form submission
 
-    // Hide the modal when clicking on the close button
-    $('.custom-modal-close').click(function() {
-        $('#filterModal').hide();
-    });
+    let formData = new FormData(this);
 
-    // Hide the modal when clicking outside the modal content
-    $(window).click(function(event) {
-        if ($(event.target).is('#filterModal')) {
-            $('#filterModal').hide();
-        }
-    });
-
-    // Handle form submission
-    $('#filterForm').submit(function(e) {
-        e.preventDefault();
-        var namaLengkap = $('#nama_lengkap').val();
-        var startDate = $('#start_date').val();
-        var endDate = $('#end_date').val();
-
-        $.ajax({
-            url: "{{ route('rekapitulasi-jam-lembur') }}",
-            type: 'GET',
-            data: {
-                nama_lengkap: namaLengkap,
-                start_date: startDate,
-                end_date: endDate
-            },
-            success: function(response) {
-                $('#summaryTable').html(response.table);
-                $('#filterModal').hide();
-            },
-            error: function(xhr, status, error) {
-                console.error('AJAX Error:', error);
-            }
-        });
-    });
-
-    // Reset filter form
-    $('#resetFilterButton').click(function() {
-        $('#filterForm')[0].reset();
-        // Optionally, reload the table with original data
-        $.ajax({
-            url: "{{ route('rekapitulasi-jam-lembur') }}",
-            success: function(response) {
-                $('#summaryTable').html(response.table);
-            },
-            error: function(xhr, status, error) {
-                console.error('AJAX Error:', error);
-            }
-        });
-    });
+    fetch('{{ route('rekapitulasi-jam-lembur') }}', {
+        method: 'POST',
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest',
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+        },
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        // Update the table with filtered data
+        document.getElementById('table-container').innerHTML = data.table;
+        // Update totals
+        document.getElementById('totalJamKerja').innerText = data.totalJamKerja;
+        document.getElementById('totalUpahLembur').innerText = data.totalUpahLembur;
+    })
+    .catch(error => console.error('Error:', error));
 });
+
+
 //FILTER
 //PRINT
 document.addEventListener('DOMContentLoaded', function () {
-    // Get modal elements
-    var printButton = document.getElementById('openPrintModal2');
-    var printModal = document.getElementById('printModal2');
-    var closePrintModal = document.getElementById('closePrintModal');
-    
-    // Show the modal
-    printButton.onclick = function() {
-        printModal.style.display = 'block';
+    const filterModal = document.getElementById('filterModal');
+    const filterButton = document.getElementById('filterButton2'); // Ensure this ID matches the button
+    const closeModal = filterModal.querySelector('.close');
+
+    // Open and close the modal
+    if (filterButton) {
+        filterButton.addEventListener('click', function () {
+            filterModal.style.display = 'block';
+        });
     }
-    
-    // Close the modal
-    closePrintModal.onclick = function() {
-        printModal.style.display = 'none';
+
+    if (closeModal) {
+        closeModal.addEventListener('click', function () {
+            filterModal.style.display = 'none';
+        });
     }
-    
-    // Close the modal if clicking outside of it
-    window.onclick = function(event) {
-        if (event.target == printModal) {
-            printModal.style.display = 'none';
+
+    window.addEventListener('click', function(event) {
+        if (event.target === filterModal) {
+            filterModal.style.display = 'none';
         }
-    }
+    });
 });
+
+
+document.getElementById('filterForm').addEventListener('submit', function(event) {
+    event.preventDefault(); // Prevent default form submission
+
+    let formData = new FormData(this);
+
+    fetch('{{ route('rekapitulasi-jam-lembur') }}', {
+        method: 'POST',
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest',
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+        },
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        // Update the table with filtered data
+        document.getElementById('table-container').innerHTML = data.table;
+        // Update totals
+        document.getElementById('totalJamKerja').innerText = data.totalJamKerja;
+        document.getElementById('totalUpahLembur').innerText = data.totalUpahLembur;
+    })
+    .catch(error => console.error('Error:', error));
+});
+
 //PRINT
 
 //EXPORT

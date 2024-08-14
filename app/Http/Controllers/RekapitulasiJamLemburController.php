@@ -11,52 +11,51 @@ use App\Exports\FilteredLemburExport; // Import the new export class
 class RekapitulasiJamLemburController extends Controller
 {
     public function index(Request $request)
-    {
-        $query = Lembur::query();
+{
+    $query = Lembur::query();
+    
+    if ($request->filled('nama_lengkap5')) {
+        $query->where('nama_lengkap', 'like', '%' . $request->nama_lengkap5 . '%');
+    }
 
-        if ($request->filled('nama_lengkap')) {
-            $query->where('nama_lengkap', 'like', '%' . $request->nama_lengkap . '%');
-        }
+    if ($request->filled('start_date5') && $request->filled('end_date5')) {
+        $query->whereBetween('tanggal_lembur', [$request->start_date5, $request->end_date5]);
+    }
 
-        if ($request->filled('start_date') && $request->filled('end_date')) {
-            $query->whereBetween('tanggal_masuk', [$request->start_date, $request->end_date]);
-        }
+    $lemburRecords = $query->get();
 
-        $lemburRecords = $query->get();
+    // Group records by nama_lengkap
+    $groupedRecords = $lemburRecords->groupBy('nama_lengkap')->map(function ($group) {
+        return [
+            'totalJamKerja' => $group->sum('jam_kerja_lembur'),
+            'totalUpahLembur' => $group->sum('upah_lembur'),
+        ];
+    });
 
-        // Group records by nama_lengkap
-        $groupedRecords = $lemburRecords->groupBy('nama_lengkap')->map(function (Collection $group) {
-            return [
-                'totalJamKerja' => $group->sum('jam_kerja_lembur'),
-                'totalUpahLembur' => $group->sum('upah_lembur'),
-            ];
-        });
+    // Calculate overall totals
+    $totalJamKerja = $lemburRecords->sum('jam_kerja_lembur');
+    $totalUpahLembur = $lemburRecords->sum('upah_lembur');
 
-        // Calculate overall totals
-        $totalJamKerja = $lemburRecords->sum('jam_kerja_lembur');
-        $totalUpahLembur = $lemburRecords->sum('upah_lembur');
-
-        // Return JSON response for AJAX request
-        if ($request->ajax()) {
-            return response()->json([
-                'table' => view('app.Rekapitulasi Jam Lembur Table', [
-                    'groupedRecords' => $groupedRecords,
-                    'totalJamKerja' => $totalJamKerja,
-                    'totalUpahLembur' => $totalUpahLembur,
-                ])->render(),
-                'totalJamKerja' => number_format($totalJamKerja, 2),
-                'totalUpahLembur' => number_format($totalUpahLembur, 2),
-                'totalUpahLembur' => number_format($totalUpahLembur, 2),
-            ]);
-        }
-
-        // For normal requests (non-AJAX)
-        return view('app.Rekapitulasi Jam Lembur', [
-            'groupedRecords' => $groupedRecords,
-            'totalJamKerja' => $totalJamKerja,
-            'totalUpahLembur' => $totalUpahLembur,
+    if ($request->ajax()) {
+        return response()->json([
+            'table' => view('app.Rekapitulasi Jam Lembur Table', [
+                'groupedRecords' => $groupedRecords,
+                'totalJamKerja' => $totalJamKerja,
+                'totalUpahLembur' => $totalUpahLembur,
+            ])->render(),
+            'totalJamKerja' => number_format($totalJamKerja, 2),
+            'totalUpahLembur' => number_format($totalUpahLembur, 2),
         ]);
     }
+
+    return view('app.Rekapitulasi Jam Lembur', [
+        'groupedRecords' => $groupedRecords,
+        'totalJamKerja' => $totalJamKerja,
+        'totalUpahLembur' => $totalUpahLembur,
+    ]);
+}
+
+    
 
     public function printFilteredData(Request $request)
 {

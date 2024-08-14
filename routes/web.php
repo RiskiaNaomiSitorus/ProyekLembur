@@ -111,3 +111,5 @@ Route::get('print-filtered-data', [RekapitulasiJamLemburController::class, 'prin
 // Route for exporting the filtered data to Excel
 Route::get('/export-excel2', [RekapitulasiJamLemburController::class, 'exportExcel'])
     ->name('export.filtered.excel');
+
+    Route::post('rekapitulasi-jam-lembur', [RekapitulasiJamLemburController::class, 'index'])->name('rekapitulasi-jam-lembur')->middleware('auth');

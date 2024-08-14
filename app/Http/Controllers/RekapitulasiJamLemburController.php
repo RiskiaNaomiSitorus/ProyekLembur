@@ -92,8 +92,11 @@ class RekapitulasiJamLemburController extends Controller
     ]);
 }
 
-    
-    
+public function exportExcel(Request $request)
+{
+    // Pass the Request object to the FilteredLemburExport class
+    return Excel::download(new FilteredLemburExport($request), 'Summary.xlsx');
+}
 
 }
 

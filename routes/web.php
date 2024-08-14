@@ -107,3 +107,7 @@ Route::get('/printable-view', [PerhitunganLemburController::class, 'printableVie
 
 // Route for printing filtered data
 Route::get('print-filtered-data', [RekapitulasiJamLemburController::class, 'printFilteredData'])->name('print.filtered.data');
+
+// Route for exporting the filtered data to Excel
+Route::get('/export-excel2', [RekapitulasiJamLemburController::class, 'exportExcel'])
+    ->name('export.filtered.excel');

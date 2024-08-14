@@ -217,7 +217,30 @@
     </div>
 </div>
 
+<!-- Modal for Date Range Selection -->
+<div id="dateRangeModal" class="modal">
+    <div class="modal-content">
+        <span class="close" id="closedataRangeModal">&times;</span>
+        <h2>Select Date Range</h2>
+        <form id="dateRangeForm" action="{{ route('export.filtered.excel') }}" method="GET">
+        @csrf
+    <div class="form-group">
+        <label for="nama_lengkap">Nama Lengkap:</label>
+        <input type="text" id="nama_lengkap_excel" name="nama_lengkap_excel" class="form-control">
+    </div>
+    <div class="form-group">
+        <label for="start_date">Start Date:</label>
+        <input type="date" id="start_date_excel" name="start_date_excel" required class="form-control">
+    </div>
+    <div class="form-group">
+        <label for="end_date">End Date:</label>
+        <input type="date" id="end_date_excel" name="end_date_excel" required class="form-control">
+    </div>
+    <button type="submit" class="btn btn-primary">Export</button>
+</form>
 
+    </div>
+</div>
 <script>
   //FILTER
   $(document).ready(function() {
@@ -303,8 +326,36 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 });
-
 //PRINT
+
+//EXPORT
+
+    document.addEventListener('DOMContentLoaded', function () {
+        // Get modal elements
+        var exportButton = document.getElementById('exportButton2');
+        var dateRangeModal = document.getElementById('dateRangeModal');
+        var closeModal = document.getElementById('closedataRangeModal');
+        
+        // Show the modal
+        exportButton.onclick = function() {
+            dateRangeModal.style.display = 'block';
+        }
+        
+        // Close the modal
+        closeModal.onclick = function() {
+            dateRangeModal.style.display = 'none';
+        }
+        
+        // Close the modal if clicking outside of it
+        window.onclick = function(event) {
+            if (event.target == dateRangeModal) {
+                dateRangeModal.style.display = 'none';
+            }
+        }
+    });
+
+
+//EXPORT
     </script>
 </body>
 </html>

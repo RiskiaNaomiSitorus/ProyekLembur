@@ -105,3 +105,5 @@ Route::get('perhitungan-lembur', [PerhitunganLemburController::class, 'index'])-
 
 Route::get('/printable-view', [PerhitunganLemburController::class, 'printableView'])->name('printableView');
 
+// Route for printing filtered data
+Route::get('print-filtered-data', [RekapitulasiJamLemburController::class, 'printFilteredData'])->name('print.filtered.data');

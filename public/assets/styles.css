@@ -111,13 +111,6 @@ body {
     font-size: 20px;
 }
 
-.wrapper .main_content .header .profile-picture img {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    margin-right: 10px;
-}
-
 .wrapper .main_content .header .username {
     font-size: 16px;
     color: #333;
@@ -138,7 +131,7 @@ body {
     border: 1px solid #ddd;
     border-radius: 8px;
     padding: 10px;
-    width: 30%; /* Adjust width */
+    width: 35%; /* Adjust width */
     text-align: center;
 }
 
@@ -147,7 +140,7 @@ body {
 }
 
 .wrapper .main_content .card .data-content p {
-    font-size: 24px;
+    font-size: 40px;
     margin: 0;
 }
 
@@ -161,12 +154,12 @@ body {
 }
 
 .wrapper .main_content .card .label {
-    font-size: 14px;
+    font-size: 17px;
     color: #fffefe;
 }
 
 .wrapper .main_content .card:nth-child(1) {
-    background-color: #00ff33; /* Blue */
+    background-color: #00ffea; /* Blue */
 }
 
 .wrapper .main_content .card:nth-child(2) {

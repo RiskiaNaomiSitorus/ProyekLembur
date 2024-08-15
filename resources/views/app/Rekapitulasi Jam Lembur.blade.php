@@ -53,7 +53,7 @@
             display: flex;
             gap: 15px;
            position: relative;
-           right: -30px;
+           right: -25px;
         }
         .action-buttons .btn {
             margin-right: 10px;

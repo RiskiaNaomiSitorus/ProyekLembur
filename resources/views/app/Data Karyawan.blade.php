@@ -260,6 +260,9 @@
 <button class="btn btn-warning btn-sm" id="columnVisibilityButton">
     <i class="fas fa-eye"></i> Column Visibility
 </button>
+<button class="btn btn-info" id="searchButton">
+        <i class="fas fa-search"></i> Search
+    </button>
           </div>
         </div>
         <div class="container table-container">
@@ -461,6 +464,26 @@
 
     </div>
 </div>
+ <!-- Modal -->
+<div id="searchModal" class="modal">
+  <div class="modal-content">
+    <span class="close" id="closeSearchModal">&times;</span>
+    <h3 style="margin-bottom: 30px">
+      <strong>Search Data Karyawan</strong>
+    </h3>
+    <form id="searchId" method="GET" action="{{ route('data-karyawan') }}">
+      <div class="form-group">
+        <div class="form-outline" data-mdb-input-init>
+          <input type="search" name="query" id="form1" class="form-control" placeholder="Search..." />
+        </div>
+      </div>
+      <button type="submit" class="btn btn-primary">Search</button>
+      <button type="button" id="resetSearch" class="btn btn-secondary">Reset</button>
+    </form>
+  </div>
+</div>
+
+
 
 
    <!-- Modal for Deleting Data -->
@@ -999,6 +1022,29 @@ document.addEventListener('DOMContentLoaded', function() {
             // Set the date in the <h5> element
             document.getElementById('todayDate').innerText = formattedDate;
         });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchButton = document.getElementById('searchButton');
+    const searchModal = document.getElementById('searchModal');
+    const closeSearchModal = document.getElementById('closeSearchModal');
+            // Open the modal when the search button is clicked
+            searchButton.onclick = function() {
+                searchModal.style.display = 'block';
+            };
+            //close
+            closeSearchModal.onclick = function() {
+                searchModal.style.display = 'none';
+            };
+
+            
+        });
+        document.getElementById('resetSearch').onclick = function() {
+    // Clear the search input
+    document.getElementById('form1').value = '';
+
+    // Submit the form with an empty query to reset the search results
+    document.getElementById('searchId').submit();
+  }
 </script>
     <!-- Modal HTML -->
     <div id="detailModal" class="modal">

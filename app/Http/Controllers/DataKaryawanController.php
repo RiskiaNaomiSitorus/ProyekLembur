@@ -11,12 +11,31 @@ use App\Exports\KaryawanExport;
 
 class DataKaryawanController extends Controller
 {
-    public function index()
-    {
-        // Fetch the Karyawan records sorted alphabetically by 'nama_karyawan'
-        $karyawan = Karyawan::orderBy('nama_karyawan', 'asc')->paginate(10);
-        return view('app.Data Karyawan', compact('karyawan'));
+    public function index(Request $request)
+{
+    $query = $request->input('query');
+
+    // Initialize query
+    $karyawanQuery = Karyawan::query();
+
+    // Apply search filters if query is provided
+    if ($query) {
+        $karyawanQuery->where(function($subQuery) use ($query) {
+            $subQuery->where('id_karyawan', 'LIKE', "%{$query}%")
+                     ->orWhere('nama_karyawan', 'LIKE', "%{$query}%")
+                     ->orWhere('jenis_kelamin', 'LIKE', "%{$query}%")
+                     ->orWhere('jabatan', 'LIKE', "%{$query}%")
+                     ->orWhere('status', 'LIKE', "%{$query}%")
+                     ->orWhere('gaji', 'LIKE', "%{$query}%");
+        });
     }
+
+    // Sort alphabetically and paginate results
+    $karyawan = $karyawanQuery->orderBy('nama_karyawan', 'asc')->paginate(10);
+
+    return view('app.Data Karyawan', compact('karyawan'));
+}
+
 
     public function store(Request $request)
     {

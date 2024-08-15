@@ -201,7 +201,7 @@ footer {
         <div class="flex-container">
           <!-- Users Table -->
           <div class="table-container">
-            <h3>Users Table</h3>
+            <h3>Admin Terdaftar</h3>
             <table class="users-table">
               <thead>
                 <tr>

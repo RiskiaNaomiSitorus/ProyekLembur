@@ -267,7 +267,7 @@
     <thead>
         <tr>
             <th class="col-no">No</th>
-            <th class="col-idkaryawan">ID Karyawan</th>
+            <th class="col-idkaryawan">REG Karyawan</th>
             <th class="col-namakaryawan">Nama Karyawan</th>
             <th class="col-jeniskelamin">Jenis Kelamin</th>
             <th class="col-jabatan">Jabatan</th>
@@ -357,7 +357,7 @@
     @method('PUT')
     <input type="hidden" id="editID" name="editID" value="{{ old('editID') }}" />
     <div class="form-group">
-        <label for="editIDKaryawan">ID Karyawan</label>
+        <label for="editIDKaryawan">REG Karyawan</label>
         <input
             type="text"
             class="form-control"
@@ -495,7 +495,7 @@
         <form id="addForm" method="POST" action="{{ route('store-karyawan') }}">
             @csrf
             <div class="form-group">
-                <label for="addID">ID Karyawan</label>
+                <label for="addID">REG Karyawan</label>
                 <input type="text" class="form-control" id="addID" name="id_karyawan" value="{{ old('id_karyawan') }}" required />
                 @error('id_karyawan')
                     <div id="addIDKaryawanError" style="color: red">
@@ -568,7 +568,7 @@
         <thead>
             <tr>
                 <th>No</th>
-                <th>ID Karyawan</th>
+                <th>REG Karyawan</th>
                 <th>Nama Karyawan</th>
                 <th>Jenis Kelamin</th>
                 <th>Jabatan</th>

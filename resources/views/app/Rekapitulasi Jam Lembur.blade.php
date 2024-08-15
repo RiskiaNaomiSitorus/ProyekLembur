@@ -17,10 +17,14 @@
     <style>
         .table-container {
             width: 100%;
-            margin-left: 5px;
+            margin-left: 30px;
+            /* margin-top: 0px */
         }
         .table-container table {
-            width: 100%;
+            width: 80%;
+        }
+        .header-section h1 {
+        margin-bottom: 20px; 
         }
         .form-container {
             margin: 20px 0;
@@ -32,10 +36,14 @@
             font-weight: bold;
         }
         .action-buttons {
-            margin-bottom: 10px;
+            margin-bottom: 35px;
+            display: flex;
+            gap: 15px;
+           position: relative;
+           right: -30px;
         }
         .action-buttons .btn {
-            margin-right: 5px;
+            margin-right: 10px;
         }
         .btn-csv {
             background-color: #28a745;

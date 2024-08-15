@@ -191,7 +191,7 @@
     <thead>
         <tr>
             <th class="col-no">No</th>
-            <th class="col-idkaryawan">ID Karyawan</th>
+            <th class="col-idkaryawan">REG Karyawan</th>
             <th class="col-namalengkap">Nama Lengkap</th>
             <th class="col-tanggallembur">Tanggal Lembur</th>
             <th class="col-jenislembur">Jenis Lembur</th>
@@ -306,7 +306,7 @@
         <form id="addlemburForm" method="POST" action="{{ route('store-lembur') }}">
             @csrf
             <div class="form-group">
-                <label for="addIDKaryawan">ID Karyawan</label>
+                <label for="addIDKaryawan">REG Karyawan</label>
                 <input type="text" class="form-control @error('IDKaryawan') is-invalid @enderror" id="addIDKaryawan" name="IDKaryawan" pattern="\d*" title="Please enter numbers only" value="{{ old('IDKaryawan') }}" required />
                 @error('IDKaryawan')
                     <div class="invalid-feedback">
@@ -486,7 +486,7 @@
     @method('PUT')
     <input type="hidden" id="editID" name="editID">
             <div class="form-group">
-                <label for="editIDKaryawan">ID Karyawan</label>
+                <label for="editIDKaryawan">REG Karyawan</label>
                 <input
                     type="text"
                     class="form-control"
@@ -778,7 +778,7 @@
         <h2>Select Date Range</h2>
         <form id="dateRangeForm" action="{{ route('export.excel') }}" method="GET">
             <div class="form-group">
-                <label for="id_karyawan">ID Karyawan:</label>
+                <label for="id_karyawan">REG Karyawan:</label>
                 <input type="text" id="id_karyawan" name="id_karyawan" class="form-control">
             </div>
             <div class="form-group">
@@ -808,7 +808,7 @@
             <form id="filterForm" method="GET" action="{{ route('perhitungan-lembur') }}">
                 @csrf
                 <div class="form-group">
-                    <label for="id_karyawan">ID Karyawan</label>
+                    <label for="id_karyawan">REG Karyawan</label>
                     <input type="text" class="form-control" id="id_karyawan2" name="id_karyawan2">
                 </div>
                 <div class="form-group">
@@ -842,7 +842,7 @@
                 <label><input type="checkbox" id="colNo" checked> No</label>
             </div>
             <div class="form-group">
-                <label><input type="checkbox" id="colIdKaryawan" checked> ID Karyawan</label>
+                <label><input type="checkbox" id="colIdKaryawan" checked> REG Karyawan</label>
             </div>
             <div class="form-group">
                 <label><input type="checkbox" id="colNamaLengkap" checked> Nama Lengkap</label>
@@ -895,7 +895,7 @@
             <form id="printForm" method="GET" action="{{ route('printableView') }}">
                 @csrf
                 <div class="form-group">
-                    <label for="printid_karyawan2">ID Karyawan</label>
+                    <label for="printid_karyawan2">REG Karyawan</label>
                     <input type="text" class="form-control" id="printid_karyawan2" name="printid_karyawan2">
                 </div>
                 <div class="form-group">
@@ -927,7 +927,7 @@
         <thead>
             <tr>
                 <th >No</th>
-                <th >ID Karyawan</th>
+                <th >REG Karyawan</th>
                 <th >Nama Lengkap</th>
                 <th >Tanggal Lembur</th>
                 <th >Jenis Lembur</th>

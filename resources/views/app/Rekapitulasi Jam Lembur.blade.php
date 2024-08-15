@@ -15,14 +15,27 @@
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
 <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
     <style>
-        .table-container {
-            width: 100%;
-            margin-left: 30px;
-            /* margin-top: 0px */
-        }
-        .table-container table {
-            width: 80%;
-        }
+         .table-container {
+        width: 100%;
+        margin-left: 5px;
+      }
+      .table-container table {
+        width: 100%;
+      }
+      table,
+      th,
+      td {
+        border: 1px solid black;
+      }
+      th,
+      td {
+        padding: 8px;
+        text-align: center;
+      }
+      th {
+        background-color: #f2f2f2;
+      }
+
         .header-section h1 {
         margin-bottom: 20px; 
         }
@@ -120,7 +133,7 @@
                 </div>
             </div>
             <div class="info">
-                <div class="date"><h5>12 Juli 2024</h5></div>
+                <div class="date"> <h5 id="todayDate"></h5></div>
             </div>
             <div class="header-section">
                 <h1>Summary Lembur Karyawan</h1>
@@ -403,6 +416,32 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 //AUTOCOMPLETE
+
+//DATE
+document.addEventListener('DOMContentLoaded', function() {
+            // Function to format date as "Jumat, 09 Agustus 2024"
+            function formatDate(date) {
+                const daysOfWeek = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];
+                const months = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
+                
+                const dayOfWeek = daysOfWeek[date.getDay()];
+                const day = date.getDate().toString().padStart(2, '0'); // Add leading zero if needed
+                const month = months[date.getMonth()];
+                const year = date.getFullYear();
+                
+                return `${dayOfWeek}, ${day} ${month} ${year}`;
+            }
+
+            // Get today's date
+            const today = new Date();
+
+            // Format the date
+            const formattedDate = formatDate(today);
+
+            // Set the date in the <h5> element
+            document.getElementById('todayDate').innerText = formattedDate;
+        });
+//DATE
     </script>
 </body>
 </html>

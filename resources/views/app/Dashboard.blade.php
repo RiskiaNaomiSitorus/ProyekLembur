@@ -144,7 +144,7 @@ footer {
         <ul>
           <li><a href="{{ route('home') }}"><i class="fas fa-home"></i> Dashboard</a></li>
           <li><a href="{{ route('data-karyawan') }}"><i class="fas fa-user"></i> Data Karyawan</a></li>
-          <li><a href="{{ route('rekapitulasi-jam-lembur') }}"><i class="fas fa-project-diagram"></i> Rekapitulasi Jam Lembur</a></li>
+          <li><a href="{{ route('rekapitulasi-jam-lembur') }}"><i class="fas fa-project-diagram"></i> Summary Jam Lembur</a></li>
           <li><a href="{{ route('perhitungan-lembur') }}"><i class="fas fa-address-book"></i> Perhitungan Lembur</a></li>
         </ul>
       </div>

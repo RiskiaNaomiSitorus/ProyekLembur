@@ -12,30 +12,33 @@ use App\Exports\KaryawanExport;
 class DataKaryawanController extends Controller
 {
     public function index(Request $request)
-{
-    $query = $request->input('query');
-
-    // Initialize query
-    $karyawanQuery = Karyawan::query();
-
-    // Apply search filters if query is provided
-    if ($query) {
-        $karyawanQuery->where(function($subQuery) use ($query) {
-            $subQuery->where('id_karyawan', 'LIKE', "%{$query}%")
-                     ->orWhere('nama_karyawan', 'LIKE', "%{$query}%")
-                     ->orWhere('jenis_kelamin', 'LIKE', "%{$query}%")
-                     ->orWhere('jabatan', 'LIKE', "%{$query}%")
-                     ->orWhere('status', 'LIKE', "%{$query}%")
-                     ->orWhere('gaji', 'LIKE', "%{$query}%");
-        });
+    {
+        $query = $request->input('query');
+    
+        // Normalize query by removing formatting
+        $normalizedQuery = preg_replace('/[^0-9]/', '', $query); // Remove non-numeric characters
+    
+        // Initialize query
+        $karyawanQuery = Karyawan::query();
+    
+        // Apply search filters if query is provided
+        if ($query) {
+            $karyawanQuery->where(function($subQuery) use ($normalizedQuery) {
+                $subQuery->where('id_karyawan', 'LIKE', "%{$normalizedQuery}%")
+                         ->orWhere('nama_karyawan', 'LIKE', "%{$normalizedQuery}%")
+                         ->orWhere('jenis_kelamin', 'LIKE', "%{$normalizedQuery}%")
+                         ->orWhere('jabatan', 'LIKE', "%{$normalizedQuery}%")
+                         ->orWhere('status', 'LIKE', "%{$normalizedQuery}%")
+                         ->orWhereRaw('REPLACE(REPLACE(gaji, "Rp. ", ""), ".", "") LIKE ?', ["%{$normalizedQuery}%"]);
+            });
+        }
+    
+        // Sort alphabetically and paginate results
+        $karyawan = $karyawanQuery->orderBy('nama_karyawan', 'asc')->paginate(10);
+    
+        return view('app.Data Karyawan', compact('karyawan'));
     }
-
-    // Sort alphabetically and paginate results
-    $karyawan = $karyawanQuery->orderBy('nama_karyawan', 'asc')->paginate(10);
-
-    return view('app.Data Karyawan', compact('karyawan'));
-}
-
+    
 
     public function store(Request $request)
     {

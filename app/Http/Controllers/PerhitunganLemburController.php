@@ -235,46 +235,64 @@ class PerhitunganLemburController extends Controller
     public function printableView(Request $request)
     {
         // Initialize the query builder
-        $query = Lembur::query();
+        $query = Lembur::query()
+            ->join('karyawan', 'lembur.id_karyawan', '=', 'karyawan.id_karyawan')
+            ->select(
+                'lembur.*', // Select all columns from lembur table
+                'karyawan.jabatan', // Select jabatan from karyawan table
+                'karyawan.gaji' // Select gaji from karyawan table
+            );
     
         // Filtering logic
         if ($request->has('printid_karyawan2') && !empty($request->input('printid_karyawan2'))) {
-            $query->where('id_karyawan', $request->input('printid_karyawan2'));
+            $query->where('lembur.id_karyawan', $request->input('printid_karyawan2'));
         }
-        
+    
         if ($request->has('printnama_lengkap2') && !empty($request->input('printnama_lengkap2'))) {
-            $query->where('nama_lengkap', $request->input('printnama_lengkap2'));
+            $query->where('lembur.nama_lengkap', $request->input('printnama_lengkap2'));
         }
-        
+    
         if ($request->has('printstart_date') && !empty($request->input('printstart_date'))) {
-            $query->whereDate('tanggal_lembur', '>=', $request->input('printstart_date'));
+            $query->whereDate('lembur.tanggal_lembur', '>=', $request->input('printstart_date'));
+            $startDate = $request->input('printstart_date');
+        } else {
+            $startDate = null;
         }
-        
+    
         if ($request->has('printend_date') && !empty($request->input('printend_date'))) {
-            $query->whereDate('tanggal_lembur', '<=', $request->input('printend_date'));
+            $query->whereDate('lembur.tanggal_lembur', '<=', $request->input('printend_date'));
+            $endDate = $request->input('printend_date');
+        } else {
+            $endDate = null;
         }
     
         $lemburRecords = $query->get()->map(function($item) {
-            $formattedDate = $item->tanggal_lembur->locale('id')->translatedFormat('l, d F Y');
+            $formattedDate = $item->tanggal_lembur->locale('id')->translatedFormat('d F Y');
+            $dayOfWeek = $item->tanggal_lembur->locale('id')->translatedFormat('l');
             return [
                 'id_karyawan' => $item->id_karyawan,
                 'nama_lengkap' => $item->nama_lengkap,
+                'jabatan' => $item->jabatan, // Get jabatan from karyawan table
+                'formatted_tanggal_lembur2' => $dayOfWeek,
                 'formatted_tanggal_lembur' => $formattedDate,
                 'jenis_lembur' => $item->jenis_lembur,
                 'jam_masuk' => $item->jam_masuk->format('H:i'),
                 'jam_keluar' => $item->jam_keluar->format('H:i'),
-                'gaji' => $item->gaji,
+                'gaji' => $item->gaji, // Get gaji from karyawan table
                 'jam_kerja_lembur' => $item->jam_kerja_lembur,
                 'jam_i' => $item->jam_i,
                 'jam_ii' => $item->jam_ii,
                 'jam_iii' => $item->jam_iii,
                 'jam_iv' => $item->jam_iv,
+                'total_jam_lembur' => $item->total_jam_lembur,
                 'upah_lembur' => $item->upah_lembur,
                 'keterangan' => $item->keterangan
             ];
         });
     
-        return view('printable_view', compact('lemburRecords'));
+        return view('printable_view', compact('lemburRecords', 'startDate', 'endDate'));
     }
+    
+    
 }
 

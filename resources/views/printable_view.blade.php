@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Printable View</title>
+    <title></title>
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <link rel="stylesheet" href="{{ asset ('assets/styles.css')}}" />
     <script src="https://kit.fontawesome.com/b99e675b6e.js"></script>
@@ -123,44 +123,92 @@
       }
   </style>
 <body>
+
     <div id="printableView">
-        <h2>Lembur Records</h2>
+    @if(!empty($lemburRecords))
+    @php
+        // Assuming you want the first record's data
+        $firstLembur = $lemburRecords[0];
+        $nama = $firstLembur['nama_lengkap'] ?? 'N/A';
+        $jabatan = $firstLembur['jabatan'] ?? 'N/A'; // Get jabatan
+        $gaji = number_format($firstLembur['gaji'], 0, ',', '.');
+        $upahLemburPerJam = round($firstLembur['gaji'] / 173);
+    @endphp
+    <label>Nama</label>
+    <span class="value">: {{ $nama }}</span><br>
+    
+    <label>Jabatan</label>
+    <span class="value">: {{ $jabatan }}</span><br>
+    
+    @if($startDate && $endDate)
+    @php
+        $formattedStartDate = \Carbon\Carbon::parse($startDate)->locale('id')->translatedFormat('d F Y');
+        $formattedEndDate = \Carbon\Carbon::parse($endDate)->locale('id')->translatedFormat('d F Y');
+    @endphp
+    <label>Periode</label>
+    <span class="value">: {{ $formattedStartDate }} - {{ $formattedEndDate }}</span><br>
+    @else
+    <label>Periode</label>
+    <span class="value">: Tidak ada periode yang ditentukan</span><br>
+    @endif
+    
+    <label>Gaji Pokok</label>
+    <span class="value">: {{ $gaji }}</span><br>
+    
+    <label>Upah lembur per jam</label>
+    <span class="value">: {{ $gaji }} / 173 = {{ number_format($upahLemburPerJam, 0, ',', '.') }}</span>
+@else
+    <p>No records found for the given criteria.</p>
+@endif
+
         <table class="table table-striped table-bordered">
-            <thead>
-                <tr>
-                    <th>No</th>
-                    <th>ID Karyawan</th>
-                    <th>Nama Lengkap</th>
-                    <th>Tanggal Lembur</th>
-                    <th>Jenis Lembur</th>
-                    <th>Jam Masuk</th>
-                    <th>Jam Keluar</th>
-                    <th>Gaji</th>
-                    <th>Jam Kerja Lembur</th>
-                    <th>Jam I</th>
-                    <th>Jam II</th>
-                    <th>Jam III</th>
-                    <th>Jam IV</th>
-                    <th>Upah Lembur</th>
-                    <th>Keterangan</th>
-                </tr>
-            </thead>
+        <thead>
+        <tr>
+            <th rowspan="2">No</th>
+            <th rowspan="2">Hari</th>
+            <th rowspan="2">Tanggal</th>
+            <th colspan="3">Waktu Kerja</th>
+            <th colspan="9">Perhitungan Lembur</th>
+            <th rowspan="2">Upah Lembur <br> Rp.</th>
+            <th rowspan="2">Keterangan</th>
+        </tr>
+        <tr>
+            <th>In</th>
+            <th>Out</th>
+            <th>Total</th>
+            <th>Jam I</th>
+            <th>x 1.5</th>
+            <th>Jam II</th>
+            <th>x 2</th>
+            <th>Jam IX</th>
+            <th>x 3</th>
+            <th>Jam X</th>
+            <th>x 4</th>
+            <th>Total Jam Lembur</th>
+        </tr>
+    </thead>
             <tbody>
                 @foreach ($lemburRecords as $lembur)
                 <tr>
                     <td>{{ $loop->iteration }}</td>
-                    <td>{{ $lembur['id_karyawan'] }}</td>
-                    <td>{{ $lembur['nama_lengkap'] }}</td>
+                    <!-- <td>{{ $lembur['id_karyawan'] }}</td>
+                    <td>{{ $lembur['nama_lengkap'] }}</td> -->
+                    <td>{{ $lembur['formatted_tanggal_lembur2'] }}</td>
                     <td>{{ $lembur['formatted_tanggal_lembur'] }}</td>
-                    <td>{{ $lembur['jenis_lembur'] }}</td>
+                    <!-- <td>{{ $lembur['jenis_lembur'] }}</td> -->
                     <td>{{ $lembur['jam_masuk'] }}</td>
                     <td>{{ $lembur['jam_keluar'] }}</td>
-                    <td>{{ 'Rp. ' . number_format($lembur['gaji'], 0, ',', '.') }}</td>
+                    <!-- <td>{{ 'Rp. ' . number_format($lembur['gaji'], 0, ',', '.') }}</td> -->
                     <td>{{ number_format($lembur['jam_kerja_lembur'], 1, ',', '.') }}</td>
                     <td>{{ number_format($lembur['jam_i'], 1, ',', '.') }}</td>
+                    <td>{{ number_format($lembur['jam_i'] * 1.5, 1, ',', '.') }}</td>
                     <td>{{ number_format($lembur['jam_ii'], 1, ',', '.') }}</td>
+                    <td>{{ number_format($lembur['jam_ii'] * 2, 1, ',', '.') }}</td>
                     <td>{{ number_format($lembur['jam_iii'], 1, ',', '.') }}</td>
+                    <td>{{ number_format($lembur['jam_iii'] * 3, 1, ',', '.') }}</td>
                     <td>{{ number_format($lembur['jam_iv'], 1, ',', '.') }}</td>
+                    <td>{{ number_format($lembur['jam_iv'] * 4, 1, ',', '.') }}</td>
+                    <td>{{ number_format($lembur['total_jam_lembur'], 1, ',', '.') }}</td>
                     <td>{{ 'Rp. ' . number_format($lembur['upah_lembur'], 0, ',', '.') }}</td>
                     <td>{{ $lembur['keterangan'] }}</td>
                 </tr>
@@ -236,6 +284,7 @@ document.addEventListener('DOMContentLoaded', function() {
         modal.style.display = 'none';
     });
 });
+
 
     </script>
 </body>

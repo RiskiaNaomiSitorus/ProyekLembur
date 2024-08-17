@@ -224,12 +224,17 @@ class PerhitunganLemburController extends Controller
 
     public function exportExcel(Request $request)
     {
+        // Get the filter values from the request
         $startDate = $request->input('start_date');
         $endDate = $request->input('end_date');
         $namaLengkap = $request->input('nama_lengkap');
         $idKaryawan = $request->input('id_karyawan');
 
-        return Excel::download(new LemburExport($startDate, $endDate, $namaLengkap, $idKaryawan), 'lembur_records.xlsx');
+        // Create an instance of the LemburExport class with the filter values
+        $lemburExport = new LemburExport($startDate, $endDate, $namaLengkap, $idKaryawan);
+
+        // Export the data as an Excel file
+        return Excel::download($lemburExport, 'lembur.xlsx');
     }
 
     public function printableView(Request $request)

@@ -24,7 +24,7 @@
                 <th colspan="3">{{ $jabatan }}</th>
             </tr>
             @php
-        $formattedStartDate = \Carbon\Carbon::parse($startDate)->locale('id')->translatedFormat('d F ');
+        $formattedStartDate = \Carbon\Carbon::parse($startDate)->locale('id')->translatedFormat('d F Y');
         $formattedEndDate = \Carbon\Carbon::parse($endDate)->locale('id')->translatedFormat('d F Y');
     @endphp
             <tr>

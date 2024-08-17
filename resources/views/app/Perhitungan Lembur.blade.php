@@ -60,7 +60,7 @@
       .action-buttons {
         display: flex;
         gap: 10px;
-        margin-bottom: 40px;
+        margin-bottom: 15px;
         margin-left: 20px;
       }
       .header-title {
@@ -184,8 +184,27 @@
 <button class="btn btn-info" id="filterButton">
 <i class="fa fa-filter" aria-hidden="true"></i> Filter Records
 </button>
-          </div>
+          </div>          
         </div>
+        
+       <!-- Display Information -->
+<div style="margin-left:20px">
+    <label>Nama</label>
+    <span class="value">: <span id="namaLengkap6">{{ $namaLengkap ?? 'N/A'}}</span></span><br>
+
+    <label>Jabatan</label>
+    <span class="value">: <span id="jabatan6">{{ $jabatan }}</span></span><br>
+
+    <label>Periode</label>
+    <span class="value">: <span id="periode6">{{ $periode }}</span></span><br>
+
+    <label>Gaji Pokok</label>
+    <span class="value">: <span id="gajiPokok6">{{ number_format($gajiPokok, 0, ',', '.') }}</span></span><br>
+
+    <label>Upah lembur per jam</label>
+    <span class="value">: <span id="upahLemburPerJam6">{{ number_format($upahLemburPerJam, 0, ',', '.') }}</span></span>
+</div>
+
         <div class="container table-container">
         <table class="table table-striped table-bordered">
     <thead>
@@ -777,10 +796,10 @@
         <span class="close" id="closedataRangeModal">&times;</span>
         <h2>Select Date Range</h2>
         <form id="dateRangeForm" action="{{ route('export.excel') }}" method="GET">
-            <div class="form-group">
+            <!-- <div class="form-group">
                 <label for="id_karyawan">REG Karyawan:</label>
                 <input type="text" id="id_karyawan" name="id_karyawan" class="form-control">
-            </div>
+            </div> -->
             <div class="form-group">
                 <label for="nama_lengkap">Nama Lengkap:</label>
                 <input type="text" id="nama_lengkap" name="nama_lengkap" class="form-control">
@@ -807,10 +826,10 @@
         <div class="modal-body">
             <form id="filterForm" method="GET" action="{{ route('perhitungan-lembur') }}">
                 @csrf
-                <div class="form-group">
+                <!-- <div class="form-group">
                     <label for="id_karyawan">REG Karyawan</label>
                     <input type="text" class="form-control" id="id_karyawan2" name="id_karyawan2">
-                </div>
+                </div> -->
                 <div class="form-group">
                     <label for="nama_lengkap">Nama Lengkap</label>
                     <input type="text" class="form-control" id="nama_lengkap2" name="nama_lengkap2">

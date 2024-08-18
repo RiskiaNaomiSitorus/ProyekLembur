@@ -66,11 +66,15 @@ class LemburExport implements FromView, WithStyles
                 'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
             ],
         ],
-        
     ]);
+
+    // Format column P to follow the Indonesian number format (e.g., 1.234,56)
+    $sheet->getStyle('P7:P' . $sheet->getHighestRow())->getNumberFormat()
+          ->setFormatCode('#,##0');
 
     return $sheet;
 }
+
 
 
 }

@@ -107,7 +107,7 @@
         <td>{{ number_format($lembur['jam_iv'] ?? 0, 1, ',', '.') }}</td>
         <td>{{ number_format($lembur['jam_iv'] * 4, 1, ',', '.') }}</td>
         <td>{{ number_format($lembur['total_jam_lembur'], 1, ',', '.') }}</td>
-        <td>{{ number_format($lembur['upah_lembur'], 0, ',', '.') }}</td>
+        <td>{{$lembur['upah_lembur'] }}</td>
         <td>{{ $lembur['keterangan'] }}</td>
         
         @php
@@ -139,8 +139,8 @@
         <td>{{ number_format($totalJamIII3, 1, ',', '.') }}</td>
         <td>{{ number_format($totalJamIV, 1, ',', '.') }}</td>
         <td>{{ number_format($totalJamIV4, 1, ',', '.') }}</td>
-        <td>{{ number_format($totalTotalJamLembur, 1, ',', '.') }}</td>
-        <td>{{ number_format($totalUpahLembur, 0, ',', '.') }}</td>
+        <td>{{ $totalTotalJamLembur}}</td>
+        <td>{{ $totalUpahLembur}}</td>
         <td></td>
     </tr>
 </tfoot>

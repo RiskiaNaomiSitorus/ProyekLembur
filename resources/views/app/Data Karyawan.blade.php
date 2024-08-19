@@ -272,7 +272,6 @@
             <th class="col-no">No</th>
             <th class="col-idkaryawan">REG Karyawan</th>
             <th class="col-namakaryawan">Nama Karyawan</th>
-            <th class="col-jeniskelamin">Jenis Kelamin</th>
             <th class="col-jabatan">Jabatan</th>
             <th class="col-status">Status</th>
             <th class="col-gaji">Gaji</th>
@@ -285,7 +284,6 @@
             <td class="col-no">{{ $loop->iteration }}</td>
             <td class="col-idkaryawan">{{ $item->id_karyawan }}</td>
             <td class="col-namakaryawan">{{ $item->nama_karyawan }}</td>
-            <td class="col-jeniskelamin">{{ $item->jenis_kelamin }}</td>
             <td class="col-jabatan">{{ $item->jabatan }}</td>
             <td class="col-status">{{ $item->status }}</td>
             <td class="col-gaji">{{ 'Rp. ' . number_format($item->gaji, 0, ',', '.') }}</td>
@@ -391,13 +389,13 @@
             </div>
         @enderror
     </div>
-    <div class="form-group">
+    <div class="form-group" style="display: none;">
         <label for="editGender">Jenis Kelamin</label>
         <select
             class="form-control"
             id="editGender"
             name="editGender"
-            required
+
         >
             <option value="" selected disabled></option>
             <option value="Laki-laki" {{ old('editGender') == 'Laki-laki' ? 'selected' : '' }}>Laki-laki</option>
@@ -536,19 +534,6 @@
                 @enderror
             </div>
             <div class="form-group">
-                <label for="addGender">Jenis Kelamin</label>
-                <select class="form-control" id="addGender" name="jenis_kelamin" required>
-                    <option value="" selected disabled></option>
-                    <option value="Laki-laki" {{ old('jenis_kelamin') == 'Laki-laki' ? 'selected' : '' }}>Laki-laki</option>
-                    <option value="Perempuan" {{ old('jenis_kelamin') == 'Perempuan' ? 'selected' : '' }}>Perempuan</option>
-                </select>
-                @error('jenis_kelamin')
-                    <div style="color: red">
-                        {{ $message }}
-                    </div>
-                @enderror
-            </div>
-            <div class="form-group">
                 <label for="addPosition">Jabatan</label>
                 <input type="text" class="form-control" id="addPosition" name="jabatan" value="{{ old('jabatan') }}" required />
                 @error('jabatan')
@@ -593,7 +578,6 @@
                 <th>No</th>
                 <th>REG Karyawan</th>
                 <th>Nama Karyawan</th>
-                <th>Jenis Kelamin</th>
                 <th>Jabatan</th>
                 <th>Status</th>
                 <th>Gaji</th>
@@ -605,7 +589,6 @@
                 <td>{{ $loop->iteration }}</td>
                 <td>{{ $item->id_karyawan }}</td>
                 <td>{{ $item->nama_karyawan }}</td>
-                <td>{{ $item->jenis_kelamin }}</td>
                 <td>{{ $item->jabatan }}</td>
                 <td>{{ $item->status }}</td>
                 <td>{{ 'Rp. ' . number_format($item->gaji, 0, ',', '.') }}</td>
@@ -638,10 +621,6 @@
                     <div class="form-check">
                         <input class="form-check-input" type="checkbox" id="colNamaKaryawan" checked>
                         <label class="form-check-label" for="colNamaKaryawan">Nama Karyawan</label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="colJenisKelamin" checked>
-                        <label class="form-check-label" for="colJenisKelamin">Jenis Kelamin</label>
                     </div>
                     <div class="form-check">
                         <input class="form-check-input" type="checkbox" id="colJabatan" checked>
@@ -933,7 +912,7 @@ document.getElementById('printButton').addEventListener('click', function() {
                 <th>No</th>
                 <th>ID Karyawan</th>
                 <th>Nama Karyawan</th>
-                <th>Jenis Kelamin</th>
+
                 <th>Jabatan</th>
                 <th>Status</th>
                 <th>Gaji</th>
@@ -945,7 +924,7 @@ document.getElementById('printButton').addEventListener('click', function() {
                 <td>{{ $loop->iteration }}</td>
                 <td>{{ $item->id_karyawan }}</td>
                 <td>{{ $item->nama_karyawan }}</td>
-                <td>{{ $item->jenis_kelamin }}</td>
+
                 <td>{{ $item->jabatan }}</td>
                 <td>{{ $item->status }}</td>
                 <td>{{ 'Rp. ' . number_format($item->gaji, 0, ',', '.') }}</td>

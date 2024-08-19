@@ -27,7 +27,7 @@ class KaryawanExport implements FromCollection, WithHeadings, WithMapping, WithS
             'No',
             'ID Karyawan',
             'Nama Karyawan',
-            'Jenis Kelamin',
+
             'Jabatan',
             'Status',
             'Gaji (Rp.)',
@@ -40,7 +40,7 @@ class KaryawanExport implements FromCollection, WithHeadings, WithMapping, WithS
             $this->counter++, // Increment and use counter for row numbers ,
             $karyawan->id_karyawan,
             $karyawan->nama_karyawan,
-            $karyawan->jenis_kelamin,
+
             $karyawan->jabatan,
             $karyawan->status,
             $karyawan->gaji,

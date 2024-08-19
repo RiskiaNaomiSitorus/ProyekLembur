@@ -46,7 +46,6 @@ class DataKaryawanController extends Controller
         $validator = Validator::make($request->all(), [
             'id_karyawan' => 'required|numeric|unique:karyawan,id_karyawan',
             'nama_karyawan' => 'required|string|max:255',
-            'jenis_kelamin' => 'required|in:Laki-laki,Perempuan',
             'jabatan' => 'required|string|max:255',
             'status' => 'required|in:Aktif,Tidak Aktif',
             'gaji' => 'required|numeric|min:0',
@@ -54,7 +53,6 @@ class DataKaryawanController extends Controller
             'id_karyawan.required' => 'ID Karyawan harus diisi.',
             'id_karyawan.unique' => 'ID Karyawan sudah terdaftar.',
             'nama_karyawan.required' => 'Nama Karyawan harus diisi.',
-            'jenis_kelamin.required' => 'Jenis Kelamin harus dipilih.',
             'jabatan.required' => 'Jabatan harus diisi.',
             'status.required' => 'Status harus dipilih.',
             'gaji.required' => 'Gaji harus diisi.',
@@ -108,7 +106,6 @@ class DataKaryawanController extends Controller
         // Ensure that `nama_karyawan` is unique, except for the current record
         'editName' => 'required|string|max:255|unique:karyawan,nama_karyawan,' . $id,
         
-        'editGender' => 'required|in:Laki-laki,Perempuan',
         'editPosition' => 'required|string|max:255',
         'editStatus' => 'required|in:Aktif,Tidak Aktif',
         'editSalary' => 'required|numeric|min:0',
@@ -117,7 +114,6 @@ class DataKaryawanController extends Controller
         'editIDKaryawan.unique' => 'ID Karyawan sudah terdaftar.',
         'editName.required' => 'Nama Karyawan harus diisi.',
         'editName.unique' => 'Nama Karyawan sudah terdaftar.',
-        'editGender.required' => 'Jenis Kelamin harus dipilih.',
         'editPosition.required' => 'Jabatan harus diisi.',
         'editStatus.required' => 'Status harus dipilih.',
         'editSalary.required' => 'Gaji harus diisi.',
@@ -135,7 +131,6 @@ class DataKaryawanController extends Controller
     $karyawan = Karyawan::findOrFail($id);
     $karyawan->id_karyawan = $request->input('editIDKaryawan');
     $karyawan->nama_karyawan = $request->input('editName');
-    $karyawan->jenis_kelamin = $request->input('editGender');
     $karyawan->jabatan = $request->input('editPosition');
     $karyawan->status = $request->input('editStatus');
     $karyawan->gaji = $request->input('editSalary');

@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Printable View</title>
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/styles.css') }}" />
     <script src="https://kit.fontawesome.com/b99e675b6e.js"></script>
@@ -141,10 +140,10 @@
                 }
             @endphp
             <label>Nama</label>
-            <span class="value">: {{ $lemburRecords[0]['nama_lengkap'] ?? 'N/A' }}</span><br>
+            <span class="value">: {{ $lemburRecords[0]['nama_lengkap'] ?? 'Tidak ada di Data Lembur' }}</span><br>
 
             <label>Jabatan</label>
-            <span class="value">: {{ $lemburRecords[0]['jabatan'] ?? 'N/A' }}</span><br>
+            <span class="value">: {{ $lemburRecords[0]['jabatan'] ?? 'Tidak ada di Data Lembur' }}</span><br>
 
             @if($startDate && $endDate)
                 @php
@@ -159,10 +158,16 @@
             @endif
 
             <label>Gaji Pokok</label>
-            <span class="value">: {{ number_format($lemburRecords[0]['gaji'], 0, ',', '.') }}</span><br>
+<span class="value">
+    : {{ isset($firstRecord['gaji']) ? number_format($firstRecord['gaji'], 0, ',', '.') : 'Tidak ada di Data Lembur' }}
+</span><br>
+
 
             <label>Upah lembur per jam</label>
-            <span class="value">: {{ number_format($lemburRecords[0]['gaji'] / 173, 0, ',', '.') }}</span>
+<span class="value">
+    : {{ isset($firstRecord['gaji']) ? number_format($firstRecord['gaji'] / 173, 0, ',', '.') : 'Tidak ada di Data Lembur' }}
+</span>
+
         @else
             <p>No records found for the given criteria.</p>
         @endif

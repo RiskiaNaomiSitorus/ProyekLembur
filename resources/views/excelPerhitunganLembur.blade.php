@@ -16,12 +16,12 @@
             <tr>
                 <th colspan="3">Nama</th>
                 <th>:</th>
-                <th colspan="3">{{ $nama }}</th>
+                <th colspan="3">{{ $nama ?? 'Tidak ada di Data Lembur'}}</th>
             </tr>
             <tr>
                 <th colspan="3">Jabatan</th>
                 <th>:</th>
-                <th colspan="3">{{ $jabatan }}</th>
+                <th colspan="3">{{ $jabatan ?? 'Tidak ada di Data Lembur' }}</th>
             </tr>
             @php
         $formattedStartDate = \Carbon\Carbon::parse($startDate)->locale('id')->translatedFormat('d F Y');
@@ -33,15 +33,20 @@
                 <th colspan="3">{{ $formattedStartDate }} - {{ $formattedEndDate }}</th>
             </tr>
             <tr>
-                <th colspan="3">Gaji Pokok</th>
-                <th>:</th>
-                <th colspan="3">{{ number_format($gaji, 0, ',', '.') }}</th>
-            </tr>
-            <tr>
-                <th colspan="3">Upah lembur per  jam</th>
-                <th>:</th>
-                <th colspan="3">{{ number_format($gaji, 0, ',', '.') }} / 173 = {{ number_format($firstLembur->upahLemburPerJam, 0, ',', '.') }}</th>
-            </tr>
+    <th colspan="3">Gaji Pokok</th>
+    <th>:</th>
+    <th colspan="3">{{ isset($gaji) ? number_format($gaji, 0, ',', '.') : 'Tidak ada di Data Lembur' }}</th>
+</tr>
+<tr>
+    <th colspan="3">Upah lembur per jam</th>
+    <th>:</th>
+    <th colspan="3">
+        {{ isset($gaji) ? number_format($gaji, 0, ',', '.') : 'Tidak ada di Data Lembur' }} 
+        / 173 = 
+        {{ isset($gaji) ? number_format($gaji / 173, 0, ',', '.') : 'Tidak ada di Data Lembur' }}
+    </th>
+</tr>
+
         </thead>
     </table>
     @else

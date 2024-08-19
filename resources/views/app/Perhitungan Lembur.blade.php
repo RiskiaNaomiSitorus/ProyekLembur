@@ -802,7 +802,7 @@
             </div> -->
             <div class="form-group">
                 <label for="nama_lengkap">Nama Lengkap:</label>
-                <input type="text" id="nama_lengkap" name="nama_lengkap" class="form-control">
+                <input type="text" id="nama_lengkap" name="nama_lengkap" class="form-control" required>
             </div>
             <div class="form-group">
                 <label for="start_date">Start Date:</label>
@@ -832,7 +832,7 @@
                 </div> -->
                 <div class="form-group">
                     <label for="nama_lengkap">Nama Lengkap</label>
-                    <input type="text" class="form-control" id="nama_lengkap2" name="nama_lengkap2">
+                    <input type="text" class="form-control" id="nama_lengkap2" name="nama_lengkap2" required>
                 </div>
                 <div class="form-group">
                     <label for="start_date">Start Date</label>
@@ -913,13 +913,13 @@
         <div class="modal-body">
             <form id="printForm" method="GET" action="{{ route('printableView') }}">
                 @csrf
-                <div class="form-group">
+                <!-- <div class="form-group">
                     <label for="printid_karyawan2">REG Karyawan</label>
                     <input type="text" class="form-control" id="printid_karyawan2" name="printid_karyawan2">
-                </div>
+                </div> -->
                 <div class="form-group">
                     <label for="printnama_lengkap2">Nama Lengkap</label>
-                    <input type="text" class="form-control" id="printnama_lengkap2" name="printnama_lengkap2">
+                    <input type="text" class="form-control" id="printnama_lengkap2" name="printnama_lengkap2" required>
                 </div>
                 <div class="form-group">
                     <label for="printstart_date">Start Date</label>

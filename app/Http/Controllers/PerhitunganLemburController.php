@@ -29,7 +29,7 @@ class PerhitunganLemburController extends Controller
             $query->where('id_karyawan', $request->input('id_karyawan2'));
         }
     
-        $lemburRecords = $query->orderBy('tanggal_lembur', 'asc')->paginate(10);
+        $lemburRecords = $query->orderBy('tanggal_lembur', 'asc')->paginate(30);
     
         // Fetch gaji and jabatan from the karyawan table based on the selected nama_lengkap2
         $karyawan = Karyawan::where('nama_karyawan', $request->input('nama_lengkap2'))->first();
@@ -268,7 +268,7 @@ class PerhitunganLemburController extends Controller
     {
         // Initialize the query builder
         $query = Lembur::query()
-            ->join('karyawan', 'lembur.id_karyawan', '=', 'karyawan.id_karyawan')
+            ->join('karyawan', 'lembur.nama_lengkap', '=', 'karyawan.nama_karyawan')
             ->select(
                 'lembur.*', // Select all columns from lembur table
                 'karyawan.jabatan', // Select jabatan from karyawan table

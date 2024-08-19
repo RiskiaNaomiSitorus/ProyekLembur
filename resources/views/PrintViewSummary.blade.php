@@ -78,8 +78,8 @@ h4, h5 {
             <th colspan="2">Jumlah</th>
         </tr>
         <tr>
-            <th>Jam Kerja Lembur</th>
-            <th>Upah Lembur</th>
+            <th>Jam</th>
+            <th>Rp.</th>
         </tr>
     </thead>
             <tbody>

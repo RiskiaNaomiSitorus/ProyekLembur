@@ -1143,10 +1143,17 @@ function calculateAddTimeDifference(start, end) {
   return (endTime - startTime) / 1000 / 60 / 60;
 }
 
-// Round hours to the nearest 0.5
 function roundAddToHalfHour(value) {
-  return Math.round(value * 2) / 2;
+    // Multiply by 2 to get to the nearest 0.5, then floor it to always round down
+    return Math.floor(value * 2) / 2;
 }
+
+// Examples:
+// roundAddToHalfHour(0.75) -> 0.5
+// roundAddToHalfHour(0.4)  -> 0.0
+// roundAddToHalfHour(1.3)  -> 1.0
+// roundAddToHalfHour(2.7)  -> 2.5
+
 
 // Update addjamKerjaLembur based on addjamKeluar
 function updateAddJamKerjaLembur() {
@@ -1170,9 +1177,14 @@ function updateAddJamKerjaLembur() {
       jamKerjaLembur.value = "";
     }
   } else {
+    var startNormal = "07:30";
+    var totalOvertime = 0;
     var dayOfWeek = new Date(tanggalLembur).getDay();
     var endOfDay = dayOfWeek === 5 ? "15:30" : "16:30";
-    var difference = calculateAddTimeDifference(endOfDay, jamKeluar);
+   // Calculate the time difference and ensure negative values are set to 0
+var difference3 = Math.max(0, calculateAddTimeDifference(endOfDay, jamKeluar));
+var difference2 = Math.max(0, calculateAddTimeDifference(jamMasuk, startNormal));
+    var difference = difference3 + difference2;
     jamKerjaLembur.value = roundAddToHalfHour(difference).toFixed(1);
   }
 

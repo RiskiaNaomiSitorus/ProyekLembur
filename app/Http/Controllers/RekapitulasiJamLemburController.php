@@ -85,11 +85,12 @@ class RekapitulasiJamLemburController extends Controller
     $totalJamKerja = $lemburRecords->sum('jam_kerja_lembur');
     $totalUpahLembur = $lemburRecords->sum('upah_lembur');
 
-    // Pass grouped data to the view
     return view('PrintViewSummary', [
         'groupedRecords' => $groupedRecords,
         'totalJamKerja' => $totalJamKerja,
         'totalUpahLembur' => $totalUpahLembur,
+        'printstart_date' => $request->printstart_date,
+        'printend_date' => $request->printend_date,
     ]);
 }
 

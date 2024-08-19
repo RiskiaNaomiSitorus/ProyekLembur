@@ -231,13 +231,15 @@ class PerhitunganLemburController extends Controller
 
     public function destroy($id)
     {
+        // dd($id); // Use this to debug and check if the correct ID is being passed.
+    
         // Find and delete the Lembur record
         $lembur = Lembur::where('id', $id)->first();
-
+    
         if ($lembur) {
             // Delete the Lembur record
             $lembur->delete();
-
+    
             // Redirect back with success message
             return redirect()->route('perhitungan-lembur')->with('success', 'Data Lembur berhasil dihapus.');
         } else {
@@ -245,6 +247,7 @@ class PerhitunganLemburController extends Controller
             return redirect()->route('perhitungan-lembur')->with('error', 'Gagal menghapus data lembur.');
         }
     }
+    
 
     public function exportExcel(Request $request)
     {

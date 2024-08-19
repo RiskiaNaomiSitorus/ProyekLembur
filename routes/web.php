@@ -79,8 +79,8 @@ Route::get('/lembur', [PerhitunganLemburController::class, 'index'])->name('lemb
 // Add this to your web.php
 Route::post('/store-lembur', [PerhitunganLemburController::class, 'store'])->name('store-lembur');
 
-// Route to delete an employee record by ID
-Route::delete('delete-lembur/{id}', [PerhitunganLemburController::class, 'destroy'])->name('delete-lembur');
+Route::delete('/lembur/{id}', [PerhitunganLemburController::class, 'destroy'])->name('lembur.destroy');
+
 
 // In routes/web.php or routes/api.php
 Route::get('autocomplete/id-karyawan', [DataKaryawanController::class, 'autocomplete'])->name('autocomplete.id_karyawan');

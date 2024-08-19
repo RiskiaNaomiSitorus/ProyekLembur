@@ -1976,6 +1976,25 @@ document.addEventListener('DOMContentLoaded', function() {
             // Set the date in the <h5> element
             document.getElementById('todayDate').innerText = formattedDate;
         });
+
+        document.querySelectorAll('.delete-buttonLembur').forEach(button => {
+    button.addEventListener('click', function () {
+        const lemburId = this.getAttribute('data-id');
+        document.getElementById('deleteLemburID').value = lemburId;
+        document.getElementById('deleteLemburForm').action = '/lembur/' + lemburId; // Set the action URL dynamically
+        document.getElementById('deleteLemburModal').style.display = 'block';
+    });
+});
+
+// Close the modal
+document.getElementById('closeDeleteLemburModal').addEventListener('click', function() {
+    document.getElementById('deleteLemburModal').style.display = 'none';
+});
+
+document.getElementById('cancelLemburDelete').addEventListener('click', function() {
+    document.getElementById('deleteLemburModal').style.display = 'none';
+});
+
     </script>
   </body>
 </html>

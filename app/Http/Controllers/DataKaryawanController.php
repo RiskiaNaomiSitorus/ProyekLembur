@@ -78,8 +78,10 @@ class DataKaryawanController extends Controller
 
     public function destroy($id)
     {
+           // Use dd to check if the ID is passed correctly
+    // dd($id);
         // Find and delete the Karyawan record
-        $karyawan = Karyawan::where('id', $id)->first();
+        $karyawan = Karyawan::where('id_karyawan', $id)->first();
 
         if ($karyawan) {
             // Delete the Karyawan record

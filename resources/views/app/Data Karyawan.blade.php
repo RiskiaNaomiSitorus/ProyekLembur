@@ -545,7 +545,6 @@
             <div class="form-group">
                 <label for="addStatus">Status</label>
                 <select class="form-control" id="addStatus" name="status" required>
-                    <option value="" selected disabled></option>
                     <option value="Aktif" {{ old('status') == 'Aktif' ? 'selected' : '' }}>Aktif</option>
                     <option value="Tidak Aktif" {{ old('status') == 'Tidak Aktif' ? 'selected' : '' }}>Tidak Aktif</option>
                 </select>

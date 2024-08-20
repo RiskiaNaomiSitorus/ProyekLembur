@@ -12,56 +12,59 @@ use Illuminate\Support\Facades\DB;
 class PerhitunganLemburController extends Controller
 {
     public function index(Request $request)
-    {
-        Carbon::setLocale('id'); // Set the locale to Indonesian
-    
-        $query = Lembur::query();
-    
-        if ($request->filled('start_date') && $request->filled('end_date')) {
-            $query->whereBetween('tanggal_lembur', [$request->input('start_date'), $request->input('end_date')]);
-        }
-    
-        if ($request->filled('nama_lengkap2')) {
-            $query->where('nama_lengkap', 'like', '%' . $request->input('nama_lengkap2') . '%');
-        }
-    
-        if ($request->filled('id_karyawan2')) {
-            $query->where('id_karyawan', $request->input('id_karyawan2'));
-        }
-    
-        $lemburRecords = $query->orderBy('tanggal_lembur', 'asc')->paginate(15);
-    
-        // Fetch gaji and jabatan from the karyawan table based on the selected nama_lengkap2
-        $karyawan = Karyawan::where('nama_karyawan', $request->input('nama_lengkap2'))->first();
-    
-        $gajiPokok = $karyawan ? $karyawan->gaji : 0;
-        $jabatan = $karyawan ? $karyawan->jabatan : 'N/A';
-        $namaLengkap = $karyawan ? $karyawan->nama_lengkap : 'N/A';
-        
-    
-        // Calculate upah lembur per jam
-        $upahLemburPerJam = $gajiPokok ? floor($gajiPokok / 173) : 0;
-    
-        // Format start_date and end_date for Periode
-        $startDate = $request->input('start_date');
-        $endDate = $request->input('end_date');
-        $periode = 'Tidak ada periode yang ditentukan';
-        $namaLengkap = $request->input('nama_lengkap2');
-    
-        if ($startDate && $endDate) {
-            $formattedStartDate = Carbon::parse($startDate)->translatedFormat(' d F Y');
-            $formattedEndDate = Carbon::parse($endDate)->translatedFormat(' d F Y');
-            $periode = $formattedStartDate . ' - ' . $formattedEndDate;
-        }
-    
-        // Format dates for each record
-        $lemburRecords->transform(function ($item) {
-            $item->formatted_tanggal_lembur = $item->tanggal_lembur->locale('id')->translatedFormat('l, d F Y');
-            return $item;
-        });
-    
-        return view('app.Perhitungan Lembur', compact('lemburRecords', 'gajiPokok', 'jabatan', 'namaLengkap', 'upahLemburPerJam', 'periode'));
+{
+    Carbon::setLocale('id'); // Set the locale to Indonesian
+
+    $query = Lembur::query();
+
+    if ($request->filled('start_date') && $request->filled('end_date')) {
+        $query->whereBetween('tanggal_lembur', [$request->input('start_date'), $request->input('end_date')]);
     }
+
+    if ($request->filled('nama_lengkap2')) {
+        $query->where('nama_lengkap', 'like', '%' . $request->input('nama_lengkap2') . '%');
+    }
+
+    if ($request->filled('id_karyawan2')) {
+        $query->where('id_karyawan', $request->input('id_karyawan2'));
+    }
+
+    // Append query parameters to pagination links
+    $lemburRecords = $query->orderBy('tanggal_lembur', 'asc')
+        ->paginate(15)
+        ->appends($request->query());
+
+    // Fetch gaji and jabatan from the karyawan table based on the selected nama_lengkap2
+    $karyawan = Karyawan::where('nama_karyawan', $request->input('nama_lengkap2'))->first();
+
+    $gajiPokok = $karyawan ? $karyawan->gaji : 0;
+    $jabatan = $karyawan ? $karyawan->jabatan : 'N/A';
+    $namaLengkap = $karyawan ? $karyawan->nama_lengkap : 'N/A';
+
+    // Calculate upah lembur per jam
+    $upahLemburPerJam = $gajiPokok ? floor($gajiPokok / 173) : 0;
+
+    // Format start_date and end_date for Periode
+    $startDate = $request->input('start_date');
+    $endDate = $request->input('end_date');
+    $periode = 'Tidak ada periode yang ditentukan';
+    $namaLengkap = $request->input('nama_lengkap2');
+
+    if ($startDate && $endDate) {
+        $formattedStartDate = Carbon::parse($startDate)->translatedFormat(' d F Y');
+        $formattedEndDate = Carbon::parse($endDate)->translatedFormat(' d F Y');
+        $periode = $formattedStartDate . ' - ' . $formattedEndDate;
+    }
+
+    // Format dates for each record
+    $lemburRecords->transform(function ($item) {
+        $item->formatted_tanggal_lembur = $item->tanggal_lembur->locale('id')->translatedFormat('l, d F Y');
+        return $item;
+    });
+
+    return view('app.Perhitungan Lembur', compact('lemburRecords', 'gajiPokok', 'jabatan', 'namaLengkap', 'upahLemburPerJam', 'periode'));
+}
+
     
     public function store(Request $request)
     {

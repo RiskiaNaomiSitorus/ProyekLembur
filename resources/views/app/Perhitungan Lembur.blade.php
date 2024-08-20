@@ -402,6 +402,7 @@
             <div class="form-group">
                 <label for="addGaji">Gaji (Rp)</label>
                 <input type="number" class="form-control @error('gaji') is-invalid @enderror" id="addgaji" name="gaji" value="{{ old('gaji') }}" readOnly/>
+                <span>*Isi REG Karyawan dan Nama Lengkap secara berurutan untuk memunculkan Gaji</span><br>
                 <button type="button" class="btn btn-secondary" onclick="addcalculateUpahLembur()">Calculate Upah Lembur</button>
                 @error('gaji')
                     <div class="invalid-feedback">
@@ -619,6 +620,7 @@
                     required
                     readOnly
                 />
+                <span>*Isi REG Karyawan dan Nama Lengkap secara berurutan untuk memunculkan Gaji</span><br>
                 <button type="button" class="btn btn-secondary" onclick="editcalculateUpahLembur()">Recalculate Upah Lembur</button>
                 @error('editgaji')
                     <div style="color: red">

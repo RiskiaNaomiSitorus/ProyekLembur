@@ -33,10 +33,10 @@ class DataKaryawanController extends Controller
             });
         }
     
-        // Sort alphabetically and paginate results
-        $karyawan = $karyawanQuery->orderBy('nama_karyawan', 'asc')->paginate(10);
+        // Sort alphabetically and paginate results with the query string
+        $karyawan = $karyawanQuery->orderBy('nama_karyawan', 'asc')->paginate(10)->appends(['query' => $query]);
     
-        return view('app.Data Karyawan', compact('karyawan'));
+        return view('app.Data Karyawan', compact('karyawan', 'query'));
     }
     
 

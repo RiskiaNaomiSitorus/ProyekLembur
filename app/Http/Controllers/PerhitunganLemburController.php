@@ -30,7 +30,7 @@ class PerhitunganLemburController extends Controller
     }
 
     // Append query parameters to pagination links
-    $lemburRecords = $query->orderBy('tanggal_lembur', 'asc')
+    $lemburRecords = $query->orderBy('tanggal_lembur', 'desc')
         ->paginate(15)
         ->appends($request->query());
 

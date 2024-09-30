@@ -467,7 +467,7 @@
   <div class="modal-content">
     <span class="close" id="closeSearchModal">&times;</span>
     <h3 style="margin-bottom: 30px">
-      <strong>Search Data Karyawan</strong>
+      <strong>Search Data REG Karyawan</strong>
     </h3>
     <form id="searchId" method="GET" action="{{ route('data-karyawan') }}">
       <div class="form-group">
